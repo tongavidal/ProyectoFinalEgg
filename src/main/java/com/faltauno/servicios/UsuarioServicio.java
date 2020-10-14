@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.faltauno.enumeraciones;
+package com.faltauno.servicios;
+
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author CARMEN
  */
-public enum Posiciones {
-    DELANTERO,ARQUERO,DEFENSA,MEDIO;
+@Service
+public class UsuarioServicio {
+    
 }

@@ -5,31 +5,32 @@
  */
 package com.faltauno.entidades;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author CARMEN
+ * @author FaltaUno
  */
 @Entity
-public class Foto {
+public class Ciudad {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid",strategy = "uuid2")
     private String id;
     
     private String nombre;
-    private String mime;
     
-    @Lob @Basic(fetch = FetchType.LAZY)
-    private byte[] contenido;
+    @ManyToOne
+    private Pais pais;
 
+    public Ciudad() {
+    }
+    
+    
     /**
      * @return the id
      */
@@ -59,31 +60,17 @@ public class Foto {
     }
 
     /**
-     * @return the mime
+     * @return the pais
      */
-    public String getMime() {
-        return mime;
+    public Pais getPais() {
+        return pais;
     }
 
     /**
-     * @param mime the mime to set
+     * @param pais the pais to set
      */
-    public void setMime(String mime) {
-        this.mime = mime;
-    }
-
-    /**
-     * @return the contenido
-     */
-    public byte[] getContenido() {
-        return contenido;
-    }
-
-    /**
-     * @param contenido the contenido to set
-     */
-    public void setContenido(byte[] contenido) {
-        this.contenido = contenido;
+    public void setPais(Pais pais) {
+        this.pais = pais;
     }
     
     

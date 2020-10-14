@@ -7,8 +7,8 @@ package com.faltauno.enumeraciones;
 
 /**
  *
- * @author CARMEN
+ * @author FaltaUno
  */
 public enum Sexo {
-    FEMENINO, MASCULINO;
+    FEMENINO, MASCULINO, MIXTO;
 }

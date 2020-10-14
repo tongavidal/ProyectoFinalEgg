@@ -8,6 +8,7 @@ package com.faltauno.entidades;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -15,21 +16,23 @@ import org.hibernate.annotations.GenericGenerator;
  * @author FaltaUno
  */
 @Entity
-public class Reputacion {
-    
+public class Asistencia {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid",strategy = "uuid2")
     private String id;
     
+    private Boolean asistencia;
     
-    private Integer puntualidad;
-    private Integer habilidad;
-    private Integer fairplay;
+    @ManyToOne
+    private Usuario usuario;
+    
+    @ManyToOne
+    private Partido partido;
 
-    public Reputacion() {
+    public Asistencia() {
     }
-    
+
     
     /**
      * @return the id
@@ -46,45 +49,45 @@ public class Reputacion {
     }
 
     /**
-     * @return the puntualidad
+     * @return the asistencia
      */
-    public Integer getPuntualidad() {
-        return puntualidad;
+    public Boolean getAsistencia() {
+        return asistencia;
     }
 
     /**
-     * @param puntualidad the puntualidad to set
+     * @param asistencia the asistencia to set
      */
-    public void setPuntualidad(Integer puntualidad) {
-        this.puntualidad = puntualidad;
+    public void setAsistencia(Boolean asistencia) {
+        this.asistencia = asistencia;
     }
 
     /**
-     * @return the habilidad
+     * @return the usuario
      */
-    public Integer getHabilidad() {
-        return habilidad;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     /**
-     * @param habilidad the habilidad to set
+     * @param usuario the usuario to set
      */
-    public void setHabilidad(Integer habilidad) {
-        this.habilidad = habilidad;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     /**
-     * @return the fairplay
+     * @return the partido
      */
-    public Integer getFairplay() {
-        return fairplay;
+    public Partido getPartido() {
+        return partido;
     }
 
     /**
-     * @param fairplay the fairplay to set
+     * @param partido the partido to set
      */
-    public void setFairplay(Integer fairplay) {
-        this.fairplay = fairplay;
+    public void setPartido(Partido partido) {
+        this.partido = partido;
     }
     
     
