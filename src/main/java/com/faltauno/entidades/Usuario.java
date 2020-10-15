@@ -9,6 +9,8 @@ import com.faltauno.enumeraciones.Sexo;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -34,6 +36,8 @@ public class Usuario {
     private String edad;
     private String mail;
     private String clave;
+    
+    @Enumerated(EnumType.STRING)
     private Sexo sexo;
     
     @ManyToOne
