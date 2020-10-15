@@ -6,6 +6,7 @@
 package com.faltauno.servicios;
 
 import com.faltauno.repositorios.ReputacionRepositorio;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +20,16 @@ public class ReputacionServicio {
     
     @Autowired
     private ReputacionRepositorio reputacionRepositorio;
+    
+    /*
+        private Integer puntualidad;
+    private Integer habilidad;
+    private Integer fairplay;
+    
+    */
+    
+    @Transactional
+    public void agregarReputacion(){
+        
+    }
 }

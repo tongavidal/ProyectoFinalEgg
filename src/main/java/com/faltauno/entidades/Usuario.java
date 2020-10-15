@@ -47,7 +47,7 @@ public class Usuario {
     private List<Posicion> posiciones; //-----
     
     @OneToMany
-    private List<Reputacion> reputación;
+    private List<Reputacion> reputacion;
     
     
     @Temporal(TemporalType.TIMESTAMP)
@@ -248,10 +248,14 @@ public class Usuario {
     }
 
     /**
-     * @param reputación the reputación to set
+     * @param reputacion the reputacion to set
      */
-    public void setReputación(List<Reputacion> reputación) {
-        this.reputación = reputación;
+    public void setReputacion(List<Reputacion> reputacion) {
+        this.reputacion = reputacion;
+    }
+
+    public List<Reputacion> getReputacion() {
+        return reputacion;
     }
     
     
