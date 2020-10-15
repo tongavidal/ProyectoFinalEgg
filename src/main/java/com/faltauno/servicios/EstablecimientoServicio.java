@@ -43,11 +43,11 @@ public class EstablecimientoServicio {
     }
     
     @Transactional
-    public void modificar(String idEstablecimiento, String idLocalidad,String nombre,String direccion) throws ErrorServicio{
+    public void modificar(String id, String idLocalidad,String nombre,String direccion) throws ErrorServicio{
         //Localidad localidad=localidadRepositorio.getOne(idLocalidad);
         validar(nombre, direccion);
         
-        Optional<Establecimiento> respuesta=establecimientoRepositorio.findById(idEstablecimiento);
+        Optional<Establecimiento> respuesta=establecimientoRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Establecimiento establecimiento=respuesta.get();
             establecimiento.setNombre(nombre);
