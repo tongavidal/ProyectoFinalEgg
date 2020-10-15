@@ -47,7 +47,7 @@ public class Usuario {
     private List<Posicion> posiciones; //-----
     
     @OneToMany
-    private Reputacion reputación;
+    private List<Reputacion> reputación;
     
     
     @Temporal(TemporalType.TIMESTAMP)
@@ -190,19 +190,6 @@ public class Usuario {
         this.posiciones = posiciones;
     }
 
-    /**
-     * @return the reputación
-     */
-    public Reputacion getReputación() {
-        return reputación;
-    }
-
-    /**
-     * @param reputación the reputación to set
-     */
-    public void setReputación(Reputacion reputación) {
-        this.reputación = reputación;
-    }
 
     /**
      * @return the fechaCreacion
@@ -258,6 +245,13 @@ public class Usuario {
      */
     public void setFoto(Foto foto) {
         this.foto = foto;
+    }
+
+    /**
+     * @param reputación the reputación to set
+     */
+    public void setReputación(List<Reputacion> reputación) {
+        this.reputación = reputación;
     }
     
     
