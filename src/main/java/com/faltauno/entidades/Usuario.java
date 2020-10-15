@@ -9,6 +9,8 @@ import com.faltauno.enumeraciones.Sexo;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -34,6 +36,8 @@ public class Usuario {
     private String edad;
     private String mail;
     private String clave;
+    
+    @Enumerated(EnumType.STRING)
     private Sexo sexo;
     
     @ManyToOne
@@ -43,7 +47,7 @@ public class Usuario {
     private List<Posicion> posiciones; //-----
     
     @OneToMany
-    private Reputacion reputación;
+    private List<Reputacion> reputacion;
     
     
     @Temporal(TemporalType.TIMESTAMP)
@@ -186,19 +190,6 @@ public class Usuario {
         this.posiciones = posiciones;
     }
 
-    /**
-     * @return the reputación
-     */
-    public Reputacion getReputación() {
-        return reputación;
-    }
-
-    /**
-     * @param reputación the reputación to set
-     */
-    public void setReputación(Reputacion reputación) {
-        this.reputación = reputación;
-    }
 
     /**
      * @return the fechaCreacion
@@ -254,6 +245,17 @@ public class Usuario {
      */
     public void setFoto(Foto foto) {
         this.foto = foto;
+    }
+
+    /**
+     * @param reputacion the reputacion to set
+     */
+    public void setReputacion(List<Reputacion> reputacion) {
+        this.reputacion = reputacion;
+    }
+
+    public List<Reputacion> getReputacion() {
+        return reputacion;
     }
     
     
