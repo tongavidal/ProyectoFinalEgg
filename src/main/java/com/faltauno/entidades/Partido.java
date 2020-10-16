@@ -9,6 +9,8 @@ import com.faltauno.enumeraciones.Sexo;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -53,6 +55,7 @@ public class Partido {
     private String obsVacante;
     private String obsEstablecimiento;
     
+    @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
     public Partido() {
