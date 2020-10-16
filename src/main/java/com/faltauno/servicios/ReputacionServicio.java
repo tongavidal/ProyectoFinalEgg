@@ -46,7 +46,7 @@ public class ReputacionServicio {
             reputacion.setHabilidad(habilidad);
             reputacionRepositorio.save(reputacion);
         }else{
-            throw new ErrorServicio("No se encontro el usuario");
+            throw new ErrorServicio("Surgió algún error");
         }
         
     }
