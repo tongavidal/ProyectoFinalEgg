@@ -15,5 +15,31 @@ public class PortalControlador {
 		
 		return "index.html";
 	}
+        
+        @GetMapping("/registrar_usuario")
+        public String registrar_usuario(){
+            return "registrar_usuario";
+        }
+        
+        @GetMapping("/postular_partido")
+        public String postular_partido(){
+            return "postular_partido";
+        }
+        
+        @GetMapping("/postular_jugador")
+        public String postular_jugador(){
+            return "postular_jugador";
+        }
+        
+        @GetMapping("/postular_desafio")
+        public String postular_desafio(){
+            return "postular_desafio";
+        }
+        
+        @GetMapping("/login")
+        public String login_usuario(){
+            return "login_usuario";
+        }
+        
 
 }
