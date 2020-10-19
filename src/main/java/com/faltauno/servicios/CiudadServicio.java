@@ -1,6 +1,7 @@
 package com.faltauno.servicios;
 
 import com.faltauno.entidades.Ciudad;
+import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.CiudadRepositorio;
 import java.util.List;
 import java.util.Optional;
@@ -18,29 +19,45 @@ public class CiudadServicio {
 
     @Autowired
     public CiudadRepositorio ciudadRepositorio;
+    @Autowired
+    public PaisServicio paisServicio;
 
     @Transactional
-    public void registrarCiudad(String nombre, String pais) {
-        validarDatosCiudad(nombre, pais);
-        verificarDuplicado(nombre, pais);
+    public void registrarCiudad(String nombre, String nombrePais) throws ErrorServicio {
+        validarDatosCiudad(nombre, nombrePais);
+        verificarDuplicadoCiudad(nombre, nombrePais);
         Ciudad ciudad = new Ciudad();
         ciudad.setNombre(nombre);
-        ciudad.setNombre(pais);
+        ciudad.setPais(paisServicio.buscarPaisPorNombre(nombrePais));
         ciudadRepositorio.save(ciudad);
     }
     
     @Transactional
-    public void editarCiudad (String id, String nombre, String pais){
+    public void editarCiudad (String id, String nombre, String nombrePais) throws ErrorServicio{
         Ciudad ciudad = verificarExistenciaCiudad(id);
         ciudad.setNombre(nombre);
-        //Acá tengo que devolver el pais;
+        ciudad.setPais(paisServicio.buscarPaisPorNombre(nombre));
         ciudadRepositorio.save(ciudad);
     }
     
     @Transactional
-    public void eliminarCiudad(String id){
+    public void eliminarCiudad(String id) throws ErrorServicio{
         Ciudad ciudad = verificarExistenciaCiudad(id);
         ciudadRepositorio.delete(ciudad);
+    }
+    
+    //Listar todas las ciudades de todos los paises
+    @Transactional
+    public List<Ciudad> listarTodasCiudades(){
+        List<Ciudad> listaCiudades = ciudadRepositorio.findAll();
+        return  listaCiudades;
+    }
+    
+    //Listar todas las ciudades de un pais
+    @Transactional
+    public List<Ciudad> listarCiudadesPais(String nombrePais){
+        List<Ciudad> listaCiudades = ciudadRepositorio.buscarCiudadPorPais(nombrePais);
+        return listaCiudades;
     }
     
     //Verifico que ya existe la ciudad con los mismos valores(nombre, pais)
@@ -57,19 +74,19 @@ public class CiudadServicio {
     public void verificarDuplicadoCiudad(String nombre, String pais) throws ErrorServicio {
         List<Ciudad> listaCiudades = ciudadRepositorio.buscarCiudadPorPais(pais);
         for (Ciudad c : listaCiudades) {
-            if (c.getNombre() == nombre) {
+            if (c.getNombre().equals(nombre)) {
                 throw new ErrorServicio("Ya existe la ciudad " + nombre + " en " + pais);
             }
         }
     }
 
     //Verifico que los datos no estén vacios
-    public void validarDatosCiudad(String nombre, String pais) throws ErrorSerivicio {
+    public void validarDatosCiudad(String nombre, String pais) throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
-            throw new ErrorServicio("El nombre de la Ciudad no puede estar vacio")
+            throw new ErrorServicio("El nombre de la Ciudad no puede estar vacio");
         }
         if (pais == null || pais.isEmpty()) {
-            throw new ErrorSerivicio("El país no puede estar vacio")
+            throw new ErrorServicio("El país no puede estar vacio");
         }
     }
 

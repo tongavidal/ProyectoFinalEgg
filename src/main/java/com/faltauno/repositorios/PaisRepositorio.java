@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PaisRepositorio extends JpaRepository<Pais, String>{
     
-    @Query("SELECT p FROM pais p WHERE p.nombre= :nombre")
+    @Query("SELECT p FROM Pais p WHERE p.nombre= :nombre")
     public Pais buscarPaisPorNombre(@Param("nombre")String nombre);
     
 }
