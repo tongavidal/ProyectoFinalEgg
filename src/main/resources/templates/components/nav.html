@@ -4,14 +4,14 @@
 			<div class="row">
 				<div class="col-xs-2">
 					<div id="fh5co-logo">
-						<a href="index.html">NosFalta1<span>.</span></a>
+						<a th:href="@{/}">NosFalta1<span>.</span></a>
 					</div>
 				</div>
 				<div class="col-xs-10 text-right menu-1">
 					<ul>
-						<li class="active"><a href="index.html">Home</a></li>
-						<li><a href="gallery.html">Buscar Jugador</a></li>
-						<li><a href="about.html">Trainer</a></li>
+						<li class="active"><a th:href="@{/}">Home</a></li>
+						<li><a  th:href="@{login}">Ingresar</a></li>
+						<li><a th:href="@{registrarse}">Registrarse</a></li>
 						<li><a href="pricing.html">Pricing</a></li>
 						<li class="has-dropdown"><a href="blog.html">Blog</a>
 							<ul class="dropdown">
