@@ -30,8 +30,13 @@ public class Partido {
     @GenericGenerator(name = "uuid",strategy = "uuid2")
     private String id;
     
+    //FECHA DEL PARTIDO
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    
+    //FECHA DE CREACION
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
     
     @ManyToOne
     private Localidad localidad;
@@ -60,6 +65,19 @@ public class Partido {
 
     public Partido() {
     }
+
+    public Partido(Localidad localidad, Integer cantJugador, Integer cantVacantes, Double precio, Usuario creador, Boolean estado, String obsVacante, String obsEstablecimiento, Sexo sexo) {
+        this.localidad = localidad;
+        this.cantJugador = cantJugador;
+        this.cantVacantes = cantVacantes;
+        this.precio = precio;
+        this.creador = creador;
+        this.estado = estado;
+        this.obsVacante = obsVacante;
+        this.obsEstablecimiento = obsEstablecimiento;
+        this.sexo = sexo;
+    }
+    
     
     
     /**
@@ -257,8 +275,14 @@ public class Partido {
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
     }
-    
-    
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }        
     
     
     
