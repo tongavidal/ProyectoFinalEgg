@@ -34,6 +34,9 @@ public class Partido {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     
+    //Hora del partido
+    Integer horario;
+    
     //FECHA DE CREACION
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
@@ -283,6 +286,14 @@ public class Partido {
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }        
+
+    public Integer getHorario() {
+        return horario;
+    }
+
+    public void setHorario(Integer horario) {
+        this.horario = horario;
+    }
     
     
     

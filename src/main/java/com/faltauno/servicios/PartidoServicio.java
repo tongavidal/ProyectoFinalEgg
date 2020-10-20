@@ -34,7 +34,7 @@ public class PartidoServicio {
 
     /* CREACION DE PARTIDO */
     @Transactional
-    public void crearPartido(Localidad localidad, Integer cantJugador, Integer cantVacantes, Double precio, Usuario creador, String obsVacante, String obsEstablecimiento, Sexo sexo, Date fecha) {
+    public void crearPartido(Localidad localidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio, Usuario creador, String obsVacante, String obsEstablecimiento, Sexo sexo, Date fecha) {
 
         Partido p = new Partido();
 
@@ -48,6 +48,7 @@ public class PartidoServicio {
         p.setObsEstablecimiento(obsEstablecimiento);
         p.setSexo(sexo);
         p.setFecha(fecha); //Fecha del partido
+        p.setHorario(horario);//Horario del partido
         p.setFechaCreacion(new Date());
 
         partidoRepositorio.save(p);
