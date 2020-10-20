@@ -36,6 +36,7 @@ public class Usuario {
     private String edad;
     private String mail;
     private String clave;
+    private String acceso;
     
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
@@ -182,6 +183,8 @@ public class Usuario {
     public List<Posicion> getPosiciones() {
         return posiciones;
     }
+    
+    
 
     /**
      * @param posiciones the posiciones to set
@@ -256,6 +259,14 @@ public class Usuario {
 
     public List<Reputacion> getReputacion() {
         return reputacion;
+    }
+
+    public String getAcceso() {
+        return acceso;
+    }
+
+    public void setAcceso(String acceso) {
+        this.acceso = acceso;
     }
     
     
