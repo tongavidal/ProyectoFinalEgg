@@ -19,20 +19,20 @@ public class RegistroControlador {
     @Autowired
     UsuarioServicio usuarioServicio;
 	
-    @PostMapping("/registrarUsuario")
-    public String registrarUsuario(ModelMap modelo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String edad,
-            @RequestParam String mail, @RequestParam String clave, ) throws ErrorServicio{
-        try{
-            usuarioServicio.registrarUsuario(nombre, apellido, mail, clave);
-        }catch(ErrorServicio ex){
-            modelo.put("error", ex.getMessage());
-            Logger.getLogger(RegistroControlador.class.getName()).log(Level.SEVERE, null, ex);
-            modelo.put("nombre", nombre);
-            modelo.put("mail", mail);
-            
-            return "cargar_usuario";
-        }
-        return "exito_usuario.html";
-    }
+//    @PostMapping("/registrarUsuario")
+//    public String registrarUsuario(ModelMap modelo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String edad,
+//            @RequestParam String mail, @RequestParam String clave, ) throws ErrorServicio{
+//        try{
+//            usuarioServicio.registrarUsuario(nombre, apellido, mail, clave);
+//        }catch(ErrorServicio ex){
+//            modelo.put("error", ex.getMessage());
+//            Logger.getLogger(RegistroControlador.class.getName()).log(Level.SEVERE, null, ex);
+//            modelo.put("nombre", nombre);
+//            modelo.put("mail", mail);
+//            
+//            return "cargar_usuario";
+//        }
+//        return "exito_usuario.html";
+//    }
 
 }
