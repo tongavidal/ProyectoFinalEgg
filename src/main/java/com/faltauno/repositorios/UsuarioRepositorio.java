@@ -5,8 +5,7 @@
  */
 package com.faltauno.repositorios;
 
-import com.faltauno.entidades.Establecimiento;
-import java.util.List;
+import com.faltauno.entidades.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,10 +13,12 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author FaltaUno
+ * @author salmonIT
  */
 @Repository
-public interface EstablecimientoRepositorio extends JpaRepository<Establecimiento, String>{
-    @Query("SELECT e FROM Establecimiento e WHERE e.localidad.id= :id")
-    public List<Establecimiento> listarEstablecimientoPorLocalidad(@Param("id") String id);
+public interface UsuarioRepositorio extends JpaRepository<Usuario, String>{
+    
+    @Query("Select u from Usuario u where u.mail = :mail")
+    public Usuario buscarUsuarioPorMail(@Param("mail")String mail);
+    
 }
