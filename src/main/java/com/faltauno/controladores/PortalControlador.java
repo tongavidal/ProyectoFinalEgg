@@ -22,5 +22,10 @@ public class PortalControlador {
 		
 		return "registrarse.html";
 	}
+        
+        @GetMapping("/login")
+        public String login(){
+            return "login.html";
+        }
 
 }

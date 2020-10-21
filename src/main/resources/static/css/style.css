@@ -7,7 +7,7 @@
 }
 /* =======================================================
 *
-* 	Template Style 
+*   Template Style 
 *
 * ======================================================= */
 body {
@@ -64,7 +64,7 @@ p {
 
 h1, h2, h3, h4, h5, h6, figure {
   color: #000;
-  font-family: "Work Sans", Arial, sans-serif;
+  font-family: "Archivo", Arial, sans-serif;
   font-weight: 400;
   margin: 0 0 20px 0;
 }
@@ -93,6 +93,7 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 .fh5co-nav .top-menu {
   padding: 28px 0;
+  background-color: black;
 }
 .fh5co-nav .top {
   background: #F85A16;
@@ -132,14 +133,16 @@ h1, h2, h3, h4, h5, h6, figure {
   text-transform: uppercase;
   font-weight: bold;
   font-weight: 700;
-  font-family: "Work Sans", Arial, sans-serif;
+  font-family: "Archivo", Arial, sans-serif;
 }
 .fh5co-nav #fh5co-logo a span {
   color: #F85A16;
 }
+
+/*LETRAS MENU*/
 .fh5co-nav a {
   padding: 5px 10px;
-  color: #000;
+  color: white;
 }
 @media screen and (max-width: 768px) {
   .fh5co-nav .menu-1 {
@@ -166,7 +169,7 @@ h1, h2, h3, h4, h5, h6, figure {
   transition: 0.5s;
 }
 .fh5co-nav ul li a:hover, .fh5co-nav ul li a:focus, .fh5co-nav ul li a:active {
-  color: #000 !important;
+  color: #F85A16 !important;
 }
 .fh5co-nav ul li.has-dropdown {
   position: relative;
@@ -222,9 +225,14 @@ h1, h2, h3, h4, h5, h6, figure {
   font-size: 13px;
   letter-spacing: 0;
 }
-.fh5co-nav ul li.has-dropdown .dropdown li a:hover {
+.fh5co-nav ul li.has-dropdown {
   color: #fff;
 }
+
+.fh5co-nav ul li.has-dropdown .dropdown li a:hover{
+  color: black !important;
+}
+
 .fh5co-nav ul li.has-dropdown:hover a, .fh5co-nav ul li.has-dropdown:focus a {
   color: #fff;
 }
@@ -339,6 +347,7 @@ h1, h2, h3, h4, h5, h6, figure {
   transform: scale(1.2);
 }
 
+}
 .fh5co-cover {
   height: 800px;
   background-size: cover;
@@ -383,11 +392,6 @@ h1, h2, h3, h4, h5, h6, figure {
 .fh5co-cover.fh5co-cover-sm {
   height: 600px;
 }
-
-.fh5co-cover.registro {
-  height: auto;
-}
-
 @media screen and (max-width: 768px) {
   .fh5co-cover.fh5co-cover-sm {
     height: 400px;
@@ -690,7 +694,7 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
 #fh5co-schedule .fh5co-heading h2 {
-  color: #fff;
+  color: black;
 }
 #fh5co-schedule .fh5co-heading p {
   color: rgba(255, 255, 255, 0.5);
@@ -1256,7 +1260,7 @@ h1, h2, h3, h4, h5, h6, figure {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 0px;
   background: rgba(0, 0, 0, 0.9);
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
@@ -1548,7 +1552,7 @@ h1, h2, h3, h4, h5, h6, figure {
 .btn {
   margin-right: 4px;
   margin-bottom: 4px;
-  font-family: "Work Sans", Arial, sans-serif;
+  font-family: "Archivo", Arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
   -webkit-border-radius: 30px;
