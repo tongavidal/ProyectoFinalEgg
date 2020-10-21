@@ -27,5 +27,15 @@ public class PortalControlador {
         public String login(){
             return "login.html";
         }
+        
+        @GetMapping("/partidos")
+        public String partidos(){
+            return "partidos";
+        }
+        
+        @GetMapping("/crear_partido")
+        public String crear_partido(){
+            return "crear_partido";
+        }
 
 }

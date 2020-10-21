@@ -347,7 +347,7 @@ h1, h2, h3, h4, h5, h6, figure {
   transform: scale(1.2);
 }
 
-}
+
 .fh5co-cover {
   height: 800px;
   background-size: cover;
@@ -356,7 +356,9 @@ h1, h2, h3, h4, h5, h6, figure {
   position: relative;
   float: left;
   width: 100%;
+  background-image: url(C:/Users/pc/Documents/GitHub/ProyectoFinalEgg/src/main/resources/static/images/cancha4.jpg);
 }
+
 .fh5co-cover .overlay {
   z-index: 0;
   position: absolute;
@@ -364,7 +366,7 @@ h1, h2, h3, h4, h5, h6, figure {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: white;
 }
 .fh5co-cover > .fh5co-container {
   position: relative;
