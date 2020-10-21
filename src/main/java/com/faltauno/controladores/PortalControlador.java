@@ -33,9 +33,9 @@ public class PortalControlador {
             return "partidos";
         }
         
-        @GetMapping("/crear_partido")
-        public String crear_partido(){
-            return "crear_partido";
+        @GetMapping("/alta-partido")
+        public String alta_partido(){
+            return "alta-partido";
         }
 
 }
