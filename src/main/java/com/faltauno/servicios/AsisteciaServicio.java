@@ -27,7 +27,7 @@ public class AsisteciaServicio {
     @Transactional
     public void asociarPartido(String idUsuario, String idPartido) {
         //un método que busque un usuario por id y me devuelva un jugador
-        //Usuario usuario = usuarioServicio;
+        //Usuario usuario = usuarioServicio.
         //un método que busque un partido por id y me devuelva un partido
         //Partido partido = ;
         Asistencia asistencia = new Asistencia();
