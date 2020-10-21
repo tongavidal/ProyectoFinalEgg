@@ -280,6 +280,10 @@ h1, h2, h3, h4, h5, h6, figure {
   position: relative;
 }
 
+.alta-partido{
+  
+}
+
 .fh5co-bg {
   background-size: cover;
   background-position: center center;
@@ -287,6 +291,7 @@ h1, h2, h3, h4, h5, h6, figure {
   width: 100%;
   float: left;
 }
+
 .fh5co-bg .overlay {
   position: absolute;
   top: 0;
