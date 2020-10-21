@@ -54,20 +54,6 @@
 							<div class="row form-group">
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
-									<input th:value="${partido.cantJugadores}" type="number" id="subject" class="form-control" name="cantJugadores" 
-										placeholder="Cantidad de jugadores">
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-12">
-									<!-- <label for="subject">Subject</label> -->
-									<input th:value="${partido.cantVacantes}" type="number" id="subject" class="form-control" name="cantVacantes" 
-										placeholder="Cantidad de vacantes libres">
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-12">
-									<!-- <label for="subject">Subject</label> -->
 									<input th:value="${partido.precio}" type="number" id="subject" class="form-control" name="precio" 
 										placeholder="Precio por jugador">
 								</div>
@@ -75,9 +61,12 @@
 							<div class="row form-group">
 								<div class="col-md-12">
 									<select name="sexo" class="form-control" placeholder="Sexo">
-										<option th:value="${masculino}">Masculino</option>
+										<!--<option th:value="${masculino}">Masculino</option>
                                         <option th:value="${femenino}">Femenino</option>
-                                        <option th:value="${mixto}">Mixto</option>
+                                        <option th:value="${mixto}">Mixto</option>-->
+                                        <option th:each="sex:${sexo}" 
+                                        th:value="${sex}"
+                                        th:text="${sex}"></option>
 									</select>
 								</div>
 							</div>
