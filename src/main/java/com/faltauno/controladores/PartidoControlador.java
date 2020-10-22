@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/partido")
@@ -25,7 +26,7 @@ public class PartidoControlador {
     private PartidoServicio partidoServicio;
 
     @PostMapping("/listar-postulados")
-    public String listarpostulados(ModelMap modelo, @RequestParam String idpartido) {
+    public String listarpostulados(ModelMap modelo, @RequestParam String idpartido) throws ErrorServicio {
         try {
             List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
             modelo.put("listado-postulados", postulados);
@@ -34,9 +35,10 @@ public class PartidoControlador {
             return "listado-postulados";
         }
         return "listado-postulados";
+    }
     
     @GetMapping("/listarconfirmados")
-    public String listarConfirmados(ModelMap modelo, @PathVariable String idPartido) {
+    public String listarConfirmados(ModelMap modelo, @PathVariable String idPartido) throws ErrorServicio {
         Partido partido = partidoServicio.traerPartido(idPartido);
         List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
         modelo.put("confirmados", listaConfirmados);
@@ -66,9 +68,10 @@ public class PartidoControlador {
 
         modelo.put("listado-postulados", postulados);
         return "listado-postulados";
+    }
     
     @PostMapping("/eliminarpostulado")
-    public String eliminarPostulado(ModelMap modelo, @PathVariable String idPartido, @PathVariable String idUsuario) {
+    public String eliminarPostulado(ModelMap modelo, @PathVariable String idPartido, @PathVariable String idUsuario) throws ErrorServicio {
         partidoServicio.eliminaPostulado(idPartido, idUsuario);
         Partido partido = partidoServicio.traerPartido(idPartido);
         List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
