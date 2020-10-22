@@ -174,16 +174,5 @@ public class PartidoServicio {
         partidoRepositorio.save(partido);
     }
     
-    @Transactional
-    public void confirmarPostulado(String idPartido, String idUsuario){
-        //Buscco el usuario por id
-        Usuario usuario = usuarioRepositorio.findById(idUsuario).get();
-        //Busco el partido por id
-        Partido partido = partidoRepositorio.findById(idPartido).get();
-      //Pido la lista de jugadores confirmados del partido y le agrego el jugador
-        partido.getJugPostulados().add(usuario);
-        //Guardo el partido con la nueva lista de confirmados
-        partidoRepositorio.save(partido);
-    }
     
 }
