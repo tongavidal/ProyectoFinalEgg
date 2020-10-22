@@ -17,7 +17,7 @@ import com.faltauno.servicios.UsuarioServicio;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/usuario")
 public class UsuarioControlador {
 	
 	@Autowired
