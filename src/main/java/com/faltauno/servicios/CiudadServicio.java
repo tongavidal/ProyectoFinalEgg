@@ -71,21 +71,21 @@ public class CiudadServicio {
     }
     
     //Verifico que no existe dos ciudades con el mismo nombre en un país
-    public void verificarDuplicadoCiudad(String nombre, String pais) throws ErrorServicio {
-        List<Ciudad> listaCiudades = ciudadRepositorio.buscarCiudadPorPais(pais);
+    public void verificarDuplicadoCiudad(String nombre, String nombrePais) throws ErrorServicio {
+        List<Ciudad> listaCiudades = ciudadRepositorio.buscarCiudadPorPais(nombrePais);
         for (Ciudad c : listaCiudades) {
             if (c.getNombre().equals(nombre)) {
-                throw new ErrorServicio("Ya existe la ciudad " + nombre + " en " + pais);
+                throw new ErrorServicio("Ya existe la ciudad " + nombre + " en " + nombrePais);
             }
         }
     }
 
     //Verifico que los datos no estén vacios
-    public void validarDatosCiudad(String nombre, String pais) throws ErrorServicio {
+    public void validarDatosCiudad(String nombre, String nombrePais) throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre de la Ciudad no puede estar vacio");
         }
-        if (pais == null || pais.isEmpty()) {
+        if (nombrePais == null || nombrePais.isEmpty()) {
             throw new ErrorServicio("El país no puede estar vacio");
         }
     }

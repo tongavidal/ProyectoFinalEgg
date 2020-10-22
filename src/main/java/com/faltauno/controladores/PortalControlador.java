@@ -15,11 +15,5 @@ public class PortalControlador {
 		
 		return "index.html";
 	}
-	
-	@GetMapping("/registrarse")
-	public String registrarse(ModelMap modelo) {
-		modelo.put("title", "Registrarse - NosFalta1");
-		
-		return "registrarse.html";
-	}
+
 }
