@@ -5,6 +5,7 @@
  */
 package com.faltauno.servicios;
 
+import com.faltauno.entidades.Localidad;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.UsuarioRepositorio;
@@ -19,6 +20,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -29,7 +31,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @author CARMEN
  */
 @Service
-public class UsuarioServicio {
+public class UsuarioServicio implements  UserDetailsService{
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
@@ -38,14 +40,16 @@ public class UsuarioServicio {
     private NotificacionServicio notificacionServicio;
 
     @Transactional
-    public void registrarUsuario(String nombre, String apellido, String mail, String clave) throws ErrorServicio {
+    public void registrarUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave) throws ErrorServicio {
 
-        validarRegistroUsuario(nombre, apellido, mail, clave);
+        validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave);
 
         Usuario u = new Usuario();
         //u.setId(UUID.randomUUID().toString().substring(0, 8));
         u.setNombre(nombre);
         u.setApellido(apellido);
+        u.setEdad(edad);
+        u.setLocalidad(localidad);
         u.setMail(mail);        
         u.setAcceso("1");
         u.setFechaCreacion(new Date());
@@ -62,9 +66,9 @@ public class UsuarioServicio {
     }
 
     @Transactional
-    public void modificarUsuario(String id, String nombre, String apellido, String mail, String clave) throws ErrorServicio {
+    public void modificarUsuario(String id, String nombre, String apellido, String edad, Localidad localidad, String mail, String clave) throws ErrorServicio {
 
-        validarRegistroUsuario(nombre, apellido, mail, clave);
+    	validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -111,7 +115,7 @@ public class UsuarioServicio {
         }
     }
 
-    public void validarRegistroUsuario(String nombre, String apellido, String mail, String clave) throws ErrorServicio {
+    public void validarRegistroUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave) throws ErrorServicio {
 
         if (nombre == "" || nombre.isEmpty()) {
 
@@ -120,6 +124,14 @@ public class UsuarioServicio {
         if (apellido == "" || apellido.isEmpty()) {
 
             throw new ErrorServicio("El apellido no puede estar vacio");
+        }
+        if (edad == "" || edad.isEmpty()) {
+
+            throw new ErrorServicio("La edad no puede estar vacio");
+        }
+        if (localidad == null) {
+
+            throw new ErrorServicio("La localidad no puede estar vacía");
         }
         if (mail == "" || mail.isEmpty()) {
 
@@ -138,7 +150,7 @@ public class UsuarioServicio {
 
     }
 
-    //@Override
+    @Override
     public UserDetails loadUserByUsername(String mail){
         Usuario user = usuarioRepositorio.buscarUsuarioPorMail(mail);
 

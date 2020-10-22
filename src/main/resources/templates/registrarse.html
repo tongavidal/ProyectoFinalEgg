@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="components/head::head"></head>
 
@@ -10,218 +11,149 @@
 	<div id="page">
 		<nav th:replace="components/nav::nav"></nav>
 
-		<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url(images/img_bg_2.jpg);" data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 text-center">
-					<div class="display-t">
-						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>Registrate!</h1>
-							<h2>Y nunca más te quedes sin un jugador, ni con las ganas de jugar!</h2>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 animate-box">
-					<form action="#">
-						<div class="row form-group">
-							<div class="col-md-6">
-								<!-- <label for="fname">First Name</label> -->
-								<input type="text" id="fname" class="form-control" placeholder="Your firstname">
-							</div>
-							<div class="col-md-6">
-								<!-- <label for="lname">Last Name</label> -->
-								<input type="text" id="lname" class="form-control" placeholder="Your lastname">
-							</div>
-						</div>
-
-						<div class="row form-group">
-							<div class="col-md-12">
-								<!-- <label for="email">Email</label> -->
-								<input type="text" id="email" class="form-control" placeholder="Your email address">
-							</div>
-						</div>
-
-						<div class="row form-group">
-							<div class="col-md-12">
-								<!-- <label for="subject">Subject</label> -->
-								<input type="text" id="subject" class="form-control" placeholder="Your subject of this message">
-							</div>
-						</div>
-
-						<div class="row form-group">
-							<div class="col-md-12">
-								<!-- <label for="message">Message</label> -->
-								<textarea name="message" id="message" cols="30" rows="10" class="form-control" placeholder="Say something about us"></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<input type="submit" value="Send Message" class="btn btn-primary">
-						</div>
-
-					</form>		
-				</div>
-			</div>
-		</div>
-	</header>
-
-		<div id="fh5co-services" class="fh5co-bg-section">
+		<header id="fh5co-header" class="fh5co-cover registro">
+			<div class="overlay"></div>
 			<div class="container">
 				<div class="row">
-					<div class="col-md-4 text-center animate-box">
-						<div class="services">
-							<span><img class="img-responsive"
-								src="images/football-field.svg" alt=""></span>
-							<h3>Postula un partido</h3>
-							<p>Crea un partido para que otros jugadores puedan
-								inscribirse!</p>
-							<p>
-								<a href="#" class="btn btn-primary btn-outline btn-sm">Mas..
-									<i class="icon-arrow-right"></i>
-								</a>
-							</p>
+					<div class="col-md-4">
+						<div class="display-t">
+							<div class="animate-box" data-animate-effect="fadeIn">
+								<h1>
+									<span>Ingresá</span>!
+								</h1>
+								<p>
+									Colocá tu usuario y contraseña para poder consultar, crear o sumarte a partidos.
+								</p>
+								<form th:action="@{/logincheck}" method="post"
+									enctype="multipart/form-data">
+									<div class="form-row">
+										<div th:if="${error != null}"
+											class="col-md-12 alert alert-danger" role="alert">
+											<p th:text="${error}"></p>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-12">
+											<input type="text" id="mail" class="form-control" name="mail"
+												th:value="${mail}" placeholder="Email">
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-12">
+											<input type="text" id="clave" class="form-control"
+												name="apellido" th:value="${clave}" placeholder="Contraseña">
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="text-center col-md-12">
+											<input type="submit" value="Ingresar"
+												class="btn btn-primary">
+										</div>
+									</div>
+
+									<!-- 							<div class="text-center mt-4 font-weight-light"> -->
+									<!-- 										Ya estas registrado? <a th:href="@{login}" -->
+									<!-- 											class="text-primary">Ingresar</a> -->
+									<!-- 									</div> -->
+
+								</form>
+							</div>
 						</div>
 					</div>
-					<div class="col-md-4 text-center animate-box">
-						<div class="services">
-							<span><img class="img-responsive"
-								src="images/icono_jugador.svg" alt=""></span>
-							<h3>Postulate como jugador</h3>
-							<p>Unite a distintos partidos y no te quedes sin jugar!</p>
-							<p>
-								<a href="#" class="btn btn-primary btn-outline btn-sm">Mas..
-									<i class="icon-arrow-right"></i>
-								</a>
-							</p>
-						</div>
-					</div>
-					<div class="col-md-4 text-center animate-box">
-						<div class="services">
-							<span><img class="img-responsive" src="images/team.svg"
-								alt=""></span>
-							<h3>Desafios</h3>
-							<p>Busca equipos nuevos equipos a los que enfrentarte</p>
-							<p>
-								<a href="#" class="btn btn-primary btn-outline btn-sm">Mas..
-									<i class="icon-arrow-right"></i>
-								</a>
-							</p>
-						</div>
+					<div class="col-md-8 animate-box">
+						<h1>
+							<span>Registrate</span>!
+						</h1>
+						<p>
+							Y nunca más te quedes sin un jugador,<br>ni con las ganas de
+							jugar!
+						</p>
+						<form th:action="@{/registrar}" method="post"
+							enctype="multipart/form-data">
+							<div class="form-row">
+								<div th:if="${error != null}"
+									class="col-md-12 alert alert-danger" role="alert">
+									<p th:text="${error}"></p>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-6">
+									<input type="text" id="fname" class="form-control"
+										name="nombre" th:value="${nombre}" placeholder="Nombre">
+								</div>
+								<div class="col-md-6">
+									<input type="text" id="lname" class="form-control"
+										name="apellido" th:value="${apellido}" placeholder="Apellido">
+								</div>
+							</div>
+
+							<div class="row form-group">
+								<div class="col-md-6">
+									<input type="text" id="fname" class="form-control" name="edad"
+										th:value="${edad}" placeholder="Edad">
+								</div>
+								<div class="col-md-6">
+									<select name="idLocalidad" class="form-control">
+										<option selected>Elegir Localidad...</option>
+										<option th:each="localidad : ${localidades}"
+											th:value="${localidad.id}" th:text="${localidad.nombre}"></option>
+									</select>
+								</div>
+							</div>
+
+							<div class="row form-group">
+								<div class="col-md-6">
+									<select name="idSexo" class="form-control">
+										<option selected>Sexo...</option>
+										<option th:value="${masculino}">Masculino</option>
+										<option th:value="${femenino}">Femenino</option>
+									</select>
+								</div>
+								<div class="col-md-6">
+									<input type="text" id="email" class="form-control" name="mail"
+										th:value="${mail}" placeholder="Email">
+								</div>
+							</div>
+							
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input type="text" id="clave" class="form-control" name="clave"
+										th:value="${clave}" placeholder="Ingresá la Contraseña">
+								</div>
+							</div>
+							
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input type="text" id="clave1" class="form-control" name="clave1"
+										th:value="${clave1}" placeholder="Repetí la Contraseña">
+								</div>
+							</div>
+
+							<div class="row form-group">
+								<div class="col-md-12">
+									<label for="archivo">Imagen de perfil</label> <input
+									type="file" class="form-control" name="archivo" placeholder="Imagen de Perfil">
+								</div>
+							</div>
+
+							<div class="row form-group">
+								<div class="text-center col-md-12">
+									<input type="submit" value="Registrarse"
+										class="btn btn-primary">
+								</div>
+							</div>
+
+							<!-- 							<div class="text-center mt-4 font-weight-light"> -->
+							<!-- 										Ya estas registrado? <a th:href="@{login}" -->
+							<!-- 											class="text-primary">Ingresar</a> -->
+							<!-- 									</div> -->
+
+						</form>
 					</div>
 				</div>
 			</div>
-		</div>
-
-
-		<div id="fh5co-schedule" class="fh5co-bg"
-			style="background-image: url(images/cancha2.jpg);">
-			<div class="container">
-				<div class="row">
-					<div
-						class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box">
-						<h2>Partidos Disponibles</h2>
-					</div>
-				</div>
-
-				<div class="row animate-box">
-
-					<div class="fh5co-tabs">
-						<ul class="fh5co-tab-nav">
-							<li class="active"><a href="#" data-tab="1"><span
-									class="visible-xs">S</span><span class="hidden-xs">Domingo</span></a></li>
-							<li><a href="#" data-tab="2"><span class="visible-xs">M</span><span
-									class="hidden-xs">Lunes</span></a></li>
-							<li><a href="#" data-tab="3"><span class="visible-xs">T</span><span
-									class="hidden-xs">Martes</span></a></li>
-							<li><a href="#" data-tab="4"><span class="visible-xs">W</span><span
-									class="hidden-xs">Miercoles</span></a></li>
-
-							<li><a href="#" data-tab="5"><span class="visible-xs">Th</span><span
-									class="hidden-xs">Jueves</span></a></li>
-							<li><a href="#" data-tab="6"><span class="visible-xs">F</span><span
-									class="hidden-xs">Viernes</span></a></li>
-							<li><a href="#" data-tab="7"><span class="visible-xs">S</span><span
-									class="hidden-xs">Sabado</span></a></li>
-						</ul>
-
-						<!-- Tabs -->
-						<div class="fh5co-tab-content-wrap">
-							<div class="fh5co-tab-content tab-content active"
-								data-tab-content="1">
-								<ul class="class-schedule">
-									<li class="text-center"><span><img
-											src="images/football-field.svg" class="img-responsive" alt=""></span>
-										<span class="time">7:00 AM - 8AM</span>
-										<h4>Futbol 7</h4> <small>Gaston Vidal</small></li>
-								</ul>
-							</div>
-
-							<div class="fh5co-tab-content tab-content active"
-								data-tab-content="2">
-								<ul class="class-schedule">
-									<li class="text-center"><span><img
-											src="images/football-field.svg" class="img-responsive" alt=""></span>
-										<span class="time">7:00 AM - 8AM</span>
-										<h4>Cardio</h4> <small>Angel Adams</small></li>
-								</ul>
-							</div>
-
-							<div class="fh5co-tab-content tab-content active"
-								data-tab-content="3">
-								<ul class="class-schedule">
-									<li class="text-center"><span><img
-											src="images/football-field.svg" class="img-responsive" alt=""></span>
-										<span class="time">7:00 AM - 8AM</span>
-										<h4>Ballet Dance</h4> <small>Angel Adams</small></li>
-								</ul>
-							</div>
-
-							<div class="fh5co-tab-content tab-content active"
-								data-tab-content="4">
-								<ul class="class-schedule">
-									<li class="text-center"><span><img
-											src="images/football-field.svg" class="img-responsive" alt=""></span>
-										<span class="time">7:00 AM - 8AM</span>
-										<h4>Ballet Dance</h4> <small>Angel Adams</small></li>
-								</ul>
-							</div>
-
-							<div class="fh5co-tab-content tab-content active"
-								data-tab-content="5">
-								<ul class="class-schedule">
-									<li class="text-center"><span><img
-											src="images/football-field.svg" class="img-responsive" alt=""></span>
-										<span class="time">7:00 AM - 8AM</span>
-										<h4>Ballet Dance</h4> <small>Angel Adams</small></li>
-								</ul>
-							</div>
-
-							<div class="fh5co-tab-content tab-content active"
-								data-tab-content="6">
-								<ul class="class-schedule">
-									<li class="text-center"><span><img
-											src="images/football-field.svg" class="img-responsive" alt=""></span>
-										<span class="time">7:00 AM - 8AM</span>
-										<h4>Ballet Dance</h4> <small>Angel Adams</small></li>
-								</ul>
-							</div>
-
-							<div class="fh5co-tab-content tab-content active"
-								data-tab-content="7">
-								<ul class="class-schedule">
-									<li class="text-center"><span><img
-											src="images/football-field.svg" class="img-responsive" alt=""></span>
-										<span class="time">7:00 AM - 8AM</span>
-										<h4>Ballet Dance</h4> <small>Angel Adams</small></li>
-								</ul>
-							</div>
-
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
+		</header>
 
 
 		<footer th:replace="components/footer::footer"></footer>
