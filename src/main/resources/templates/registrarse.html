@@ -28,7 +28,7 @@
 									enctype="multipart/form-data">
 									<div class="form-row">
 										<div th:if="${error != null}"
-											class="col-md-12 alert alert-danger" role="alert">
+											class="col-md-12 alert alert-warning" role="alert">
 											<p th:text="${error}"></p>
 										</div>
 									</div>
@@ -72,29 +72,29 @@
 						<form th:action="@{/registrar}" method="post"
 							enctype="multipart/form-data">
 							<div class="form-row">
-								<div th:if="${error != null}"
-									class="col-md-12 alert alert-danger" role="alert">
-									<p th:text="${error}"></p>
+								<div th:if="${errorRegistrarse != null}"
+									class="col-md-12 alert alert-warning" role="alert">
+									<p th:text="${errorRegistrarse}"></p>
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-6">
-									<input type="text" id="fname" class="form-control"
+									<input type="text" id="nombre" class="form-control"
 										name="nombre" th:value="${nombre}" placeholder="Nombre">
 								</div>
 								<div class="col-md-6">
-									<input type="text" id="lname" class="form-control"
+									<input type="text" id="apellido" class="form-control"
 										name="apellido" th:value="${apellido}" placeholder="Apellido">
 								</div>
 							</div>
 
 							<div class="row form-group">
 								<div class="col-md-6">
-									<input type="text" id="fname" class="form-control" name="edad"
+									<input type="text" id="edad" class="form-control" name="edad"
 										th:value="${edad}" placeholder="Edad">
 								</div>
 								<div class="col-md-6">
-									<select name="idLocalidad" class="form-control">
+									<select name="localidad" class="form-control">
 										<option selected>Elegir Localidad...</option>
 										<option th:each="localidad : ${localidades}"
 											th:value="${localidad.id}" th:text="${localidad.nombre}"></option>
