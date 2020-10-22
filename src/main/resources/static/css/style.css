@@ -7,7 +7,7 @@
 }
 /* =======================================================
 *
-* 	Template Style 
+*   Template Style 
 *
 * ======================================================= */
 body {
@@ -17,6 +17,14 @@ body {
   line-height: 1.7;
   color: #828282;
   background: #fff;
+}
+
+body#partidos{
+  background-color: black;
+}
+
+body#login{
+  background-image: url(/images/cancha5.jpg);
 }
 
 #page {
@@ -144,6 +152,8 @@ h1 span {
 .fh5co-nav #fh5co-logo a span {
   color: #F85A16;
 }
+
+/*LETRAS MENU*/
 .fh5co-nav a {
   padding: 5px 10px;
   color: #fff;
@@ -230,9 +240,10 @@ h1 span {
   letter-spacing: 0;
 }
 .fh5co-nav ul li.has-dropdown {
-  color: #fff;	  color: #fff;
+  color: #fff;
 }
-.fh5co-nav ul li.has-dropdown .dropdown li a:hover {
+
+.fh5co-nav ul li.has-dropdown .dropdown li a:hover{
   color: black !important;
 }
 
@@ -275,6 +286,10 @@ h1 span {
   position: relative;
 }
 
+.alta-partido{
+  
+}
+
 .fh5co-bg {
   background-size: cover;
   background-position: center center;
@@ -282,6 +297,7 @@ h1 span {
   width: 100%;
   float: left;
 }
+
 .fh5co-bg .overlay {
   position: absolute;
   top: 0;
@@ -360,6 +376,7 @@ h1 span {
   width: 100%;
   background-image: url(/images/cancha1.jpg);
 }
+
 .fh5co-cover .overlay {
   z-index: 0;
   position: absolute;
@@ -367,7 +384,6 @@ h1 span {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.3);
 }
 .fh5co-cover > .fh5co-container {
   position: relative;
@@ -395,7 +411,6 @@ h1 span {
 .fh5co-cover.fh5co-cover-sm {
   height: 600px;
 }
-
 @media screen and (max-width: 768px) {
   .fh5co-cover.fh5co-cover-sm {
     height: 400px;
@@ -778,7 +793,7 @@ h1 span {
 }
 
 #fh5co-schedule .fh5co-heading h2 {
-  color: #fff;
+  color: black;
 }
 #fh5co-schedule .fh5co-heading p {
   color: rgba(255, 255, 255, 0.5);
@@ -1344,7 +1359,7 @@ h1 span {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 0px;
   background: rgba(0, 0, 0, 0.9);
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
