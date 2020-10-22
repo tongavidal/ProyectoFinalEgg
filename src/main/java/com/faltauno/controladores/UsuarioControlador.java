@@ -42,13 +42,13 @@ public class UsuarioControlador {
 	
 	@PostMapping("/registrar")
 	public String registrar(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String edad, @RequestParam String mail, 
-			@RequestParam Localidad localidad, @RequestParam String telefono, @RequestParam String clave, String clave1) {
+			@RequestParam Localidad localidad, @RequestParam String clave, String clave1) {
 		
 		try {
 			usuarioServicio.registrarUsuario(nombre, apellido, edad, localidad, mail, clave);
 		} catch (ErrorServicio e) {
 			
-			modelo.put("error", e.getMessage());
+			modelo.put("errorRegistrarse", e.getMessage());
 			modelo.put("nombre", nombre);
 			modelo.put("apellido", apellido);
 			modelo.put("edad", edad);

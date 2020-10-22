@@ -523,7 +523,7 @@ h1 span {
   margin-bottom: 30px;
 }
 
-/*Start Estilos Registro*/
+/*Start Estilos Registro/Login*/
 .fh5co-cover .display-t {
   margin-top: 0px;
 }
@@ -599,7 +599,15 @@ h1 span {
 }
 .registro p, .registro label {
 	color: #ffffff;
-} 
+}
+
+.alert-warning {
+    background-color: #a94442;
+    border-color: #a94442;
+}
+.alert-warning p {
+	color: #fcf8e3;
+}
 /*End Estilos Registro*/
 
 #fh5co-header .display-tc .btn,
