@@ -15,4 +15,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface LocalidadRepositorio extends JpaRepository<Localidad, String>{    
+
+    public Object buscarLocalidadPorNombre(String nombre);
 }
