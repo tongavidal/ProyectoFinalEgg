@@ -11,23 +11,69 @@
 	<div id="page">
 		<nav th:replace="components/nav::nav"></nav>
 
-		<header id="fh5co-header" class="fh5co-cover registro" role="banner"
-			data-stellar-background-ratio="0.5">
+		<header id="fh5co-header" class="fh5co-cover registro">
+			<div class="overlay"></div>
 			<div class="container">
 				<div class="row">
-					<div class="col-md-6 text-center">
+					<div class="col-md-4">
 						<div class="display-t">
-							<div class="display-tc animate-box" data-animate-effect="fadeIn">
-								<h1><span>Registrate</span>!</h1>
-								<p>Y nunca más te quedes sin un jugador,<br>ni con las ganas
-									de jugar!</p>
+							<div class="animate-box" data-animate-effect="fadeIn">
+								<h1>
+									<span>Ingresá</span>!
+								</h1>
+								<p>
+									Colocá tu usuario y contraseña para poder consultar, crear o sumarte a partidos.
+								</p>
+								<form th:action="@{/logincheck}" method="post"
+									enctype="multipart/form-data">
+									<div class="form-row">
+										<div th:if="${error != null}"
+											class="col-md-12 alert alert-danger" role="alert">
+											<p th:text="${error}"></p>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-12">
+											<input type="text" id="mail" class="form-control" name="mail"
+												th:value="${mail}" placeholder="Email">
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-12">
+											<input type="text" id="clave" class="form-control"
+												name="apellido" th:value="${clave}" placeholder="Contraseña">
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="text-center col-md-12">
+											<input type="submit" value="Ingresar"
+												class="btn btn-primary">
+										</div>
+									</div>
+
+									<!-- 							<div class="text-center mt-4 font-weight-light"> -->
+									<!-- 										Ya estas registrado? <a th:href="@{login}" -->
+									<!-- 											class="text-primary">Ingresar</a> -->
+									<!-- 									</div> -->
+
+								</form>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 animate-box">
-						<form th:action="@{/registro}" method="post" enctype="multipart/form-data">
+					<div class="col-md-8 animate-box">
+						<h1>
+							<span>Registrate</span>!
+						</h1>
+						<p>
+							Y nunca más te quedes sin un jugador,<br>ni con las ganas de
+							jugar!
+						</p>
+						<form th:action="@{/registrar}" method="post"
+							enctype="multipart/form-data">
 							<div class="form-row">
-								<div th:if="${error != null}" class="col-md-12 alert alert-danger" role="alert">
+								<div th:if="${error != null}"
+									class="col-md-12 alert alert-danger" role="alert">
 									<p th:text="${error}"></p>
 								</div>
 							</div>
@@ -41,62 +87,67 @@
 										name="apellido" th:value="${apellido}" placeholder="Apellido">
 								</div>
 							</div>
+
+							<div class="row form-group">
+								<div class="col-md-6">
+									<input type="text" id="fname" class="form-control" name="edad"
+										th:value="${edad}" placeholder="Edad">
+								</div>
+								<div class="col-md-6">
+									<select name="idLocalidad" class="form-control">
+										<option selected>Elegir Localidad...</option>
+										<option th:each="localidad : ${localidades}"
+											th:value="${localidad.id}" th:text="${localidad.nombre}"></option>
+									</select>
+								</div>
+							</div>
+
+							<div class="row form-group">
+								<div class="col-md-6">
+									<select name="idSexo" class="form-control">
+										<option selected>Sexo...</option>
+										<option th:value="${masculino}">Masculino</option>
+										<option th:value="${femenino}">Femenino</option>
+									</select>
+								</div>
+								<div class="col-md-6">
+									<input type="text" id="email" class="form-control" name="mail"
+										th:value="${mail}" placeholder="Email">
+								</div>
+							</div>
 							
 							<div class="row form-group">
-								<div class="col-md-6">
-									<input type="text" id="fname" class="form-control"
-										name="edad" th:value="${edad}" placeholder="Edad">
-								</div>
-								<div class="col-md-6">
-									<input type="text" id="email" class="form-control"
-										name="sexo" th:value="${mail}" placeholder="Email">
+								<div class="col-md-12">
+									<input type="text" id="clave" class="form-control" name="clave"
+										th:value="${clave}" placeholder="Ingresá la Contraseña">
 								</div>
 							</div>
 							
 							<div class="row form-group">
-								<div class="col-md-6">
-									<input type="text" id="fname" class="form-control"
-										name="edad" th:value="${edad}" placeholder="Edad">
-								</div>
-								<div class="col-md-6">
-									<input type="text" id="email" class="form-control"
-										name="mail" th:value="${mail}" placeholder="Email">
+								<div class="col-md-12">
+									<input type="text" id="clave1" class="form-control" name="clave1"
+										th:value="${clave1}" placeholder="Repetí la Contraseña">
 								</div>
 							</div>
 
 							<div class="row form-group">
 								<div class="col-md-12">
-									<input type="text" id="email" class="form-control"
-										name="mail" th:value="${mail}" placeholder="Email">
+									<label for="archivo">Imagen de perfil</label> <input
+									type="file" class="form-control" name="archivo" placeholder="Imagen de Perfil">
 								</div>
 							</div>
 
 							<div class="row form-group">
-								<div class="col-md-12">
-									<!-- <label for="subject">Subject</label> -->
-									<input type="text" id="subject" class="form-control"
-										placeholder="Your subject of this message">
-								</div>
-							</div>
-
-							<div class="row form-group">
-								<div class="col-md-12">
-									<!-- <label for="message">Message</label> -->
-									<textarea name="message" id="message" cols="30" rows="10"
-										class="form-control" placeholder="Say something about us"></textarea>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-12">
+								<div class="text-center col-md-12">
 									<input type="submit" value="Registrarse"
 										class="btn btn-primary">
 								</div>
 							</div>
-							
-							<div class="text-center mt-4 font-weight-light">
-										Ya estas registrado? <a th:href="@{login}"
-											class="text-primary">Ingresar</a>
-									</div>
+
+							<!-- 							<div class="text-center mt-4 font-weight-light"> -->
+							<!-- 										Ya estas registrado? <a th:href="@{login}" -->
+							<!-- 											class="text-primary">Ingresar</a> -->
+							<!-- 									</div> -->
 
 						</form>
 					</div>

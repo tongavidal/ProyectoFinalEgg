@@ -13,7 +13,7 @@
 body {
   font-family: "Signika", Arial, sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.7;
   color: #828282;
   background: #fff;
@@ -95,6 +95,7 @@ h1 span {
   width: 100%;
   padding: 0;
   z-index: 1001;
+  position: fixed;
 }
 .fh5co-nav .top-menu {
   padding: 28px 0;
@@ -349,7 +350,7 @@ h1 span {
   transform: scale(1.2);
 }
 
-.fh5co-cover {
+.fh5co-cover.home {
   height: 800px;
   background-size: cover;
   background-position: center center;
@@ -357,6 +358,7 @@ h1 span {
   position: relative;
   float: left;
   width: 100%;
+  background-image: url(/images/cancha1.jpg);
 }
 .fh5co-cover .overlay {
   z-index: 0;
@@ -522,8 +524,15 @@ h1 span {
 }
 
 /*Start Estilos Registro*/
-#fh5co-header .display-tc, .fh5co-cover.registro .display-tc {
+.fh5co-cover .display-t {
+  margin-top: 0px;
+}
+.registro .display-t .display-tc {
     vertical-align: top;
+    height: auto;
+    margin-top:0px;
+}
+.fh5co-cover.registro .display-t, .fh5co-cover.registro .display-tc {
     height: auto;
 }
 #fh5co-header .display-tc h1, .fh5co-cover.registro .display-tc h1,
@@ -534,12 +543,63 @@ h1 span {
 #fh5co-header .display-tc h1, .fh5co-cover.registro .display-tc h1 {
     font-weight: 700;
 }
-
+.fh5co-cover.registro .display-tc p {
+	color: #ffffff;
+}
 .fh5co-cover.registro {
   height: auto;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  margin-top: 95px;
 }
+.fh5co-cover.registro {
+  height: auto;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: relative;
+  float: left;
+  width: 100%;
+  background-image: url(/images/cancha2.jpg);
+}
+.registro .form-control {
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.75);
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    height: 54px;
+    font-size: 18px;
+    font-weight: 400;
+}
+.registro .form-control::-webkit-input-placeholder {
+  color: #555555;
+}
+.registro .form-control:-moz-placeholder {
+  /* Firefox 18- */
+  color: #555555;
+}
+.registro .form-control::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #555555;
+}
+.registro .form-control:-ms-input-placeholder {
+  color: #555555;
+}
+.registro .form-control:focus {
+  background: rgba(255, 255, 255, 0.3);
+  color: #000000;
+}
+.registro .font-weight-light {
+	color: #ffffff;
+}
+.registro a.text-primary {
+	color: #f9763d;
+}
+.registro a.text-primary:hover, .registro a.text-primary:focus {
+    color: #F85A16;
+}
+.registro p, .registro label {
+	color: #ffffff;
+} 
 /*End Estilos Registro*/
 
 #fh5co-header .display-tc .btn,
