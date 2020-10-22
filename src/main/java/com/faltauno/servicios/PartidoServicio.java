@@ -31,11 +31,15 @@ public class PartidoServicio {
     
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+    
+    @Autowired
+    private LocalidadRepositorio localidadRepositorio;
 
     /* CREACION DE PARTIDO */
     @Transactional
-    public void crearPartido(Localidad localidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio, Usuario creador, String obsVacante, String obsEstablecimiento, Sexo sexo, Date fecha) {
+    public void crearPartido(String idlocalidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio, Usuario creador, String obsVacante, String obsEstablecimiento, Sexo sexo, Date fecha)throws ErrorServicio {
 
+        Localidad localidad = localidadRepositorio.findById(idlocalidad).get();
         Partido p = new Partido();
 
         p.setLocalidad(localidad);
@@ -50,6 +54,28 @@ public class PartidoServicio {
         p.setFecha(fecha); //Fecha del partido
         p.setHorario(horario);//Horario del partido
         p.setFechaCreacion(new Date());
+
+        partidoRepositorio.save(p);
+
+    }
+    
+    @Transactional
+    public void modificarPartido(String idpartido, String idlocalidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio, Usuario creador, String obsVacante, String obsEstablecimiento, Sexo sexo, Date fecha) throws ErrorServicio{
+
+        Localidad localidad = localidadRepositorio.findById(idlocalidad).get();
+        Partido p = partidoRepositorio.findById(idpartido).get();
+
+        p.setLocalidad(localidad);
+//        p.setCantJugador(cantJugador); >> para nueva version
+//        p.setCantVacantes(cantVacantes); >> para nueva version
+        p.setPrecio(precio);
+        p.setCreador(creador);        
+        p.setObsVacante(obsVacante);
+        p.setObsEstablecimiento(obsEstablecimiento);
+        p.setSexo(sexo);
+        p.setFecha(fecha); //Fecha del partido
+        p.setHorario(horario);//Horario del partido
+               
 
         partidoRepositorio.save(p);
 
@@ -75,13 +101,13 @@ public class PartidoServicio {
     }
 
     //Traer Partido
-    public Partido traerPartido(String idPartido) {
+    public Partido traerPartido(String idPartido) throws ErrorServicio{
         Partido p = partidoRepositorio.findById(idPartido).get();
         return p;
     }
 
     //validar si hay o no vacantes
-    public Boolean validarVacantes(Partido partido) {
+    public Boolean validarVacantes(Partido partido) throws ErrorServicio{
         Boolean vacante = false;
         int cont = 0;
         for (Usuario u : partido.getJugConfirmados()) {
@@ -96,7 +122,7 @@ public class PartidoServicio {
     }
 
     //contar vacantes
-    public Integer contarVacantes(Partido partido) {
+    public Integer contarVacantes(Partido partido) throws ErrorServicio{
         Integer vacante = partido.getCantVacantes();
         for (Usuario u : partido.getJugConfirmados()) {
             vacante--;
@@ -106,7 +132,7 @@ public class PartidoServicio {
 
     //cargar postulado
     @Transactional
-    public void cargarPostulado(Partido partido, String idUsuario){
+    public void cargarPostulado(Partido partido, String idUsuario)throws ErrorServicio{
             
        List<Usuario> usuList = null;
        //Recorro y cargo la lista de usuarios postulados
@@ -124,7 +150,7 @@ public class PartidoServicio {
     
     //confirmar postulado
     @Transactional
-    public void confirmarPostulado(Partido partido, String idUsuario){
+    public void confirmarPostulado(Partido partido, String idUsuario)throws ErrorServicio{
             
        List<Usuario> usuList = null;
        //Recorro y cargo la lista de usuarios postulados
@@ -141,7 +167,7 @@ public class PartidoServicio {
     
     
     //listar postulados
-    public List<Usuario> listarPostulados(Partido partido){
+    public List<Usuario> listarPostulados(Partido partido)throws ErrorServicio{
     List<Usuario> usuList = null;
        //Recorro y cargo la lista de usuarios postulados
        for (Usuario u : partido.getJugPostulados()) {            
@@ -152,7 +178,7 @@ public class PartidoServicio {
         
     
     //listar confirmados
-    public List<Usuario> listarConfirmados(Partido partido){
+    public List<Usuario> listarConfirmados(Partido partido)throws ErrorServicio{
     List<Usuario> usuList = null;
        //Recorro y cargo la lista de usuarios postulados
        for (Usuario u : partido.getJugConfirmados()) {            
