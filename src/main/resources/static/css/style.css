@@ -625,6 +625,12 @@ h1 span {
 }
 /*End Estilos Registro*/
 
+/*Start Estilos Lista Partidos*/
+.lista-partido .search{
+  margin-bottom: 30px;
+}
+/*End Estilos Lista Partidos*/
+
 #fh5co-header .display-tc .btn,
 #fh5co-counter .display-tc .btn,
 .fh5co-cover .display-tc .btn {

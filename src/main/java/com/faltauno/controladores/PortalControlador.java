@@ -15,5 +15,10 @@ public class PortalControlador {
 		
 		return "index.html";
 	}
+        
+        @GetMapping("/listar_partidos")
+        public String listar_partidos(){
+            return "partidos2.html";
+        }
 
 }

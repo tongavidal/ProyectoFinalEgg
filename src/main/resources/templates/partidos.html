@@ -47,16 +47,16 @@
 
                                         <tr th:each="partido:${partidos}">
                                             <td><input type="checkbox" class="checkthis" /></td>
-                                            <td th:text="${libro.id}">Id</td>
-                                            <td th:text="${libro.fecha}">Fecha</td>
-                                            <td th:text="${libro.horario}">Horario</td>
-                                            <td th:text="${libro.fechaCreacion}">F.Creacion</td>
-                                            <td th:text="${libro.cantJugadores}">C.Jugadores</td>
-                                            <td th:text="${libro.cantVacantes}">C.Vacantes</td>
-                                            <td th:text="${libro.precio}">Precio</td>
-                                            <td th:text="${libro.establecimiento}">Establecimiento</td>
-                                            <td th:text="${libro.creador}">Creador</td>
-                                            <td th:text="${libro.sexo}">Sexo</td>
+                                            <td th:text="${partido.id}">Id</td>
+                                            <td th:text="${partido.fecha}">Fecha</td>
+                                            <td th:text="${partido.horario}">Horario</td>
+                                            <td th:text="${partido.fechaCreacion}">F.Creacion</td>
+                                            <td th:text="${partido.cantJugadores}">C.Jugadores</td>
+                                            <td th:text="${partido.cantVacantes}">C.Vacantes</td>
+                                            <td th:text="${partido.precio}">Precio</td>
+                                            <td th:text="${partido.establecimiento}">Establecimiento</td>
+                                            <td th:text="${partido.creador}">Creador</td>
+                                            <td th:text="${partido.sexo}">Sexo</td>
                                             <td><a th:href="@{/modificar_partido/__${partido.id}__}"><i class="fas fa-pen"></i></a></td>
                                             <td><a th:href="@{/eliminar_partido/__${partido.id}__}" th:value="${libro.isbn}"><i class="fas fa-trash-alt"></i></td>
                                                 
