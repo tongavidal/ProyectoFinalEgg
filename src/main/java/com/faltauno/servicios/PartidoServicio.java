@@ -187,4 +187,17 @@ public class PartidoServicio {
     return usuList;
     }
     
+    @Transactional
+    public void eliminaPostulado(String idPartido, String idUsuario){
+        //Busco partido por id
+        Partido partido = traerPartido(idPartido);
+        //Busco usuario por id
+        Usuario usuario = usuarioRepositorio.findById(idUsuario).get();
+        //Pido la lista de jugadores confirmados del partido y le elimino el jugador
+        partido.getJugPostulados().remove(usuario);
+        //Guardo el partido con los cambios
+        partidoRepositorio.save(partido);
+    }
+    
+    
 }
