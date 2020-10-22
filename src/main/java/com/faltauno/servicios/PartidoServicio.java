@@ -10,9 +10,9 @@ import com.faltauno.entidades.Partido;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
+import com.faltauno.repositorios.LocalidadRepositorio;
 import com.faltauno.repositorios.PartidoRepositorio;
 import com.faltauno.repositorios.UsuarioRepositorio;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -188,7 +188,7 @@ public class PartidoServicio {
     }
     
     @Transactional
-    public void eliminaPostulado(String idPartido, String idUsuario){
+    public void eliminaPostulado(String idPartido, String idUsuario) throws ErrorServicio{
         //Busco partido por id
         Partido partido = traerPartido(idPartido);
         //Busco usuario por id
