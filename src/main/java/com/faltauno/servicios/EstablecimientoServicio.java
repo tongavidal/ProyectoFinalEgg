@@ -9,6 +9,7 @@ import com.faltauno.entidades.Establecimiento;
 import com.faltauno.entidades.Localidad;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.EstablecimientoRepositorio;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,10 @@ public class EstablecimientoServicio {
         }else{
            throw  new ErrorServicio("No se encontro el establecimiento"); 
         }
+    }
+    
+    public List<Establecimiento> listaEstablecimientos(){
+        return establecimientoRepositorio.findAll();
     }
     
     private void validar(String nombre, String direccion) throws ErrorServicio{

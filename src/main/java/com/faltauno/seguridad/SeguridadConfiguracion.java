@@ -44,14 +44,14 @@ public class SeguridadConfiguracion extends WebSecurityConfigurerAdapter{
                         .permitAll()
                 //ESTO ES LO DEL MAPEO DE LO DEL LOGIN QUE TIENE EL CONTROLADOR
                 .and().formLogin()
-                        .loginPage("/login") //DONDE ESTA EL LOGIN PAGE
+                        .loginPage("/usuario/login") //DONDE ESTA EL LOGIN PAGE
                                 .loginProcessingUrl("/logincheck")
                                 .usernameParameter("username")
                                 .passwordParameter("password")
                                 .defaultSuccessUrl("/inicio")
                                 .permitAll()
                         .and().logout()
-                                .logoutUrl("/logout")
+                                .logoutUrl("/usuario/logout")
                                 .logoutSuccessUrl("/login?logout")
                                 .permitAll().and().csrf().disable();
     }

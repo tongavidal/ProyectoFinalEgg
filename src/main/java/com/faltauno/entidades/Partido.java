@@ -31,7 +31,7 @@ public class Partido {
     private String id;
     
     //FECHA DEL PARTIDO
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date fecha;
     
     //Hora del partido
