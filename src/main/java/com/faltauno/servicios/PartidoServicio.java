@@ -41,10 +41,11 @@ public class PartidoServicio {
     private EstablecimientoRepositorio establecimientoRepositorio;
     /* CREACION DE PARTIDO */
     @Transactional
-    public void crearPartido(String idEstablecimiento,String idlocalidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio/*, Usuario creador, String obsVacante, String obsEstablecimiento*/, Sexo sexo, Date fecha)throws ErrorServicio {
+    public void crearPartido(String idEstablecimiento,String idlocalidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio, Usuario creador, /*String obsVacante, String obsEstablecimiento,*/ Sexo sexo, Date fecha)throws ErrorServicio {
 
-        Localidad localidad = localidadRepositorio.findById(idlocalidad).get();
-        Establecimiento establecimiento=establecimientoRepositorio.findById(idEstablecimiento).get();
+        Localidad localidad = localidadRepositorio.getOne(idlocalidad);
+        Establecimiento establecimiento=establecimientoRepositorio.getOne(idEstablecimiento);
+        validadr(establecimiento, localidad, cantJugador, cantVacantes, precio, fecha);
         Partido p = new Partido();
         
         p.setEstablecimiento(establecimiento);
@@ -190,7 +191,7 @@ public class PartidoServicio {
        for (Usuario u : partido.getJugConfirmados()) {            
            usuList.add(u);
         }        
-    return usuList;
+        return usuList;
     }
     
     @Transactional
@@ -205,12 +206,16 @@ public class PartidoServicio {
         partidoRepositorio.save(partido);
     }
     
-//<<<<<<< HEAD
-//    public List<Partido> listarMisPostulaciones(String idUsuario){
-//        List<Partido> listaMisPostulaciones = partidoRepositorio.listaMisPostulaciones(idUsuario);
-//        return listaMisPostulaciones;
-//    }
-    
+    public Integer horario(String horario) throws ErrorServicio{
+        if (horario==null || horario.isEmpty()) {
+            throw new ErrorServicio("Por favor indique un horario para el partido");
+        }else{
+            Integer hora=Integer.parseInt(horario.substring(0, 2));
+            Integer min=Integer.parseInt(horario.substring(3,5));
+            return hora*100+min;
+        }
+    }
+
     public List<Partido> listarMisPartidos(String idCreador) throws ErrorServicio{
         List<Partido> listaMisPartidos = partidoRepositorio.buscarPorCreador(idCreador);
         if (listaMisPartidos== null){
@@ -219,11 +224,32 @@ public class PartidoServicio {
         return listaMisPartidos;
     }
     
-//=======
-    public Integer horario(String horario){
-        Integer hora=Integer.parseInt(horario.substring(0, 2));
-        Integer min=Integer.parseInt(horario.substring(3,5));
-        return hora*100+min;
+    private void validadr(Establecimiento establecimiento,Localidad localidad, Integer cantJugador, Integer cantVacantes, Double precio/*, Usuario creador, String obsVacante, String obsEstablecimiento*/, Date fecha) throws ErrorServicio{
+        if (establecimiento==null) {
+            throw new ErrorServicio("Indique un establecimiento");
+        }
+        if (localidad==null) {
+            throw new ErrorServicio("Indique una localidad");
+        }
+        if (cantJugador==null) {
+            throw new ErrorServicio("La cantidad de jugadores no debe ser nula");
+        }
+        if (cantVacantes==null) {
+            throw new ErrorServicio("Indique un nro de vacantes");
+        }
+        if (precio==null) {
+            throw new ErrorServicio("El precio no puede estar vacio");
+        }
+        /*
+        if (creador==null) {
+            throw new ErrorServicio("Existe algun problema con su usuario");
+        }*/
+        
+        if (fecha==null) {
+            throw new ErrorServicio("Indique una fecha");
+        }
+        
+        
     }
 //>>>>>>> develop
 }
