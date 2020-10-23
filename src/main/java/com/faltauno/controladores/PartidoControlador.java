@@ -155,11 +155,16 @@ public class PartidoControlador {
             
            // Usuario creador=(Usuario)session.getAttribute("usuariosession");
            partidoServicio.crearPartido(idEstablecimiento,idLocalidad, cantJugadores, partidoServicio.horario(horario), cantVacantes, precio,/*creador,*/ sexo, fecha);
-            System.out.println(partidoServicio.horario(horario));
         }catch(ErrorServicio ex){
-            System.out.println(ex.getMessage());
+            List<Establecimiento> establecimientos=establecimientoServicio.listaEstablecimientos();
+            modelo.put("establecimientos", establecimientos);
+            List<Localidad> localidades=localidadServicio.listarPaises();
+            modelo.put("localidades", localidades);
+            modelo.put("sexo", Sexo.values());
+            modelo.put("error",ex.getMessage());
+            return "alta-partido.html";
         }
-        
+        modelo.put("exito","El partido fue agregado con exito");
         return "index.html";
     }
 
