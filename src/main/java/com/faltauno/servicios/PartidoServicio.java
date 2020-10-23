@@ -204,8 +204,11 @@ public class PartidoServicio {
 //        return listaMisPostulaciones;
 //    }
     
-    public List<Partido> listarMisPartidos(String idCreador){
+    public List<Partido> listarMisPartidos(String idCreador) throws ErrorServicio{
         List<Partido> listaMisPartidos = partidoRepositorio.buscarPorCreador(idCreador);
+        if (listaMisPartidos== null){
+            throw new ErrorServicio("No tenés partidos creados");
+        }
         return listaMisPartidos;
     }
     
