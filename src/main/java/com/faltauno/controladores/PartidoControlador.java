@@ -49,6 +49,13 @@ public class PartidoControlador {
     
     
 
+    
+    @GetMapping("/modificar_partido")
+    public String modificar_partido(ModelMap modelo){
+        modelo.put("tittle", "Modificar Partido - NosFalta1");
+        return "modificar_partido";
+    }
+
     @PostMapping("/listar-postulados")
     public String listarpostulados(ModelMap modelo, @RequestParam String idpartido) throws ErrorServicio {
         try {
