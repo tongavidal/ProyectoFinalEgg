@@ -625,8 +625,13 @@ h1 span {
 }
 /*End Estilos Registro*/
 
-/*Start Partidos*/
-.lista-partido .search{
+/* Start Partidos */
+.fh5co-cover.partidos {
+  height: auto;
+  margin-top: 95px;
+}
+
+.lista-partido . search{
   margin-bottom: 30px;
 }
 
