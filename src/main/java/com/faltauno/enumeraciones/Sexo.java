@@ -10,5 +10,5 @@ package com.faltauno.enumeraciones;
  * @author FaltaUno
  */
 public enum Sexo {
-    FEMENINO, MASCULINO, MIXTO;
+    FEMENINO, MASCULINO, MIXTO; 
 }
