@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.faltauno.entidades.Localidad;
 import com.faltauno.errores.ErrorServicio;
+import com.faltauno.servicios.LocalidadServicio;
 import com.faltauno.servicios.UsuarioServicio;
+import java.util.List;
 
 
 
@@ -22,6 +24,9 @@ public class UsuarioControlador {
 	
 	@Autowired
 	private UsuarioServicio usuarioServicio;
+        
+        @Autowired
+	private LocalidadServicio localidadServicio;
 	
 	@GetMapping("/login")
 	public String login(@RequestParam(required = false) String error, ModelMap modelo) {
@@ -36,7 +41,8 @@ public class UsuarioControlador {
 	@GetMapping("/registrarse")
 	public String registrarse(ModelMap modelo) {
 		modelo.put("title", "Registrarse - NosFalta1");
-		
+		List<Localidad> localidades = localidadServicio.listarPaises();
+                modelo.put("localidades", localidades);
 		return "registrarse.html";
 	}
 	
