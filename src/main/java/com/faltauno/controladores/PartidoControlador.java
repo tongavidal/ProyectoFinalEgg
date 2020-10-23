@@ -34,6 +34,7 @@ public class PartidoControlador {
 
     @Autowired
     private PartidoServicio partidoServicio;
+
     
     @Autowired
     private EstablecimientoServicio establecimientoServicio;
@@ -43,9 +44,9 @@ public class PartidoControlador {
     
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
-    	modelo.put("title", "Lista de Partidos - NosFalta1");
-    	
-    	return "listar-partidos.html";
+        modelo.put("title", "Lista de Partidos - NosFalta1");
+
+        return "listar-partidos.html";
     }
     
     
@@ -69,15 +70,23 @@ public class PartidoControlador {
         }
         return "listado-postulados";
     }
+
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/listarconfirmados")
     public String listarConfirmados(ModelMap modelo, @PathVariable String idPartido) throws ErrorServicio {
-        Partido partido = partidoServicio.traerPartido(idPartido);
-        List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
-        modelo.put("confirmados", listaConfirmados);
-        return "/partido/listado-confirmados.html";
+        modelo.put("title", "Registrarse - NosFalta1");
+        try {
+            Partido partido = partidoServicio.traerPartido(idPartido);
+            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            modelo.put("confirmados", listaConfirmados);
+            return "/partido/listado-confirmados.html";
+        } catch (ErrorServicio es) {
+            modelo.put("error", es.getMessage());
+            return "partido.html";
+        }
     }
+
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/confirmar-postulado")
@@ -104,18 +113,23 @@ public class PartidoControlador {
         modelo.put("listado-postulados", postulados);
         return "listado-postulados";
     }
+
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/eliminarpostulado")
     public String eliminarPostulado(ModelMap modelo, @PathVariable String idPartido, @PathVariable String idUsuario) throws ErrorServicio {
-        partidoServicio.eliminaPostulado(idPartido, idUsuario);
-        Partido partido = partidoServicio.traerPartido(idPartido);
-        List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
-        modelo.put("confirmados", listaConfirmados);
-        return "/partido/listado-confirmados.html";
+        modelo.put("title", "Registrarse - NosFalta1");
+        try {
+            partidoServicio.eliminaPostulado(idPartido, idUsuario);
+            Partido partido = partidoServicio.traerPartido(idPartido);
+            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            modelo.put("confirmados", listaConfirmados);
+            return "listado-confirmados.html";
+        } catch (ErrorServicio es) {
+            modelo.put("error", es.getMessage());
+            return ("listado-postulados");
+        }
     }
-    
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/postularse")
     public String postularse(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
 
@@ -157,17 +171,36 @@ public class PartidoControlador {
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/crear_partido")
-    public String registroPartido(/*HttpSession session,*/ModelMap modelo,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,@RequestParam Integer cantJugadores,@RequestParam String horario,@RequestParam Integer cantVacantes, @RequestParam Double precio,@RequestParam Sexo sexo,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
-        try{
-            
-           // Usuario creador=(Usuario)session.getAttribute("usuariosession");
-           partidoServicio.crearPartido(idEstablecimiento,idLocalidad, cantJugadores, partidoServicio.horario(horario), cantVacantes, precio,/*creador,*/ sexo, fecha);
-            System.out.println(partidoServicio.horario(horario));
+    public String registroPartido(HttpSession session,ModelMap modelo,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,@RequestParam Integer cantJugadores,@RequestParam String horario,@RequestParam Integer cantVacantes, @RequestParam Double precio,@RequestParam Sexo sexo,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
+        try{ 
+           Usuario creador=(Usuario)session.getAttribute("usuariosession");
+           System.out.println(creador.getNombre());
+           partidoServicio.crearPartido(idEstablecimiento,idLocalidad, cantJugadores, partidoServicio.horario(horario), cantVacantes, precio,creador, sexo, fecha);
         }catch(ErrorServicio ex){
-            System.out.println(ex.getMessage());
+            List<Establecimiento> establecimientos=establecimientoServicio.listaEstablecimientos();
+            modelo.put("establecimientos", establecimientos);
+            List<Localidad> localidades=localidadServicio.listarPaises();
+            modelo.put("localidades", localidades);
+            modelo.put("sexo", Sexo.values());
+            modelo.put("error",ex.getMessage());
+            return "alta-partido.html";
         }
-        
+        modelo.put("exito","El partido fue agregado con exito");
         return "index.html";
+    }
+
+    @GetMapping("/mis-partidos")
+    public String misPartidos(ModelMap modelo, String idCreador) throws ErrorServicio {
+        modelo.put("title", "Registrarse - NosFalta1");
+        try {
+            modelo.put("title", "Registrarse - NosFalta1");
+            List<Partido> listaMisPartidos = partidoServicio.listarMisPartidos(idCreador);
+            modelo.put("partidos", listaMisPartidos);
+            return ("mis-postulaciones.html");
+        } catch (ErrorServicio es) {
+            modelo.put("error", es.getMessage());
+            return "partido.html";
+        }
     }
 
 }
