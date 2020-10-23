@@ -24,6 +24,13 @@ public class PartidoControlador {
 
     @Autowired
     private PartidoServicio partidoServicio;
+    
+    @GetMapping("/listar-partidos")
+    public String partidos(ModelMap modelo) {
+    	modelo.put("title", "Lista de Partidos - NosFalta1");
+    	
+    	return "listar-partidos.html";
+    }
 
     @PostMapping("/listar-postulados")
     public String listarpostulados(ModelMap modelo, @RequestParam String idpartido) throws ErrorServicio {
@@ -44,6 +51,7 @@ public class PartidoControlador {
         modelo.put("confirmados", listaConfirmados);
         return "/partido/listado-confirmados.html";
     }
+    
 
     @PostMapping("/confirmar-postulado")
     public String confirmarpostulado(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {

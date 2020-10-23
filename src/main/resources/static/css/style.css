@@ -625,6 +625,13 @@ h1 span {
 }
 /*End Estilos Registro*/
 
+/* Start Partidos */
+.fh5co-cover.partidos {
+  height: auto;
+  margin-top: 95px;
+}
+/* End Partidos */
+
 #fh5co-header .display-tc .btn,
 #fh5co-counter .display-tc .btn,
 .fh5co-cover .display-tc .btn {
