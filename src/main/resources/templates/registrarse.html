@@ -24,7 +24,7 @@
 								<p>
 									Colocá tu usuario y contraseña para poder consultar, crear o sumarte a partidos.
 								</p>
-								<form th:action="@{/logincheck}" method="post"
+								<form th:action="@{/usuario/loguinchek}" method="post"
 									enctype="multipart/form-data">
 									<div class="form-row">
 										<div th:if="${error != null}"
@@ -34,14 +34,14 @@
 									</div>
 									<div class="row form-group">
 										<div class="col-md-12">
-											<input type="text" id="mail" class="form-control" name="mail"
+											<input type="text" id="mail" class="form-control" name="email"
 												th:value="${mail}" placeholder="Email">
 										</div>
 									</div>
 									<div class="row form-group">
 										<div class="col-md-12">
-											<input type="text" id="clave" class="form-control"
-												name="apellido" th:value="${clave}" placeholder="Contraseña">
+											<input type="password" id="password" class="form-control"
+												name="clave" th:value="${clave}" placeholder="Contraseña">
 										</div>
 									</div>
 
