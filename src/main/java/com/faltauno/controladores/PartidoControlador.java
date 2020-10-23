@@ -40,15 +40,13 @@ public class PartidoControlador {
     @Autowired
     private LocalidadServicio localidadServicio;
     
+    
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
     	modelo.put("title", "Lista de Partidos - NosFalta1");
     	
     	return "listar-partidos.html";
     }
-    
-    
-
     
     @GetMapping("/modificar_partido")
     public String modificar_partido(ModelMap modelo){
@@ -141,6 +139,7 @@ public class PartidoControlador {
     
     @GetMapping("/alta-partido")
     public String registrarPartido(HttpSession session,ModelMap modelo){
+    	modelo.put("title", "Crear Partido - NosFalta1");
         List<Establecimiento> establecimientos=establecimientoServicio.listaEstablecimientos();
         modelo.put("establecimientos", establecimientos);
         List<Localidad> localidades=localidadServicio.listarPaises();
@@ -149,7 +148,7 @@ public class PartidoControlador {
         return "alta-partido.html";
     }
     
-    @PostMapping("/crear_partido")
+    @PostMapping("/crear-partido")
     public String registroPartido(/*HttpSession session,*/ModelMap modelo,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,@RequestParam Integer cantJugadores,@RequestParam String horario,@RequestParam Integer cantVacantes, @RequestParam Double precio,@RequestParam Sexo sexo,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
         try{
             

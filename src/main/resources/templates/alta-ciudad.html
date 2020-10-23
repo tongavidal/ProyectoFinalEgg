@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="components/head::head"></head>
+
+<body>
+
+	<div class="fh5co-loader"></div>
+
+	<div id="page">
+		<nav th:replace="components/nav::nav"></nav>
+
+		<header id="fh5co-header" class="fh5co-cover partidos alta-partido"
+			role="banner" data-stellar-background-ratio="0.5">
+			<div class="container pt-30">
+				<div class="row equal">
+					<div class="col-md-6 animate-box">
+
+						<h1>Cargar País</h1>
+						<form th:action="@{/pais/crear-pais}" method="post">
+							<div class="form-row">
+								<div th:if="${mensajeerror != null}"
+									class="col-md-12 alert alert-danger" role="alert">
+									<h4 th:text="${mensajeerror}"></h4>
+								</div>
+								<div th:if="${mensajeexito != null}" role="alert"
+									class="col-md-12 alert alert-success animate-box text-center">
+									<h4 th:text="${mensajeexito}"></h4>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input type="text" id="nombre" class="form-control"
+										name="nombre" th:value="${nombre}" placeholder="Ingresá el País">
+								</div>
+							</div>
+							<!--BOTON DE CREAR-->
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input type="submit" value="Crear País" class="btn btn-primary">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-md-6 animate-box img-lateral"></div>
+				</div>
+			</div>
+		</header>
+
+
+
+		<!--COMENTO FOOTER-->
+		<!--<footer th:replace="components/footer::footer"></footer>-->
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+
+	<scripts th:replace="/components/scripts::scripts"></scripts>
+
+
+
+</body>
+</html>
