@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/partido")
+@RequestMapping("/")
 public class PartidoControlador {
 
     @Autowired
@@ -30,6 +30,18 @@ public class PartidoControlador {
     	modelo.put("title", "Lista de Partidos - NosFalta1");
     	
     	return "listar-partidos.html";
+    }
+
+    @GetMapping("/partidos")
+    public String partidos(ModelMap modelo) {
+        modelo.put("tittle", "Partidos - NosFalta1");
+        return "partidos.html";
+    }
+    
+    @GetMapping("/modificar_partido")
+    public String modificar_partido(ModelMap modelo){
+        modelo.put("tittle", "Modificar Partido - NosFalta1");
+        return "modificar_partido";
     }
 
     @PostMapping("/listar-postulados")
