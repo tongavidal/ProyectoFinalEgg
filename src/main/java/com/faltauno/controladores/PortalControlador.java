@@ -15,5 +15,10 @@ public class PortalControlador {
 		
 		return "index.html";
 	}
-
+        
+                
+        @GetMapping("/listarlocalidad")
+        public String listarlocalidad(){
+            return "listar-localidad.html";
+        }
 }
