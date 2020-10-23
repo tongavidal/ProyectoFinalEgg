@@ -629,6 +629,14 @@ h1 span {
 .lista-partido .search{
   margin-bottom: 30px;
 }
+
+.bmodificar{
+  color: green;
+}
+
+.beliminar{
+  color: red;
+}
 /*End Estilos Lista Partidos*/
 
 #fh5co-header .display-tc .btn,
@@ -679,6 +687,11 @@ h1 span {
   padding: 7em 0;
   clear: both;
 }
+
+#fh5co-footer {
+  padding: 2em 0;
+}
+
 @media screen and (max-width: 768px) {
   #fh5co-services,
   #fh5co-started,

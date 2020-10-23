@@ -16,7 +16,7 @@
 					<div class="col-md-6 animate-box">
 						<br>
 						<h1>Modificar Partido</h1>
-						<form th:action="@{/modificar_partido/__${partido.id}__}" method="post" enctype="multipart/form-data">
+						<form th:action="@{/modificar-partido/__${partido.id}__}" method="post" enctype="multipart/form-data">
 							<div class="form-row">
 								<div th:if="${error != null}" class="col-md-12 alert alert-danger" role="alert">
 									<p th:text="${error}"></p>
