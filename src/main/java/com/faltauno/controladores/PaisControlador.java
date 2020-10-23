@@ -17,20 +17,22 @@ import com.faltauno.errores.ErrorServicio;
 public class PaisControlador {
 	
 	@Autowired
-	PaisServicio paisServicio;
+	private PaisServicio paisServicio;
 	
+	@PreAuthorize("hasAnyRole('ROLE_USUARIO_ADMIN')")
 	@GetMapping("/alta-pais")
 	public String alta_pais(ModelMap modelo) {
 		modelo.put("title", "Cargar País - NosFalta1");
 		
 		return "alta-pais.html";
 	}
-	
+
+	@PreAuthorize("hasAnyRole('ROLE_USUARIO_ADMIN')")
 	@PostMapping("crear-pais")
-	public String registrarPais(/*HttpSession session,*/ ModelMap modelo, @RequestParam String nombre) {
+	public String registrarPais(@RequestParam(required = false), ModelMap modelo, @RequestParam String nombre) {
 		
 		try {
-			paisServicio.registrarPais(nombre);;
+			paisServicio.registrarPais(nombre);
 		} catch (ErrorServicio e) {
 			modelo.put("mensajeerror", e.getMessage());
 			modelo.put("nombre", nombre);
@@ -42,6 +44,6 @@ public class PaisControlador {
 		
 		return "alta-pais.html";
 	}
-	
+    
     
 }

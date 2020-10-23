@@ -16,6 +16,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,6 @@ public class PartidoControlador {
     @Autowired
     private LocalidadServicio localidadServicio;
     
-    
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
     	modelo.put("title", "Lista de Partidos - NosFalta1");
@@ -48,12 +48,16 @@ public class PartidoControlador {
     	return "listar-partidos.html";
     }
     
+    
+
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/modificar_partido")
     public String modificar_partido(ModelMap modelo){
         modelo.put("tittle", "Modificar Partido - NosFalta1");
         return "modificar_partido";
     }
-
+    
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/listar-postulados")
     public String listarpostulados(ModelMap modelo, @RequestParam String idpartido) throws ErrorServicio {
         try {
@@ -66,6 +70,7 @@ public class PartidoControlador {
         return "listado-postulados";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/listarconfirmados")
     public String listarConfirmados(ModelMap modelo, @PathVariable String idPartido) throws ErrorServicio {
         Partido partido = partidoServicio.traerPartido(idPartido);
@@ -74,7 +79,7 @@ public class PartidoControlador {
         return "/partido/listado-confirmados.html";
     }
     
-
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/confirmar-postulado")
     public String confirmarpostulado(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
 
@@ -100,6 +105,7 @@ public class PartidoControlador {
         return "listado-postulados";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/eliminarpostulado")
     public String eliminarPostulado(ModelMap modelo, @PathVariable String idPartido, @PathVariable String idUsuario) throws ErrorServicio {
         partidoServicio.eliminaPostulado(idPartido, idUsuario);
@@ -108,7 +114,8 @@ public class PartidoControlador {
         modelo.put("confirmados", listaConfirmados);
         return "/partido/listado-confirmados.html";
     }
-
+    
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/postularse")
     public String postularse(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
 
@@ -137,6 +144,7 @@ public class PartidoControlador {
         return "listado-postulados";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/alta-partido")
     public String registrarPartido(HttpSession session,ModelMap modelo){
     	modelo.put("title", "Crear Partido - NosFalta1");
@@ -148,6 +156,7 @@ public class PartidoControlador {
         return "alta-partido.html";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/crear-partido")
     public String registroPartido(/*HttpSession session,*/ModelMap modelo,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,@RequestParam Integer cantJugadores,@RequestParam String horario,@RequestParam Integer cantVacantes, @RequestParam Double precio,@RequestParam Sexo sexo,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
         try{
