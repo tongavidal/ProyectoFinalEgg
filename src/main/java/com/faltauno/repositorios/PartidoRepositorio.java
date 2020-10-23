@@ -30,6 +30,10 @@ public interface PartidoRepositorio extends JpaRepository<Partido, String> {
      @Query("Select p from Partido p where p.creador.id = :idcreador")
     public List<Partido> buscarPorCreador(@Param("idcreador")String idcreador);
     
+    
+
+    
+    
       
     //cargar postulado
     

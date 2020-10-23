@@ -199,5 +199,14 @@ public class PartidoServicio {
         partidoRepositorio.save(partido);
     }
     
+//    public List<Partido> listarMisPostulaciones(String idUsuario){
+//        List<Partido> listaMisPostulaciones = partidoRepositorio.listaMisPostulaciones(idUsuario);
+//        return listaMisPostulaciones;
+//    }
+    
+    public List<Partido> listarMisPartidos(String idCreador){
+        List<Partido> listaMisPartidos = partidoRepositorio.buscarPorCreador(idCreador);
+        return listaMisPartidos;
+    }
     
 }

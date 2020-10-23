@@ -76,7 +76,7 @@ public class PartidoControlador {
         Partido partido = partidoServicio.traerPartido(idPartido);
         List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
         modelo.put("confirmados", listaConfirmados);
-        return "/partido/listado-confirmados.html";
+        return "listado-confirmados.html";
     }
 
     @PostMapping("/postularse")
@@ -106,5 +106,14 @@ public class PartidoControlador {
 
         return "listado-postulados";
     }
+    
+    @GetMapping("/mis-partidos")
+    public String misPartidos(String idCreador){
+        List<Partido> listaMisPartidos = partidoServicio.listarMisPartidos(idCreador);
+        return ("mis-postulaciones.html");
+    }
+    
 
+
+    
 }
