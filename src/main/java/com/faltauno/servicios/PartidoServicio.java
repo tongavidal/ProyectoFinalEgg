@@ -215,6 +215,14 @@ public class PartidoServicio {
             return hora*100+min;
         }
     }
+
+    public List<Partido> listarMisPartidos(String idCreador) throws ErrorServicio{
+        List<Partido> listaMisPartidos = partidoRepositorio.buscarPorCreador(idCreador);
+        if (listaMisPartidos== null){
+            throw new ErrorServicio("No tenés partidos creados");
+        }
+        return listaMisPartidos;
+    }
     
     private void validadr(Establecimiento establecimiento,Localidad localidad, Integer cantJugador, Integer cantVacantes, Double precio/*, Usuario creador, String obsVacante, String obsEstablecimiento*/, Date fecha) throws ErrorServicio{
         if (establecimiento==null) {
@@ -243,4 +251,5 @@ public class PartidoServicio {
         
         
     }
+//>>>>>>> develop
 }
