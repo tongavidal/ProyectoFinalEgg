@@ -41,7 +41,7 @@ public class PartidoServicio {
     private EstablecimientoRepositorio establecimientoRepositorio;
     /* CREACION DE PARTIDO */
     @Transactional
-    public void crearPartido(String idEstablecimiento,String idlocalidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio/*, Usuario creador, String obsVacante, String obsEstablecimiento*/, Sexo sexo, Date fecha)throws ErrorServicio {
+    public void crearPartido(String idEstablecimiento,String idlocalidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio, Usuario creador, /*String obsVacante, String obsEstablecimiento,*/ Sexo sexo, Date fecha)throws ErrorServicio {
 
         Localidad localidad = localidadRepositorio.getOne(idlocalidad);
         Establecimiento establecimiento=establecimientoRepositorio.getOne(idEstablecimiento);
