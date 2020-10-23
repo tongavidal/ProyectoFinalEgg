@@ -147,14 +147,13 @@ public class PartidoControlador {
         try{
             
            // Usuario creador=(Usuario)session.getAttribute("usuariosession");
-           Usuario creador=new Usuario();
-           partidoServicio.crearPartido(idEstablecimiento,idLocalidad, cantJugadores, Integer.parseInt(horario), cantVacantes, precio,creador, sexo, fecha);
+           partidoServicio.crearPartido(idEstablecimiento,idLocalidad, cantJugadores, partidoServicio.horario(horario), cantVacantes, precio,/*creador,*/ sexo, fecha);
             System.out.println(partidoServicio.horario(horario));
-        }catch(Exception ex){
-            
+        }catch(ErrorServicio ex){
+            System.out.println(ex.getMessage());
         }
         
-        return "redirect:/";
+        return "index.html";
     }
 
 }
