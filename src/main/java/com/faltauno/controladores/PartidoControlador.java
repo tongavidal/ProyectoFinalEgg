@@ -1,12 +1,14 @@
 package com.faltauno.controladores;
 
 import com.faltauno.entidades.Establecimiento;
+import com.faltauno.entidades.Localidad;
 import com.faltauno.entidades.Partido;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.PartidoRepositorio;
 import com.faltauno.servicios.EstablecimientoServicio;
+import com.faltauno.servicios.LocalidadServicio;
 import com.faltauno.servicios.PartidoServicio;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +35,9 @@ public class PartidoControlador {
     
     @Autowired
     private EstablecimientoServicio establecimientoServicio;
+    
+    @Autowired
+    private LocalidadServicio localidadServicio;
 
     @PostMapping("/listar-postulados")
     public String listarpostulados(ModelMap modelo, @RequestParam String idpartido) throws ErrorServicio {
@@ -120,22 +125,25 @@ public class PartidoControlador {
     public String registrarPartido(HttpSession session,ModelMap modelo){
         List<Establecimiento> establecimientos=establecimientoServicio.listaEstablecimientos();
         modelo.put("establecimientos", establecimientos);
-//        List<Localidad> localidades=localidadServicio.listaLocalidades();
-//        modelo.put("localidades", establecimientos);
+        List<Localidad> localidades=localidadServicio.listarPaises();
+        modelo.put("localidades", localidades);
         modelo.put("sexo", Sexo.values());
-        return "HTML";
+        return "alta-partido.html";
     }
     
-    @PostMapping("/alta-partido-ok")
-    public String registroPartido(HttpSession session,ModelMap modelo,@RequestParam String idLocalidad,@RequestParam Integer cantJugador,@RequestParam String horario,@RequestParam Integer cantVacantes, @RequestParam Double precio, @RequestParam String obsVacante,@RequestParam String obsEstablecimiento,@RequestParam Sexo sex,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
+    @PostMapping("/crear_partido")
+    public String registroPartido(/*HttpSession session,*/ModelMap modelo,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,@RequestParam Integer cantJugadores,@RequestParam String horario,@RequestParam Integer cantVacantes, @RequestParam Double precio,@RequestParam Sexo sexo,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
         try{
-            Usuario creador=(Usuario)session.getAttribute("usuariosession");
-            partidoServicio.crearPartido(idLocalidad, cantJugador, Integer.parseInt(horario), cantVacantes, precio,creador, obsVacante, obsEstablecimiento, sex, fecha);
-        }catch(ErrorServicio ex){
+            
+           // Usuario creador=(Usuario)session.getAttribute("usuariosession");
+           Usuario creador=new Usuario();
+           partidoServicio.crearPartido(idEstablecimiento,idLocalidad, cantJugadores, Integer.parseInt(horario), cantVacantes, precio,creador, sexo, fecha);
+            System.out.println(partidoServicio.horario(horario));
+        }catch(Exception ex){
             
         }
         
-        return"html";
+        return "redirect:/";
     }
 
 }

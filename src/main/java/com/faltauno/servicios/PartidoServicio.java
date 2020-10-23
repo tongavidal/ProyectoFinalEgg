@@ -5,11 +5,13 @@
  */
 package com.faltauno.servicios;
 
+import com.faltauno.entidades.Establecimiento;
 import com.faltauno.entidades.Localidad;
 import com.faltauno.entidades.Partido;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
+import com.faltauno.repositorios.EstablecimientoRepositorio;
 import com.faltauno.repositorios.LocalidadRepositorio;
 import com.faltauno.repositorios.PartidoRepositorio;
 import com.faltauno.repositorios.UsuarioRepositorio;
@@ -34,22 +36,26 @@ public class PartidoServicio {
     
     @Autowired
     private LocalidadRepositorio localidadRepositorio;
-
+    
+     @Autowired
+    private EstablecimientoRepositorio establecimientoRepositorio;
     /* CREACION DE PARTIDO */
     @Transactional
-    public void crearPartido(String idlocalidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio, Usuario creador, String obsVacante, String obsEstablecimiento, Sexo sexo, Date fecha)throws ErrorServicio {
+    public void crearPartido(String idEstablecimiento,String idlocalidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio, Usuario creador/*, String obsVacante, String obsEstablecimiento*/, Sexo sexo, Date fecha)throws ErrorServicio {
 
         Localidad localidad = localidadRepositorio.findById(idlocalidad).get();
+        Establecimiento establecimiento=establecimientoRepositorio.findById(idEstablecimiento).get();
         Partido p = new Partido();
-
+        
+        p.setEstablecimiento(establecimiento);
         p.setLocalidad(localidad);
         p.setCantJugador(cantJugador);
         p.setCantVacantes(cantVacantes);
         p.setPrecio(precio);
         p.setCreador(creador);
         p.setEstado(true);
-        p.setObsVacante(obsVacante);
-        p.setObsEstablecimiento(obsEstablecimiento);
+        p.setObsVacante("");
+        p.setObsEstablecimiento("");
         p.setSexo(sexo);
         p.setFecha(fecha); //Fecha del partido
         p.setHorario(horario);//Horario del partido
@@ -199,5 +205,9 @@ public class PartidoServicio {
         partidoRepositorio.save(partido);
     }
     
-    
+    public Integer horario(String horario){
+        Integer hora=Integer.parseInt(horario.substring(0, 2));
+        Integer min=Integer.parseInt(horario.substring(3,5));
+        return hora*100+min;
+    }
 }

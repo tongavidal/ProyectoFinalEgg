@@ -16,7 +16,7 @@
 					<div class="col-md-6 animate-box">
 						<br>
 						<h1>Crear Partido</h1>
-						<form th:action="@{/crear_partido}" method="post" enctype="multipart/form-data">
+						<form th:action="@{/partido/crear_partido}" method="post" enctype="multipart/form-data">
 							<div class="form-row">
 								<div th:if="${error != null}" class="col-md-12 alert alert-danger" role="alert">
 									<p th:text="${error}"></p>
@@ -38,17 +38,19 @@
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
-									<select name="localidad" class="form-control">
+									<select name="idLocalidad" class="form-control">
 										<option selected>Selecciona Localidad</option>
-										<!--<option th:each="${localidad.id}" th:text="${localidad.nombre}"></option>-->
+										<option th:each="localidad:${localidades}" th:value="${localidad.id}" th:text="${localidad.nombre}"></option>
 									</select>
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
-									<input type="text" id="subject" class="form-control" name="establecimiento" 
-										placeholder="Nombre del establecimiento">
+									<select name="idEstablecimiento" class="form-control">
+										<option selected>Selecciona Localidad</option>
+										<option th:each="establecimiento:${establecimientos}" th:value="${establecimiento.id}" th:text="${establecimiento.nombre}"></option>
+									</select>
 								</div>
 							</div>
 							<div class="row form-group">
