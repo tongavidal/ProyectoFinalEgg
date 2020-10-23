@@ -33,8 +33,9 @@
                                     <p>Horario: <span th:text="${partido.horario}"></span></p>
                                     <p>Precio: <span th:text="${partido.precio}"></span></p>
                                     <br>
-                                    <button type="button" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Modificar</button>
-                                    <button type="button" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</button>
+                                    <a th:href="@{partido/modificar_partido/__${partido.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Modificar</a>
+                                    
+                                    <a th:href="@{partido/eliminar_partido/__${partido.id}__}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</a>
                                 </div>
                             </div>
                             <div class="items col-xs-12 col-sm-12 col-md-6 col-lg-6 clearfix">

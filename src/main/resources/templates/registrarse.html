@@ -109,7 +109,7 @@
                                         <option th:value="${femenino}">Femenino</option>
                                         <option th:value="${mixto}">Mixto</option>-->
                                         <option selected>Selecciona el Sexo</option>
-                                        <option th:each="sex:${sexo}" 
+                                        <option th:each="sex:${sexo}" th:if="${sex.name()!='MIXTO'}" 
                                         th:value="${sex}"
                                         th:text="${sex}"></option>
 									</select>

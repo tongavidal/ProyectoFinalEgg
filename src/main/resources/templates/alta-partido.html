@@ -18,12 +18,16 @@
 					<div class="col-md-6 animate-box">
 
 						<h1>Crear Partido</h1>
-						<form th:action="@{/partido/crear_partido}" method="post"
+						<form th:action="@{/partido/crear-partido}" method="post"
 							enctype="multipart/form-data">
 							<div class="form-row">
-								<div th:if="${error != null}"
+								<div th:if="${mensajeerror != null}"
 									class="col-md-12 alert alert-danger" role="alert">
-									<p th:text="${error}"></p>
+									<h4 th:text="${mensajeerror}"></h4>
+								</div>
+								<div th:if="${mensajeexito != null}" role="alert"
+									class="col-md-12 alert alert-success animate-box text-center">
+									<h4 th:text="${mensajeexito}"></h4>
 								</div>
 							</div>
 							<div class="row form-group">
