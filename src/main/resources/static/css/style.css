@@ -625,7 +625,7 @@ h1 span {
 }
 /*End Estilos Registro*/
 
-/*Start Estilos Lista Partidos*/
+/*Start Partidos*/
 .lista-partido .search{
   margin-bottom: 30px;
 }
@@ -637,7 +637,7 @@ h1 span {
 .beliminar{
   color: red;
 }
-/*End Estilos Lista Partidos*/
+/*End Partidos*/
 
 #fh5co-header .display-tc .btn,
 #fh5co-counter .display-tc .btn,
