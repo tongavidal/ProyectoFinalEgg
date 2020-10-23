@@ -4,6 +4,7 @@ import com.faltauno.entidades.Establecimiento;
 import com.faltauno.entidades.Localidad;
 import com.faltauno.entidades.Partido;
 import com.faltauno.entidades.Usuario;
+import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.EstablecimientoRepositorio;
 import com.faltauno.repositorios.PartidoRepositorio;
@@ -117,11 +118,6 @@ public class PartidoControlador {
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/eliminarpostulado")
     public String eliminarPostulado(ModelMap modelo, @PathVariable String idPartido, @PathVariable String idUsuario) throws ErrorServicio {
-        partidoServicio.eliminaPostulado(idPartido, idUsuario);
-        Partido partido = partidoServicio.traerPartido(idPartido);
-        List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
-        modelo.put("confirmados", listaConfirmados);
-        return "/partido/listado-confirmados.html";
         modelo.put("title", "Registrarse - NosFalta1");
         try {
             partidoServicio.eliminaPostulado(idPartido, idUsuario);

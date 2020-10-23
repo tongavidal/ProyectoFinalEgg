@@ -205,7 +205,7 @@ public class PartidoServicio {
         partidoRepositorio.save(partido);
     }
     
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //    public List<Partido> listarMisPostulaciones(String idUsuario){
 //        List<Partido> listaMisPostulaciones = partidoRepositorio.listaMisPostulaciones(idUsuario);
 //        return listaMisPostulaciones;
@@ -219,11 +219,11 @@ public class PartidoServicio {
         return listaMisPartidos;
     }
     
-=======
+//=======
     public Integer horario(String horario){
         Integer hora=Integer.parseInt(horario.substring(0, 2));
         Integer min=Integer.parseInt(horario.substring(3,5));
         return hora*100+min;
     }
->>>>>>> develop
+//>>>>>>> develop
 }
