@@ -1,5 +1,9 @@
 package com.faltauno.controladores;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,66 +24,56 @@ import java.util.List;
 @RequestMapping("/usuario")
 public class UsuarioControlador {
 
-    @Autowired
-    private UsuarioServicio usuarioServicio;
+	@Autowired
+	private UsuarioServicio usuarioServicio;
 
-    @Autowired
-    private LocalidadServicio localidadServicio;
+	@Autowired
+	private LocalidadServicio localidadServicio;
 
-    @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, ModelMap modelo) {
-        modelo.put("title", "Ingresá - Tu Biblioteca");
-        if (error != null) {
-            modelo.put("error", "Nombre de usuario o clave incorrectos.");
-            List<Localidad> localidades = localidadServicio.listarPaises();
-            modelo.put("localidades", localidades);
-        }
+	@GetMapping("/login")
+	public String login(@RequestParam(required = false) String error, ModelMap modelo) {
+		modelo.put("title", "Ingresá - NosFalta1");
+		if (error != null) {
+			modelo.put("error", "Nombre de usuario o clave incorrectos.");
+		}
 
-        return "registrarse.html";
-    }
+		return "registrarse.html";
+	}
 
-    @PostMapping("/loguinchek")
-    public String loguinchek() {
-        return "index.html";
-    }
+	@GetMapping("/registrarse")
+	public String registrarse(HttpSession session, ModelMap modelo) {
+		modelo.put("title", "Registrarse - NosFalta1");
+		List<Localidad> localidades = localidadServicio.listarPaises();
+		modelo.put("localidades", localidades);
+		modelo.put("sexo", Sexo.values());
 
-    @GetMapping("/logout")
-    public String logout() {
-        return "index.html";
-    }
+		return "registrarse.html";
+	}
 
-    @GetMapping("/registrarse")
-    public String registrarse(ModelMap modelo) {
-        modelo.put("title", "Registrarse - NosFalta1");
-        List<Localidad> localidades = localidadServicio.listarPaises();
-        modelo.put("localidades", localidades);
-        return "registrarse.html";
-    }
+	@PostMapping("/registrar")
+	public String registrar(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre,
+			@RequestParam String apellido, @RequestParam String edad, @RequestParam String mail,
+			@RequestParam Localidad localidad, @RequestParam String clave, String clave1) {
 
-    @PostMapping("/registrar")
-    public String registrar(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String edad, @RequestParam String mail,
-            @RequestParam Localidad localidad, @RequestParam String clave, String clave1, Sexo sexo) {
+		try {
+			usuarioServicio.registrarUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
+		} catch (ErrorServicio e) {
 
-        try {
-            usuarioServicio.registrarUsuario(nombre, apellido, edad, localidad, mail, clave, sexo);
-        } catch (ErrorServicio e) {
+			modelo.put("errorRegistrarse", e.getMessage());
+			modelo.put("nombre", nombre);
+			modelo.put("apellido", apellido);
+			modelo.put("edad", edad);
+			modelo.put("mail", mail);
+			modelo.put("localidad", localidad);
+			modelo.put("clave", clave);
+			modelo.put("clave1", clave1);
 
-            List<Localidad> localidades = localidadServicio.listarPaises();
-            modelo.put("errorRegistrarse", e.getMessage());
-            modelo.put("nombre", nombre);
-            modelo.put("apellido", apellido);
-            modelo.put("edad", edad);
-            modelo.put("mail", mail);
-            modelo.put("localidades", localidades);
-            modelo.put("clave", clave);
-            modelo.put("clave1", clave1);
+			return "registrarse.html";
+		}
 
-            return "registrarse.html";
-        }
-
-        modelo.put("title", "Te has registrado Correctamente! - Tu Biblioteca");
-        modelo.put("titulo", "Felicitaciones!!");
-        modelo.put("descripcion", "Tu registro como usuario se ha realizado con éxito.");
-        return "exito.html";
-    }
+		modelo.put("title", "Te has registrado Correctamente! - Tu Biblioteca");
+		modelo.put("titulo", "Felicitaciones!!");
+		modelo.put("descripcion", "Tu registro como usuario se ha realizado con éxito.");
+		return "exito.html";
+	}
 }

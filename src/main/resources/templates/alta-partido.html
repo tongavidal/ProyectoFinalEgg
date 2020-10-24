@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="components/head::head"></head>
 
@@ -10,37 +11,52 @@
 	<div id="page">
 		<nav th:replace="components/nav::nav"></nav>
 
-		<header id="fh5co-header" class="fh5co-cover partidos alta-partido" role="banner" data-stellar-background-ratio="0.5">
-			<div class="container">
-				<div class="row">
+		<header id="fh5co-header" class="fh5co-cover partidos alta-partido"
+			role="banner" data-stellar-background-ratio="0.5">
+			<div class="container pt-30">
+				<div class="row equal">
 					<div class="col-md-6 animate-box">
-						<br>
+
 						<h1>Crear Partido</h1>
-						<form th:action="@{/partido/crear_partido}" method="post" enctype="multipart/form-data">
+						<form th:action="@{/partido/crear_partido}" method="post"
+							enctype="multipart/form-data">
 							<div class="form-row">
-								<div th:if="${error != null}" class="col-md-12 alert alert-danger" role="alert">
-									<p th:text="${error}"></p>
+								<div th:if="${mensajeerror != null}"
+									class="col-md-12 alert alert-danger" role="alert">
+									<h4 th:text="${mensajeerror}"></h4>
+								</div>
+								<div th:if="${mensajeexito != null}" role="alert"
+									class="col-md-12 alert alert-success animate-box text-center">
+									<h4 th:text="${mensajeexito}"></h4>
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
-									<input type="date" id="subject" class="form-control" name="fecha" 
-										placeholder="fecha">
+									<input type="date" id="subject" class="form-control"
+										name="fecha" placeholder="fecha">
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
-									<input type="time" id="subject" class="form-control" name="horario" 
-										placeholder="horario">
+									<input type="hidden" id="usuario" class="form-control"
+										name="idcreador" th:value="${session.usuariosession.id}">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<!-- <label for="subject">Subject</label> -->
+									<input type="time" id="subject" class="form-control"
+										name="horario" placeholder="horario">
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
 									<select name="idLocalidad" class="form-control">
 										<option selected>Selecciona Localidad</option>
-										<option th:each="localidad:${localidades}" th:value="${localidad.id}" th:text="${localidad.nombre}"></option>
+										<option th:each="localidad:${localidades}"
+											th:value="${localidad.id}" th:text="${localidad.nombre}"></option>
 									</select>
 								</div>
 							</div>
@@ -48,30 +64,32 @@
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
 									<select name="idEstablecimiento" class="form-control">
-										<option selected>Selecciona Localidad</option>
-										<option th:each="establecimiento:${establecimientos}" th:value="${establecimiento.id}" th:text="${establecimiento.nombre}"></option>
+										<option selected>Selecciona Establecimiento</option>
+										<option th:each="establecimiento:${establecimientos}"
+											th:value="${establecimiento.id}"
+											th:text="${establecimiento.nombre}"></option>
 									</select>
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
-									<input type="number" id="subject" class="form-control" name="cantJugadores" 
-										placeholder="Cantidad de jugadores">
+									<input type="number" id="subject" class="form-control"
+										name="cantJugadores" placeholder="Cantidad de jugadores">
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
-									<input type="number" id="subject" class="form-control" name="cantVacantes" 
-										placeholder="Cantidad de vacantes libres">
+									<input type="number" id="subject" class="form-control"
+										name="cantVacantes" placeholder="Cantidad de vacantes libres">
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
-									<input type="number" id="subject" class="form-control" name="precio" 
-										placeholder="Precio por jugador">
+									<input type="number" id="subject" class="form-control"
+										name="precio" placeholder="Precio por jugador">
 								</div>
 							</div>
 							<div class="row form-group">
@@ -80,10 +98,9 @@
 										<!--<option th:value="${masculino}">Masculino</option>
                                         <option th:value="${femenino}">Femenino</option>
                                         <option th:value="${mixto}">Mixto</option>-->
-                                                                
-                                        <option th:each="sex:${sexo}" 
-                                        th:value="${sex}"
-                                        th:text="${sex}"></option>
+										<option selected>Selecciona el Sexo</option>
+										<option th:each="sex:${sexo}" th:value="${sex}"
+											th:text="${sex}"></option>
 									</select>
 								</div>
 							</div>
@@ -96,16 +113,10 @@
 										class="btn btn-primary">
 								</div>
 							</div>
-							<div class="text-center mt-4 font-weight-light">
-										Todavia no sos usuario? <a th:href="@{registrarse}"
-											class="text-primary">Registrate</a>
-							</div>
-							<br>
-							<br>
-							<br>
-							<br>
-
 						</form>
+					</div>
+					<div class="col-md-6 animate-box img-lateral">
+						
 					</div>
 				</div>
 			</div>
