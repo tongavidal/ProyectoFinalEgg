@@ -18,7 +18,7 @@
 					<div class="col-md-6 animate-box">
 
 						<h1>Crear Partido</h1>
-						<form th:action="@{/partido/crear-partido}" method="post"
+						<form th:action="@{/partido/crear_partido}" method="post"
 							enctype="multipart/form-data">
 							<div class="form-row">
 								<div th:if="${mensajeerror != null}"
@@ -35,6 +35,13 @@
 									<!-- <label for="subject">Subject</label> -->
 									<input type="date" id="subject" class="form-control"
 										name="fecha" placeholder="fecha">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<!-- <label for="subject">Subject</label> -->
+									<input type="hidden" id="usuario" class="form-control"
+										name="idcreador" th:value="${session.usuariosession.id}">
 								</div>
 							</div>
 							<div class="row form-group">

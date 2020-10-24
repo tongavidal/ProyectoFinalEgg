@@ -27,45 +27,19 @@
                                     <div class="square-box pull-left">
                                         <span class="glyphicon glyphicon-user glyphicon-lg"></span>
                                     </div>
-                                    <h5>Company Name</h5>
-                                    <h4>Nombre: <span th:text="${partido.creador}"></span></h4>
+                                    <h4>Nombre: <span th:text="${partido.creador.nombre + ' ' + partido.creador.apellido }"></span></h4>
                                     <p>Fecha: <span th:text="${partido.fecha}"></span></p>
                                     <p>Horario: <span th:text="${partido.horario}"></span></p>
                                     <p>Precio: <span th:text="${partido.precio}"></span></p>
                                     <br>
-                                    <a th:href="@{partido/modificar_partido/__${partido.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Modificar</a>
                                     
-                                    <a th:href="@{partido/eliminar_partido/__${partido.id}__}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</a>
-                                </div>
-                            </div>
-                            <div class="items col-xs-12 col-sm-12 col-md-6 col-lg-6 clearfix">
-                                <div class="info-block block-info clearfix">
-                                    <div class="square-box pull-left">
-                                        <span class="glyphicon glyphicon-user glyphicon-lg"></span>
-                                    </div>
-                                    <h4>Name: Brenda Tree</h4>
-                                    <p>Title: Manager</p>
-                                    <span>Phone: 555-555-5555</span>
-                                    <br>
-                                    <span>Email: sample@company.com</span>
-                                    <br>
-                                    <button type="button" class="btn btn-secondary btn-sm bmodificar"><i class="fas fa-edit"></i> Modificar</button>
-                                    <button type="button" class="btn btn-secondary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</button>
-                                </div>
-                            </div>
-                            <div class="items col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                <div class="info-block block-info clearfix">
-                                    <div class="square-box pull-left">
-                                        <span class="glyphicon glyphicon-user glyphicon-lg"></span>
-                                    </div>
-                                    <h4>Name: Glenn Pho shizzle</h4>
-                                    <p>Title: Manager</p>
-                                    <span>Phone: 555-555-5555</span>
-                                    <br>
-                                    <span>Email: sample@company.com</span>
-                                    <br>
-                                    <button type="button" class="btn btn-secondary btn-sm bmodificar"><i class="fas fa-edit"></i> Modificar</button>
-                                    <button type="button" class="btn btn-secondary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</button>
+                                    <a th:href="@{/partido/modificar_partido/__${partido.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Modificar</a>
+                                    
+                                    <a th:href="@{/partido/eliminar_partido/__${partido.id}__}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</a>
+                                    
+                                    <a th:href="@{/partido/postularse(idpartido=__${partido.id}__,idpostulado=__${session.usuariosession.id}__)}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Postularse</a>
+                                    
+                                    
                                 </div>
                             </div>
                         </div>

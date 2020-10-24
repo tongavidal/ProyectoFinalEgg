@@ -8,6 +8,7 @@ import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.EstablecimientoRepositorio;
 import com.faltauno.repositorios.PartidoRepositorio;
+import com.faltauno.repositorios.UsuarioRepositorio;
 import com.faltauno.servicios.EstablecimientoServicio;
 import com.faltauno.servicios.LocalidadServicio;
 import com.faltauno.servicios.PartidoServicio;
@@ -42,10 +43,13 @@ public class PartidoControlador {
     @Autowired
     private LocalidadServicio localidadServicio;
     
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+    
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
         modelo.put("title", "Lista de Partidos - NosFalta1");
-
+        modelo.put("partidos", partidoRepositorio.findAll());
         return "listar-partidos.html";
     }
     
@@ -130,11 +134,12 @@ public class PartidoControlador {
             return ("listado-postulados");
         }
     }
-    @PostMapping("/postularse")
+    @GetMapping("/postularse")
     public String postularse(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
 
         try {
-            partidoServicio.cargarPostulado(partidoServicio.traerPartido(idpartido), idpostulado);
+        	Partido partido = partidoServicio.traerPartido(idpartido);
+            partidoServicio.cargarPostulado(partido, idpostulado);
 
             //Consulto si ya no estan completo los postulados y guardo confirmado
             if (partidoServicio.validarVacantes(partidoServicio.traerPartido(idpartido))) {
@@ -172,9 +177,9 @@ public class PartidoControlador {
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/crear_partido")
-    public String registroPartido(HttpSession session,ModelMap modelo,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,@RequestParam Integer cantJugadores,@RequestParam String horario,@RequestParam Integer cantVacantes, @RequestParam Double precio,@RequestParam Sexo sexo,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
+    public String registroPartido(HttpSession session, @RequestParam String idcreador, ModelMap modelo,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,@RequestParam Integer cantJugadores,@RequestParam String horario,@RequestParam Integer cantVacantes, @RequestParam Double precio,@RequestParam Sexo sexo,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
         try{ 
-           Usuario creador=(Usuario)session.getAttribute("usuariosession");
+           Usuario creador = usuarioRepositorio.getOne(idcreador);
            System.out.println(creador.getNombre());
            partidoServicio.crearPartido(idEstablecimiento,idLocalidad, cantJugadores, partidoServicio.horario(horario), cantVacantes, precio,creador, sexo, fecha);
         }catch(ErrorServicio ex){

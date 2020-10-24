@@ -18,7 +18,7 @@
 								<li><a th:href="@{/partido/alta-partido}">Crear Partido</a></li>
 								<li><a href="#">API</a></li>
 							</ul></li>
-						<li><a href="contact.html">Contact</a></li>
+						<li><a th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre }"></a></li>
 					</ul>
 				</div>
 			</div>
