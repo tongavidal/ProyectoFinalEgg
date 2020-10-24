@@ -53,7 +53,7 @@ public class PartidoServicio {
         p.setCantJugador(cantJugador);
         p.setCantVacantes(cantVacantes);
         p.setPrecio(precio);
-        //p.setCreador(creador);
+        p.setCreador(creador);
         p.setEstado(true);
         p.setObsVacante("");
         p.setObsEstablecimiento("");

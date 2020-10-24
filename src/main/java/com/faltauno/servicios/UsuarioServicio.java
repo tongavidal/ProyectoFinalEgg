@@ -7,6 +7,7 @@ package com.faltauno.servicios;
 
 import com.faltauno.entidades.Localidad;
 import com.faltauno.entidades.Usuario;
+import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class UsuarioServicio implements  UserDetailsService{
     private NotificacionServicio notificacionServicio;
 
     @Transactional
-    public void registrarUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave) throws ErrorServicio {
+    public void registrarUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, Sexo sexo) throws ErrorServicio {
 
         validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave);
 
@@ -53,7 +54,8 @@ public class UsuarioServicio implements  UserDetailsService{
         u.setMail(mail);        
         u.setAcceso("1");
         u.setFechaCreacion(new Date());
-        u.setEstado(false);
+        u.setEstado(true);
+        u.setSexo(sexo);
 
         //Encripto clave
         String encriptada = new BCryptPasswordEncoder().encode(clave);

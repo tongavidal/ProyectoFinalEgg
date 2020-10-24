@@ -173,8 +173,8 @@ public class PartidoControlador {
     @PostMapping("/crear_partido")
     public String registroPartido(HttpSession session,ModelMap modelo,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,@RequestParam Integer cantJugadores,@RequestParam String horario,@RequestParam Integer cantVacantes, @RequestParam Double precio,@RequestParam Sexo sexo,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
         try{ 
-           Usuario creador=(Usuario)session.getAttribute("usuariosession");
-           System.out.println(creador.getNombre());
+           Usuario creador = (Usuario) session.getAttribute("usuariosession");
+          // System.out.println(creador.getNombre());
            partidoServicio.crearPartido(idEstablecimiento,idLocalidad, cantJugadores, partidoServicio.horario(horario), cantVacantes, precio,creador, sexo, fecha);
         }catch(ErrorServicio ex){
             List<Establecimiento> establecimientos=establecimientoServicio.listaEstablecimientos();

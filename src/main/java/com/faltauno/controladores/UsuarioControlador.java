@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.faltauno.entidades.Localidad;
+import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.servicios.LocalidadServicio;
 import com.faltauno.servicios.UsuarioServicio;
@@ -57,10 +58,10 @@ public class UsuarioControlador {
 
     @PostMapping("/registrar")
     public String registrar(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String edad, @RequestParam String mail,
-            @RequestParam Localidad localidad, @RequestParam String clave, String clave1) {
+            @RequestParam Localidad localidad, @RequestParam String clave, String clave1, Sexo sexo) {
 
         try {
-            usuarioServicio.registrarUsuario(nombre, apellido, edad, localidad, mail, clave);
+            usuarioServicio.registrarUsuario(nombre, apellido, edad, localidad, mail, clave, sexo);
         } catch (ErrorServicio e) {
 
             List<Localidad> localidades = localidadServicio.listarPaises();
