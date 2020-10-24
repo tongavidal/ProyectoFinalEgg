@@ -82,6 +82,56 @@ h1 span {
 	color: #F85A16;
 } 
 
+/* Espacios p para paddings y m para Margins (t=top, l=left, r=right, b=bottom) */
+.p-10 {
+	padding: 10px;	
+}
+.p-15 {
+	padding: 15px;	
+}
+.p-20 {
+	padding: 20px;	
+}
+.p-25 {
+	padding: 25px;	
+}
+.p-30 {
+	padding: 30px;	
+}
+.pt-10 {
+	padding-top: 10px;	
+}
+.pt-15 {
+	padding-top: 15px;	
+}
+.pt-20 {
+	padding-top: 20px;	
+}
+.pt-25 {
+	padding-top: 25px;	
+}
+.pt-30 {
+	padding-top: 30px;	
+}
+.pt-35 {
+	padding-top: 35px;	
+}
+.pt-40 {
+	padding-top: 40px;	
+}
+
+.equal {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+}
+.equal > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
 ::-webkit-selection {
   color: #fff;
   background: #F85A16;
@@ -635,13 +685,20 @@ h1 span {
   margin-bottom: 30px;
 }
 
-.bmodificar{
+.lista-partido .bmodificar{
   color: green;
 }
 
-.beliminar{
+.lista-partido .beliminar{
   color: red;
 }
+
+.fh5co-cover.partidos.alta-partido .img-lateral {
+	background-image: url(/images/crear-partido.jpg);
+	background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat
+} 
 /*End Partidos*/
 
 #fh5co-header .display-tc .btn,

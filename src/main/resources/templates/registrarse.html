@@ -40,7 +40,7 @@
 									</div>
 									<div class="row form-group">
 										<div class="col-md-12">
-											<input type="password" id="password" class="form-control"
+											<input type="password" id="clave" class="form-control"
 												name="clave" th:value="${clave}" placeholder="Contraseña">
 										</div>
 									</div>
@@ -104,10 +104,14 @@
 
 							<div class="row form-group">
 								<div class="col-md-6">
-									<select name="idSexo" class="form-control">
-										<option selected>Sexo...</option>
-										<option th:value="${masculino}">Masculino</option>
-										<option th:value="${femenino}">Femenino</option>
+									<select name="sexo" class="form-control">
+										<!--<option th:value="${masculino}">Masculino</option>
+                                        <option th:value="${femenino}">Femenino</option>
+                                        <option th:value="${mixto}">Mixto</option>-->
+                                        <option selected>Selecciona el Sexo</option>
+                                        <option th:each="sex:${sexo}" th:if="${sex.name()!='MIXTO'}" 
+                                        th:value="${sex}"
+                                        th:text="${sex}"></option>
 									</select>
 								</div>
 								<div class="col-md-6">
@@ -118,14 +122,14 @@
 							
 							<div class="row form-group">
 								<div class="col-md-12">
-									<input type="text" id="clave" class="form-control" name="clave"
+									<input type="password" id="clave" class="form-control" name="clave"
 										th:value="${clave}" placeholder="Ingresá la Contraseña">
 								</div>
 							</div>
 							
 							<div class="row form-group">
 								<div class="col-md-12">
-									<input type="text" id="clave1" class="form-control" name="clave1"
+									<input type="password" id="clave1" class="form-control" name="clave1"
 										th:value="${clave1}" placeholder="Repetí la Contraseña">
 								</div>
 							</div>
