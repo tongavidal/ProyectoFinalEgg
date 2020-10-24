@@ -44,17 +44,17 @@ public class PartidoControlador {
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
     	modelo.put("title", "Lista de Partidos - NosFalta1");
-    	
+    	modelo.put("partidos",partidoRepositorio.findAll());
     	return "listar-partidos.html";
     }
     
     
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-    @GetMapping("/modificar_partido")
-    public String modificar_partido(ModelMap modelo){
+    @GetMapping("/modificar_partido/{id}")
+    public String modificar_partido(@PathVariable String id,ModelMap modelo){
         modelo.put("tittle", "Modificar Partido - NosFalta1");
-        return "modificar_partido";
+        return "modificar-partido.html";
     }
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")

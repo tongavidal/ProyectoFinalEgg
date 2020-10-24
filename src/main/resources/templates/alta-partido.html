@@ -48,7 +48,7 @@
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
 									<select name="idEstablecimiento" class="form-control">
-										<option selected>Selecciona Localidad</option>
+										<option selected>Selecciona Establecimiento</option>
 										<option th:each="establecimiento:${establecimientos}" th:value="${establecimiento.id}" th:text="${establecimiento.nombre}"></option>
 									</select>
 								</div>
@@ -82,7 +82,7 @@
                                         <option th:value="${mixto}">Mixto</option>-->
                                                                 
                                         <option th:each="sex:${sexo}" 
-                                        th:value="${sex}"
+                                         th:value="${sex}"
                                         th:text="${sex}"></option>
 									</select>
 								</div>
