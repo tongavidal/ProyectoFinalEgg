@@ -12,3 +12,4 @@ package com.faltauno.enumeraciones;
 public enum Sexo {
     FEMENINO, MASCULINO, MIXTO; 
 }
+

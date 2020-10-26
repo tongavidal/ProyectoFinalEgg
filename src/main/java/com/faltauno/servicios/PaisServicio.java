@@ -22,20 +22,20 @@ public class PaisServicio {
     @Transactional
     public void registrarPais(String nombre) throws ErrorServicio {
         verificarDatosPais(nombre);
-        verificarDuplicadoPais(nombre);
         Pais pais = new Pais();
         pais.setNombre(nombre);
         paisRepositorio.save(pais);
     }
 
-    public void editarPais(String id, String nombre) throws ErrorServicio {
-        Pais pais = verficarExistenciaPais(id);
+    public void editarPais(String nombre) throws ErrorServicio {
+    	verificarDatosPais(nombre);
+        Pais pais = buscarPaisPorNombre(nombre);
         pais.setNombre(nombre);
         paisRepositorio.save(pais);
     }
 
     public void eliminarPais(String id) throws ErrorServicio {
-        Pais pais = verficarExistenciaPais(id);
+        Pais pais = buscarPaisPorId(id);
         paisRepositorio.delete(pais);
     }
 
@@ -44,13 +44,10 @@ public class PaisServicio {
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre del país no puede estar vacio");
         }
-    }
-
-    @Transactional
-    public void verificarDuplicadoPais(String nombre) throws ErrorServicio {
-        if (nombre.equals(paisRepositorio.buscarPaisPorNombre(nombre).getNombre())) {
+        if (paisRepositorio.buscarPaisPorNombre(nombre) != null) {
             throw new ErrorServicio("Ya existe el pais " + nombre);
         }
+        
     }
 
     @Transactional
@@ -76,6 +73,16 @@ public class PaisServicio {
         Pais pais = paisRepositorio.buscarPaisPorNombre(nombre);
         if (pais == null) {
             throw new ErrorServicio("No existe el pais " + nombre);
+        } else {
+            return pais;
+        }
+    }
+    
+    @Transactional
+    public Pais buscarPaisPorId(String id) throws ErrorServicio {
+        Pais pais = paisRepositorio.buscarPaisPorId(id);
+        if (pais == null) {
+            throw new ErrorServicio("No existe el pais " + pais.getNombre());
         } else {
             return pais;
         }
