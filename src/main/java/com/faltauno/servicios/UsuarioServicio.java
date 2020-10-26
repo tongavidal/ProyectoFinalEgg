@@ -38,6 +38,9 @@ public class UsuarioServicio implements  UserDetailsService{
     
     @Autowired
     private NotificacionServicio notificacionServicio;
+    
+    @Autowired
+    private LocalidadServicio localidadServicio;
 
     @Transactional
     public void registrarUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
@@ -66,8 +69,9 @@ public class UsuarioServicio implements  UserDetailsService{
     }
 
     @Transactional
-    public void modificarUsuario(String id, String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
+    public void modificarUsuario(String id, String nombre, String apellido, String edad, String idLocalidad, String mail, String clave, String clave1) throws ErrorServicio {
 
+                  Localidad localidad = localidadServicio.buscarLocalidadPorId(idLocalidad);
     	validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
@@ -147,10 +151,6 @@ public class UsuarioServicio implements  UserDetailsService{
 
             throw new ErrorServicio("La clave no puede estar vacia y no puede ser menor a 6 digitos");
         }
-        if (!clave.equals(clave1)) {
-			throw new ErrorServicio(
-					"Las contraseñas no son iguales. Reingrésala.");
-		}
 
     }
 
