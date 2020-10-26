@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.faltauno.entidades.Localidad;
-import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.servicios.LocalidadServicio;
 import com.faltauno.servicios.UsuarioServicio;
@@ -62,7 +60,7 @@ public class UsuarioControlador {
             @RequestParam Localidad localidad, @RequestParam String clave, String clave1) {
 
         try {
-            usuarioServicio.registrarUsuario(nombre, apellido, edad, localidad, mail, clave);
+            usuarioServicio.registrarUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
         } catch (ErrorServicio e) {
 
             List<Localidad> localidades = localidadServicio.listarPaises();
@@ -92,9 +90,9 @@ public class UsuarioControlador {
     
     @PostMapping("editar-perfil/{idusuario}")
     public String editarPerfilPost(ModelMap modelo, @PathVariable String idusuario, @RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String edad, @RequestParam String idLocalidad, @RequestParam String mail, @RequestParam String clave) throws ErrorServicio{
+            @RequestParam String edad, @RequestParam String idLocalidad, @RequestParam String mail, @RequestParam String clave, @RequestParam String clave1) throws ErrorServicio{
         try{
-            usuarioServicio.modificarUsuario(idusuario, nombre, apellido, edad, idLocalidad, mail, clave);
+            usuarioServicio.modificarUsuario(idusuario, nombre, apellido, edad, idLocalidad, mail, clave, clave1);
             return ("listar-perfil.html");
         } catch (ErrorServicio es) {
             modelo.put("error", es.getMessage());
