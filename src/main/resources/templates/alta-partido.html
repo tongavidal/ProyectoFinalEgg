@@ -34,7 +34,7 @@
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
 									<input type="date" id="subject" class="form-control"
-										name="fecha" placeholder="fecha">
+										name="fecha"th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"  placeholder="fecha">
 								</div>
 							</div>
 							<div class="row form-group">

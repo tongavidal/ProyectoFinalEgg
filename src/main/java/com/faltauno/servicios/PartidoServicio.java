@@ -69,18 +69,20 @@ public class PartidoServicio {
     }
     
     @Transactional
-    public void modificarPartido(String idpartido, String idlocalidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio, Usuario creador, String obsVacante, String obsEstablecimiento, Sexo sexo, Date fecha) throws ErrorServicio{
+    public void modificarPartido(String idpartido, String idlocalidad, String idEstablecimiento, /*Integer cantJugador,*/ Integer horario, /*Integer cantVacantes,*/ Double precio, /*Usuario creador, String obsVacante, String obsEstablecimiento,*/ Sexo sexo, Date fecha) throws ErrorServicio{
 
         Localidad localidad = localidadRepositorio.findById(idlocalidad).get();
+        Establecimiento establecimiento=establecimientoRepositorio.findById(idEstablecimiento).get();
         Partido p = partidoRepositorio.findById(idpartido).get();
 
         p.setLocalidad(localidad);
+        p.setEstablecimiento(establecimiento);
 //        p.setCantJugador(cantJugador); >> para nueva version
 //        p.setCantVacantes(cantVacantes); >> para nueva version
         p.setPrecio(precio);
-        p.setCreador(creador);        
-        p.setObsVacante(obsVacante);
-        p.setObsEstablecimiento(obsEstablecimiento);
+        //p.setCreador(creador);        
+        //p.setObsVacante(obsVacante);
+        //p.setObsEstablecimiento(obsEstablecimiento);
         p.setSexo(sexo);
         p.setFecha(fecha); //Fecha del partido
         p.setHorario(horario);//Horario del partido
@@ -218,7 +220,21 @@ public class PartidoServicio {
             return hora*100+min;
         }
     }
-
+    public String horario(Integer horario) throws ErrorServicio{
+        Integer hora=horario/100;
+        Integer min=horario%100;
+        String h="";
+        String m="";
+        if (hora<10) {
+            h="0";
+        }
+        if (min<10){
+            m="0";
+        }
+        h+=Integer.toString(hora);
+        m+=Integer.toString(min);
+        return h+":"+m;
+    }
     public List<Partido> listarMisPartidos(String idCreador) throws ErrorServicio{
         List<Partido> listaMisPartidos = partidoRepositorio.buscarPorCreador(idCreador);
         if (listaMisPartidos== null){
@@ -253,5 +269,15 @@ public class PartidoServicio {
         }
         
         
+    }
+    
+    @Transactional
+    public void eliminarPartido(String id) throws ErrorServicio{
+        try {
+            Partido partido=partidoRepositorio.getOne(id);
+            partidoRepositorio.delete(partido);
+        } catch (Exception e) {
+            throw new ErrorServicio("Existe un error al eliminar");
+        }
     }
 }
