@@ -191,9 +191,8 @@ public class PartidoControlador {
 
     @GetMapping("/mis-partidos")
     public String misPartidos(ModelMap modelo, String idCreador) throws ErrorServicio {
-        modelo.put("title", "Registrarse - NosFalta1");
         try {
-            modelo.put("title", "Registrarse - NosFalta1");
+            modelo.put("title", "Mis Partidos - NosFalta1");
             List<Partido> listaMisPartidos = partidoServicio.listarMisPartidos(idCreador);
             modelo.put("partidos", listaMisPartidos);
             return ("mis-postulaciones.html");

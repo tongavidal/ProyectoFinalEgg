@@ -38,6 +38,9 @@ public class UsuarioServicio implements  UserDetailsService{
     
     @Autowired
     private NotificacionServicio notificacionServicio;
+    
+    @Autowired
+    private LocalidadServicio localidadServicio;
 
     @Transactional
     public void registrarUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave) throws ErrorServicio {
@@ -66,8 +69,9 @@ public class UsuarioServicio implements  UserDetailsService{
     }
 
     @Transactional
-    public void modificarUsuario(String id, String nombre, String apellido, String edad, Localidad localidad, String mail, String clave) throws ErrorServicio {
+    public void modificarUsuario(String id, String nombre, String apellido, String edad, String idLocalidad, String mail, String clave) throws ErrorServicio {
 
+                  Localidad localidad = localidadServicio.buscarLocalidadPorId(idLocalidad);
     	validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
@@ -114,7 +118,7 @@ public class UsuarioServicio implements  UserDetailsService{
             throw new ErrorServicio("No se encontro el usuario buscado");
         }
     }
-
+    
     public void validarRegistroUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave) throws ErrorServicio {
 
         if (nombre == "" || nombre.isEmpty()) {
