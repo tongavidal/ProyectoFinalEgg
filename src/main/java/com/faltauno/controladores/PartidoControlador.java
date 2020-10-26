@@ -151,21 +151,10 @@ public class PartidoControlador {
 
         try {
         	Partido partido = partidoServicio.traerPartido(idpartido);
-            partidoServicio.cargarPostulado(partido, idpostulado);
-
-            //Consulto si ya no estan completo los postulados y guardo confirmado
-            if (partidoServicio.validarVacantes(partidoServicio.traerPartido(idpartido))) {
-
-                partidoServicio.confirmarPostulado(partidoServicio.traerPartido(idpartido), idpostulado);
-                modelo.put("mensaje", "El jugador fue confirmado con exito");
-
-            } else {
-                modelo.put("mensaje", "Ya no hay mas vacantes");
-            } //<< muestro mensaje caso contrario
-
+                partidoServicio.cargarPostulado(partido, idpostulado);
             //vuelvo a cargar postulados para mostrar
-            List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
-            modelo.put("listado-postulados", postulados);
+            //List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
+            //modelo.put("listado-postulados", postulados);
 
         } catch (ErrorServicio ex) {
             modelo.put("mensaje", ex.getMessage());
