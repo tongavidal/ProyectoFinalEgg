@@ -17,9 +17,9 @@
 
                 <div class="container">
                     <div class="row">
-                        <h2>Lista de Partidos</h2>
+                        <h2>Lista de Postulados</h2>
                         <div class="col-lg-12 search">
-                            <input type="search" class="form-control" id="input-search" placeholder="Search Attendees..." >
+                            <input type="search" class="form-control" id="input-search" placeholder="Buscar Postulados..." >
                         </div>
                         <div class="searchable-container">
                             <div th:each="partido:${partidos}" class="items col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
@@ -33,9 +33,9 @@
                                     <p>Precio: <span th:text="${partido.precio}"></span></p>
                                     <br>
                                     
-                                    <a th:href="@{/partido/modificar_partido(idpartido=__${partido.id}__,idpostulado=__${session.usuariosession.id}__)}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Modificar</a>
+                                    <a th:href="@{/partido/modificar_partido/__${partido.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Modificar</a>
                                     
-                                    <a th:href="@{/partido/eliminar_partido(idpartido=__${partido.id}__,idpostulado=__${session.usuariosession.id}__)}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</a>
+                                    <a th:href="@{/partido/eliminar_partido/__${partido.id}__}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</a>
                                     
                                     <a th:href="@{/partido/postularse(idpartido=__${partido.id}__,idpostulado=__${session.usuariosession.id}__)}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Postularse</a>
                                     

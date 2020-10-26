@@ -144,7 +144,7 @@ public class PartidoControlador {
             //Consulto si ya no estan completo los postulados y guardo confirmado
             if (partidoServicio.validarVacantes(partidoServicio.traerPartido(idpartido))) {
 
-                partidoServicio.confirmarPostulado(partidoServicio.traerPartido(idpartido), idpartido);
+                partidoServicio.confirmarPostulado(partidoServicio.traerPartido(idpartido), idpostulado);
                 modelo.put("mensaje", "El jugador fue confirmado con exito");
 
             } else {

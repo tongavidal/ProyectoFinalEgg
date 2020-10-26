@@ -1,0 +1,26 @@
+
+#                                                                                                                                                              
+#                                                                                                                                                              
+#  NNNNNNNN        NNNNNNNN                                  FFFFFFFFFFFFFFFFFFFFFF                lllllll         tttt                              1111111   
+#  N:::::::N       N::::::N                                  F::::::::::::::::::::F                l:::::l      ttt:::t                             1::::::1   
+#  N::::::::N      N::::::N                                  F::::::::::::::::::::F                l:::::l      t:::::t                            1:::::::1   
+#  N:::::::::N     N::::::N                                  FF::::::FFFFFFFFF::::F                l:::::l      t:::::t                            111:::::1   
+#  N::::::::::N    N::::::N   ooooooooooo       ssssssssss     F:::::F       FFFFFFaaaaaaaaaaaaa    l::::lttttttt:::::ttttttt      aaaaaaaaaaaaa      1::::1   
+#  N:::::::::::N   N::::::N oo:::::::::::oo   ss::::::::::s    F:::::F             a::::::::::::a   l::::lt:::::::::::::::::t      a::::::::::::a     1::::1   
+#  N:::::::N::::N  N::::::No:::::::::::::::oss:::::::::::::s   F::::::FFFFFFFFFF   aaaaaaaaa:::::a  l::::lt:::::::::::::::::t      aaaaaaaaa:::::a    1::::1   
+#  N::::::N N::::N N::::::No:::::ooooo:::::os::::::ssss:::::s  F:::::::::::::::F            a::::a  l::::ltttttt:::::::tttttt               a::::a    1::::l   
+#  N::::::N  N::::N:::::::No::::o     o::::o s:::::s  ssssss   F:::::::::::::::F     aaaaaaa:::::a  l::::l      t:::::t              aaaaaaa:::::a    1::::l   
+#  N::::::N   N:::::::::::No::::o     o::::o   s::::::s        F::::::FFFFFFFFFF   aa::::::::::::a  l::::l      t:::::t            aa::::::::::::a    1::::l   
+#  N::::::N    N::::::::::No::::o     o::::o      s::::::s     F:::::F            a::::aaaa::::::a  l::::l      t:::::t           a::::aaaa::::::a    1::::l   
+#  N::::::N     N:::::::::No::::o     o::::ossssss   s:::::s   F:::::F           a::::a    a:::::a  l::::l      t:::::t    tttttta::::a    a:::::a    1::::l   
+#  N::::::N      N::::::::No:::::ooooo:::::os:::::ssss::::::sFF:::::::FF         a::::a    a:::::a l::::::l     t::::::tttt:::::ta::::a    a:::::a 111::::::111
+#  N::::::N       N:::::::No:::::::::::::::os::::::::::::::s F::::::::FF         a:::::aaaa::::::a l::::::l     tt::::::::::::::ta:::::aaaa::::::a 1::::::::::1
+#  N::::::N        N::::::N oo:::::::::::oo  s:::::::::::ss  F::::::::FF          a::::::::::aa:::al::::::l       tt:::::::::::tt a::::::::::aa:::a1::::::::::1
+#  NNNNNNNN         NNNNNNN   ooooooooooo     sssssssssss    FFFFFFFFFFF           aaaaaaaaaa  aaaallllllll         ttttttttttt    aaaaaaaaaa  aaaa111111111111
+#                                                                                                                                                              
+#                                                                                                                                                              
+#                                                                                                                                                              
+#                                                                                                                                                              
+#                                                                                                                                                              
+#                                                                                                                                                              
+#                                                                                                                                                              
