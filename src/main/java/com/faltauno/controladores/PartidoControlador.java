@@ -56,10 +56,22 @@ public class PartidoControlador {
     
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-    @GetMapping("/modificar_partido")
-    public String modificar_partido(ModelMap modelo){
+    @GetMapping("/modificar_partido/{id}")
+    public String modificar_partido(@PathVariable String id,ModelMap modelo){
+        List<Localidad> localidades=localidadServicio.listarPaises();
+        modelo.put("localidades", localidades);
+        modelo.put("sexo", Sexo.values());
+        List<Establecimiento> establecimientos=establecimientoServicio.listaEstablecimientos();
+        modelo.put("establecimientos", establecimientos);
         modelo.put("tittle", "Modificar Partido - NosFalta1");
-        return "modificar_partido";
+        try {
+            Partido partido=partidoServicio.traerPartido(id);
+            modelo.addAttribute("partido",partido);
+            modelo.addAttribute("horario",partidoServicio.horario(partido.getHorario()));
+        } catch (ErrorServicio e) {
+            modelo.addAttribute("error",e.getMessage());
+        }
+        return "modificar-partido.html";
     }
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
@@ -180,7 +192,6 @@ public class PartidoControlador {
     public String registroPartido(HttpSession session, @RequestParam String idcreador, ModelMap modelo,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,@RequestParam Integer cantJugadores,@RequestParam String horario,@RequestParam Integer cantVacantes, @RequestParam Double precio,@RequestParam Sexo sexo,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
         try{ 
            Usuario creador = usuarioRepositorio.getOne(idcreador);
-           System.out.println(creador.getNombre());
            partidoServicio.crearPartido(idEstablecimiento,idLocalidad, cantJugadores, partidoServicio.horario(horario), cantVacantes, precio,creador, sexo, fecha);
         }catch(ErrorServicio ex){
             List<Establecimiento> establecimientos=establecimientoServicio.listaEstablecimientos();
@@ -188,11 +199,11 @@ public class PartidoControlador {
             List<Localidad> localidades=localidadServicio.listarPaises();
             modelo.put("localidades", localidades);
             modelo.put("sexo", Sexo.values());
-            modelo.put("error",ex.getMessage());
+            modelo.put("mensajeerror",ex.getMessage());
             return "alta-partido.html";
         }
-        modelo.put("exito","El partido fue agregado con exito");
-        return "index.html";
+        modelo.put("mensajeexito","El partido fue agregado con exito");
+        return "alta-partido.html";
     }
 
     @GetMapping("/mis-partidos")
@@ -208,5 +219,37 @@ public class PartidoControlador {
             return "partido.html";
         }
     }
-
+    
+    
+    @PostMapping("/modificar-partido/{id}")
+    public String modificarPartido(@PathVariable String id,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,ModelMap modelo,@RequestParam String horario,@RequestParam Sexo sexo,@RequestParam Double precio,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
+        try {
+            partidoServicio.modificarPartido(id, idLocalidad,idEstablecimiento,partidoServicio.horario(horario), precio, sexo, fecha);
+            
+        } catch (ErrorServicio e) {
+            List<Localidad> localidades=localidadServicio.listarPaises();
+            modelo.put("localidades", localidades);
+            modelo.put("sexo", Sexo.values());
+            List<Establecimiento> establecimientos=establecimientoServicio.listaEstablecimientos();
+            modelo.put("establecimientos", establecimientos);
+            modelo.addAttribute("error",e.getMessage());
+            return "modificar-partido.html";
+        }
+        //modelo.put("mensajeexito","El partido fue modificado con exito");
+        return "redirect:/partido/listar-partidos";
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @GetMapping("/eliminar_partido/{id}")
+    public String eliminarPartido(@PathVariable String id,ModelMap modelo){
+            try {
+                partidoServicio.eliminarPartido(id);
+            } catch (ErrorServicio e) {
+                modelo.addAttribute("error",e.getMessage());
+                return "redirect:/partido/listar-partidos";
+            }
+        return "redirect:/partido/listar-partidos";
+    }
+    
+    
 }
