@@ -8,6 +8,7 @@ import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.EstablecimientoRepositorio;
 import com.faltauno.repositorios.PartidoRepositorio;
+import com.faltauno.repositorios.UsuarioRepositorio;
 import com.faltauno.servicios.EstablecimientoServicio;
 import com.faltauno.servicios.LocalidadServicio;
 import com.faltauno.servicios.PartidoServicio;
@@ -42,20 +43,35 @@ public class PartidoControlador {
     @Autowired
     private LocalidadServicio localidadServicio;
     
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+    
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
         modelo.put("title", "Lista de Partidos - NosFalta1");
-
+        modelo.put("partidos", partidoRepositorio.findAll());
         return "listar-partidos.html";
     }
     
     
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-    @GetMapping("/modificar_partido")
-    public String modificar_partido(ModelMap modelo){
+    @GetMapping("/modificar_partido/{id}")
+    public String modificar_partido(@PathVariable String id,ModelMap modelo){
+        List<Localidad> localidades=localidadServicio.listarPaises();
+        modelo.put("localidades", localidades);
+        modelo.put("sexo", Sexo.values());
+        List<Establecimiento> establecimientos=establecimientoServicio.listaEstablecimientos();
+        modelo.put("establecimientos", establecimientos);
         modelo.put("tittle", "Modificar Partido - NosFalta1");
-        return "modificar_partido";
+        try {
+            Partido partido=partidoServicio.traerPartido(id);
+            modelo.addAttribute("partido",partido);
+            modelo.addAttribute("horario",partidoServicio.horario(partido.getHorario()));
+        } catch (ErrorServicio e) {
+            modelo.addAttribute("error",e.getMessage());
+        }
+        return "modificar-partido.html";
     }
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
@@ -130,16 +146,17 @@ public class PartidoControlador {
             return ("listado-postulados");
         }
     }
-    @PostMapping("/postularse")
+    @GetMapping("/postularse")
     public String postularse(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
 
         try {
-            partidoServicio.cargarPostulado(partidoServicio.traerPartido(idpartido), idpostulado);
+        	Partido partido = partidoServicio.traerPartido(idpartido);
+            partidoServicio.cargarPostulado(partido, idpostulado);
 
             //Consulto si ya no estan completo los postulados y guardo confirmado
             if (partidoServicio.validarVacantes(partidoServicio.traerPartido(idpartido))) {
 
-                partidoServicio.confirmarPostulado(partidoServicio.traerPartido(idpartido), idpartido);
+                partidoServicio.confirmarPostulado(partidoServicio.traerPartido(idpartido), idpostulado);
                 modelo.put("mensaje", "El jugador fue confirmado con exito");
 
             } else {
@@ -161,6 +178,7 @@ public class PartidoControlador {
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/alta-partido")
     public String registrarPartido(HttpSession session,ModelMap modelo){
+    	modelo.put("title", "Crear Partido - NosFalta1");
         List<Establecimiento> establecimientos=establecimientoServicio.listaEstablecimientos();
         modelo.put("establecimientos", establecimientos);
         List<Localidad> localidades=localidadServicio.listarPaises();
@@ -171,10 +189,9 @@ public class PartidoControlador {
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/crear_partido")
-    public String registroPartido(HttpSession session,ModelMap modelo,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,@RequestParam Integer cantJugadores,@RequestParam String horario,@RequestParam Integer cantVacantes, @RequestParam Double precio,@RequestParam Sexo sexo,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
+    public String registroPartido(HttpSession session, @RequestParam String idcreador, ModelMap modelo,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,@RequestParam Integer cantJugadores,@RequestParam String horario,@RequestParam Integer cantVacantes, @RequestParam Double precio,@RequestParam Sexo sexo,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
         try{ 
-           Usuario creador=(Usuario)session.getAttribute("usuariosession");
-           System.out.println(creador.getNombre());
+           Usuario creador = usuarioRepositorio.getOne(idcreador);
            partidoServicio.crearPartido(idEstablecimiento,idLocalidad, cantJugadores, partidoServicio.horario(horario), cantVacantes, precio,creador, sexo, fecha);
         }catch(ErrorServicio ex){
             List<Establecimiento> establecimientos=establecimientoServicio.listaEstablecimientos();
@@ -182,11 +199,11 @@ public class PartidoControlador {
             List<Localidad> localidades=localidadServicio.listarPaises();
             modelo.put("localidades", localidades);
             modelo.put("sexo", Sexo.values());
-            modelo.put("error",ex.getMessage());
+            modelo.put("mensajeerror",ex.getMessage());
             return "alta-partido.html";
         }
-        modelo.put("exito","El partido fue agregado con exito");
-        return "index.html";
+        modelo.put("mensajeexito","El partido fue agregado con exito");
+        return "alta-partido.html";
     }
 
     @GetMapping("/mis-partidos")
@@ -201,5 +218,37 @@ public class PartidoControlador {
             return "partido.html";
         }
     }
-
+    
+    
+    @PostMapping("/modificar-partido/{id}")
+    public String modificarPartido(@PathVariable String id,@RequestParam String idEstablecimiento,@RequestParam String idLocalidad,ModelMap modelo,@RequestParam String horario,@RequestParam Sexo sexo,@RequestParam Double precio,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date fecha){
+        try {
+            partidoServicio.modificarPartido(id, idLocalidad,idEstablecimiento,partidoServicio.horario(horario), precio, sexo, fecha);
+            
+        } catch (ErrorServicio e) {
+            List<Localidad> localidades=localidadServicio.listarPaises();
+            modelo.put("localidades", localidades);
+            modelo.put("sexo", Sexo.values());
+            List<Establecimiento> establecimientos=establecimientoServicio.listaEstablecimientos();
+            modelo.put("establecimientos", establecimientos);
+            modelo.addAttribute("error",e.getMessage());
+            return "modificar-partido.html";
+        }
+        //modelo.put("mensajeexito","El partido fue modificado con exito");
+        return "redirect:/partido/listar-partidos";
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @GetMapping("/eliminar_partido/{id}")
+    public String eliminarPartido(@PathVariable String id,ModelMap modelo){
+            try {
+                partidoServicio.eliminarPartido(id);
+            } catch (ErrorServicio e) {
+                modelo.addAttribute("error",e.getMessage());
+                return "redirect:/partido/listar-partidos";
+            }
+        return "redirect:/partido/listar-partidos";
+    }
+    
+    
 }

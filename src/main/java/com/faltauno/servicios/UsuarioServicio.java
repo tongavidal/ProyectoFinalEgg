@@ -43,9 +43,9 @@ public class UsuarioServicio implements  UserDetailsService{
     private LocalidadServicio localidadServicio;
 
     @Transactional
-    public void registrarUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave) throws ErrorServicio {
+    public void registrarUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
 
-        validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave);
+        validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
 
         Usuario u = new Usuario();
         //u.setId(UUID.randomUUID().toString().substring(0, 8));
@@ -118,8 +118,8 @@ public class UsuarioServicio implements  UserDetailsService{
             throw new ErrorServicio("No se encontro el usuario buscado");
         }
     }
-    
-    public void validarRegistroUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave) throws ErrorServicio {
+
+    public void validarRegistroUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
 
         if (nombre == "" || nombre.isEmpty()) {
 
