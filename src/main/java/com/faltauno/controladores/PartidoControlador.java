@@ -259,7 +259,7 @@ public class PartidoControlador {
         return "redirect:/partido/listar-partidos";
     }
     
-    @PostMapping("/ver-partido")
+    @GetMapping("/ver-partido")
     public  String verPartido(ModelMap modelo, @RequestParam(required = false) String idlocalidad, @RequestParam(required = false) String idpartido) throws ErrorServicio{
         try{
         modelo.put("title", "Partido Seleccioando - NosFalta1");
