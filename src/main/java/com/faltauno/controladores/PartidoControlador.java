@@ -82,21 +82,21 @@ public class PartidoControlador {
     }
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-    @PostMapping("/listar-postulados")
-    public String listarpostulados(ModelMap modelo, @RequestParam String idpartido) throws ErrorServicio {
+    @GetMapping("/listar-postulados/{idpartido}")
+    public String listarpostulados(ModelMap modelo, @PathVariable String idpartido) throws ErrorServicio {
         try {
             List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
             modelo.put("listado-postulados", postulados);
         } catch (Exception ex) {
             modelo.put("mensaje", ex.getMessage());
-            return "listado-postulados";
+            return "listado-postulados.html";
         }
-        return "listado-postulados";
+        return "listado-postulados.html";
     }
 
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-    @GetMapping("/listarconfirmados")
+    @GetMapping("/listar-confirmados/{idPartido}")
     public String listarConfirmados(ModelMap modelo, @PathVariable String idPartido) throws ErrorServicio {
         modelo.put("title", "Registrarse - NosFalta1");
         try {
@@ -161,13 +161,13 @@ public class PartidoControlador {
             //vuelvo a cargar postulados para mostrar
             //List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
             //modelo.put("listado-postulados", postulados);
-
+            
         } catch (ErrorServicio ex) {
-            modelo.put("mensaje", ex.getMessage());
-            return "listado-postulados";
+            modelo.put("error", ex.getMessage());
+            
         }
-
-        return "listado-postulados";
+        modelo.put("partido",partidoRepositorio.getOne(idpartido));
+        return "ver-partido.html";
     }
     
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")

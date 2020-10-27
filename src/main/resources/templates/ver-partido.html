@@ -40,9 +40,9 @@
 
 					<div class="col-md-6 animate-box img-lateral">
 
-						<a th:href="@{/partido/postularse/__${usuario.id}__}" th:if="${session.usuariosession.id != partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Postularse</a>
-						<a th:href="@{/partido/ver-postulados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Postulados</a>
-						<a th:href="@{/partido/ver-confirmados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Confirmados</a>
+						<a th:href="@{/partido/postularse(idpartido=__${partido.id}__,idpostulado=__${session.usuariosession.id}__)}" th:if="${session.usuariosession.id != partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Postularse</a>
+						<a th:href="@{/partido/listar-postulados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Postulados</a>
+						<a th:href="@{/partido/listar-confirmados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Confirmados</a>
 						<a th:href="@{/partido/modificar_partido/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Editar</a>
 						<a th:href="@{/partido/eliminar_partido/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Eliminar</a>
 					</div>
