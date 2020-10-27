@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.faltauno.entidades.Localidad;
+import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.servicios.LocalidadServicio;
 import com.faltauno.servicios.UsuarioServicio;
@@ -28,12 +29,13 @@ public class UsuarioControlador {
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
         modelo.put("title", "Ingresá - Tu Biblioteca");
+        List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
+        modelo.put("localidades", localidades);
+        modelo.put("sexo", Sexo.values());
         if (error != null) {
             modelo.put("error", "Nombre de usuario o clave incorrectos.");
-            List<Localidad> localidades = localidadServicio.listarPaises();
-            modelo.put("localidades", localidades);
+            return "registrarse.html";
         }
-
         return "registrarse.html";
     }
 
@@ -52,6 +54,7 @@ public class UsuarioControlador {
         modelo.put("title", "Registrarse - NosFalta1");
         List<Localidad> localidades = localidadServicio.listarPaises();
         modelo.put("localidades", localidades);
+        modelo.put("sexo", Sexo.values());
         return "registrarse.html";
     }
 
