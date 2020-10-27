@@ -22,7 +22,7 @@
 						<h1>Informacion de Partido</h1>
 						<h3>Usuario Creador: <span th:text="${partido.creador.nombre}"></span></h3>
 						<h3>Id: <span th:text="${partido.id}"></span></h3>
-						<p>Fecha: <span th:text="${partido.fecha}"></span></p>
+						<p>Fecha: <span th:text="${#dates.format(partido.fecha,'dd-MM-yyyy')}"></span></p>
 						<p>Horario: <span th:text="${partido.horario}"></span></p>
 						<p>Fecha de creación: <span th:text="${partido.fechaCreacion}"></span></p>
 						<p>Localidad: <span th:text="${partido.localidad}"></span></p>
@@ -40,9 +40,9 @@
 
 					<div class="col-md-6 animate-box img-lateral">
 
-						<a th:href="@{/partido/postularse/__${usuario.id}__}" th:if="${session.usuariosession.id != partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Postularse</a>
-						<a th:href="@{/partido/ver-postulados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Postulados</a>
-						<a th:href="@{/partido/ver-confirmados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Confirmados</a>
+						<a th:href="@{/partido/postularse(idpartido=__${partido.id}__,idpostulado=__${session.usuariosession.id}__)}" th:if="${session.usuariosession.id != partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Postularse</a>
+						<a th:href="@{/partido/listar-postulados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Postulados</a>
+						<a th:href="@{/partido/listar-confirmados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Confirmados</a>
 						<a th:href="@{/partido/modificar_partido/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Editar</a>
 						<a th:href="@{/partido/eliminar_partido/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Eliminar</a>
 					</div>

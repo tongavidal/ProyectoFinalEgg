@@ -6,6 +6,7 @@
 package com.faltauno.servicios;
 
 import com.faltauno.entidades.Localidad;
+import com.faltauno.entidades.Reputacion;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.UsuarioRepositorio;
@@ -184,5 +185,20 @@ public class UsuarioServicio implements  UserDetailsService{
             return null;
         }
 
+    }
+    
+    public List<Reputacion> reputaciones(String id){
+        return usuarioRepositorio.reputaciones(id);
+    }
+    
+    public void agregarReputacionUsuario(String id,Reputacion reputacion) throws ErrorServicio{
+        try {
+            Usuario usuario=usuarioRepositorio.getOne(id);
+            usuario.getReputacion().add(reputacion);
+            usuarioRepositorio.save(usuario); 
+        } catch (Exception e) {
+            throw new ErrorServicio("Cosas pasaron");
+        }
+        
     }
 }

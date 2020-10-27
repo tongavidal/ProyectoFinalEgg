@@ -8,6 +8,7 @@ package com.faltauno.servicios;
 import com.faltauno.entidades.Reputacion;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.ReputacionRepositorio;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class ReputacionServicio {
     @Autowired
     private ReputacionRepositorio reputacionRepositorio;
     
+    @Autowired
+    private UsuarioServicio usuarioServicio;
     
     @Transactional
     public void agregarReputacion(Integer puntualidad,Integer habilidad,Integer fairplay) throws ErrorServicio{
@@ -63,4 +66,44 @@ public class ReputacionServicio {
         }
     }
     
+    public Integer promPuntualidad(String id){
+        List<Reputacion> reputacionUsuario=usuarioServicio.reputaciones(id);
+        if (!reputacionUsuario.isEmpty()) {
+            Integer prom=0;
+            for (Reputacion reputacion : reputacionUsuario) {
+                prom+=reputacion.getPuntualidad();
+            }
+            return prom/reputacionUsuario.size();
+        }else{
+            return 0;
+        }
+    }
+    public Integer promHabilidad(String id){
+        List<Reputacion> reputacionUsuario=usuarioServicio.reputaciones(id);
+        if (!reputacionUsuario.isEmpty()) {
+            Integer prom=0;
+            for (Reputacion reputacion : reputacionUsuario) {
+                prom+=reputacion.getHabilidad();
+            }
+            return prom/reputacionUsuario.size();
+        }else{
+            return 0;
+        }
+    }
+    public Integer promFairplay(String id){
+        List<Reputacion> reputacionUsuario=usuarioServicio.reputaciones(id);
+        if (!reputacionUsuario.isEmpty()) {
+            Integer prom=0;
+            for (Reputacion reputacion : reputacionUsuario) {
+                prom+=reputacion.getFairplay();
+            }
+            return prom/reputacionUsuario.size();
+        }else{
+            return 0;
+        }
+    }
+    
+    public Reputacion devolverReputacion(String id){
+        return reputacionRepositorio.getOne(id);
+    }
 }

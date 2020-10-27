@@ -112,7 +112,7 @@ public class PartidoServicio {
 
     //Traer Partido
     public Partido traerPartido(String idPartido) throws ErrorServicio {
-        Partido p = partidoRepositorio.findById(idPartido).get();
+        Partido p = partidoRepositorio.getOne(idPartido);
         return p;
     }
 
@@ -272,7 +272,8 @@ public class PartidoServicio {
     public void eliminarPartido(String id) throws ErrorServicio {
         try {
             Partido partido = partidoRepositorio.getOne(id);
-            partidoRepositorio.delete(partido);
+            partido.setEstado(false);
+            //partidoRepositorio.delete(partido);
         } catch (Exception e) {
             throw new ErrorServicio("Existe un error al eliminar");
         }
