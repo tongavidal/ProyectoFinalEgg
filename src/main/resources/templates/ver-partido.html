@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="components/head::head"></head>
+
+<body>
+
+	<div class="fh5co-loader">
+		
+	</div>
+
+	<div id="page">
+		<nav th:replace="components/nav::nav"></nav>
+
+		<header id="fh5co-header" class="fh5co-cover partidos alta-partido"
+			role="banner" data-stellar-background-ratio="0.5">
+			<div class="container pt-30" th:each="partido:${partidos}">
+				<div class="row equal">
+					<div class="col-md-6 animate-box">
+
+						<h1>Informacion de Partido</h1>
+						<h3>Usuario Creador: <span th:text="${partido.creador.nombre}"></span></h3>
+						<h3>Id: <span th:text="${partido.id}"></span></h3>
+						<p>Fecha: <span th:text="${partido.fecha}"></span></p>
+						<p>Horario: <span th:text="${partido.horario}"></span></p>
+						<p>Fecha de creación: <span th:text="${partido.fechaCreacion}"></span></p>
+						<p>Localidad: <span th:text="${partido.localidad}"></span></p>
+						<p>Establecimiento: <span th:text="${partido.establecimiento}"></span></p>
+						<p>Precio: <span th:text="${partido.precio}"></span></p>	
+						<p>Observaciones del establecimiento: <span th:text="${partido.obsEstablecimiento}"></span></p>
+						<p>Cantidad de jugadores: <span th:text="${partido.cantJugador}"></span></p>
+						<p>Cantidad de vacantes disponibles: <span th:text="${partido.cantVacantes}"></span></p>
+						<p>Observaciones acerca de las vacantes: <span th:text="${partido.obsVacante}"></span></p>
+						<p>Jugadores confirmados: <span th:text="${partido.jugConfirmados}"></span></p>
+						<p>Jugadores postulados: <span th:text="${partido.jugPostulados}"></span></p>
+						<p>Sexo: <span th:text="${partido.sexo}"></span></p>
+
+					</div>
+
+					<div class="col-md-6 animate-box img-lateral">
+
+						<a th:href="@{/partido/postularse/__${usuario.id}__}" th:if="${session.usuariosession.id != partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Postularse</a>
+						<a th:href="@{/partido/ver-postulados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Postulados</a>
+						<a th:href="@{/partido/ver-confirmados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Confirmados</a>
+						<a th:href="@{/partido/modificar_partido/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Editar</a>
+						<a th:href="@{/partido/eliminar_partido/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Eliminar</a>
+					</div>
+				</div>
+			</div>
+		</header>
+
+
+
+		<!--COMENTO FOOTER-->
+		<!--<footer th:replace="components/footer::footer"></footer>-->
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+
+	<scripts th:replace="/components/scripts::scripts"></scripts>
+
+
+
+</body>
+</html>
