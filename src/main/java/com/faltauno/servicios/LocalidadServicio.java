@@ -95,13 +95,13 @@ public void editarLocalidad(String id, String nombre) throws ErrorServicio {
         return localidad;
     }
 
-    private Localidad verificarExistenciaLocalidad(String id) {
+    public Localidad verificarExistenciaLocalidad(String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     
-
-   
-
+    public List<Localidad> listarTodasLocalidads(){
+        List<Localidad> listaLocalidades = localidadRepositorio.findAll();
+        return listaLocalidades;
+    }
 
 }

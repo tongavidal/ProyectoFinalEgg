@@ -32,8 +32,8 @@
 						<p>Cantidad de jugadores: <span th:text="${partido.cantJugador}"></span></p>
 						<p>Cantidad de vacantes disponibles: <span th:text="${partido.cantVacantes}"></span></p>
 						<p>Observaciones acerca de las vacantes: <span th:text="${partido.obsVacante}"></span></p>
-						<p>Jugadores confirmados: <span th:text="${partido.jugConfirmados}"></span></p>
-						<p>Jugadores postulados: <span th:text="${partido.jugPostulados}"></span></p>
+						<p>Jugadores confirmados: <span th:text="${partido.jugConfirmados.size()}"></span></p>
+						<p>Jugadores postulados: <span th:text="${partido.jugPostulados.size()}"></span></p>
 						<p>Sexo: <span th:text="${partido.sexo}"></span></p>
 
 					</div>
