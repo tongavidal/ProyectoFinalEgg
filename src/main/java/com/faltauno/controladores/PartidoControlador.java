@@ -48,6 +48,9 @@ public class PartidoControlador {
     
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
+        List<Localidad> listaLocalidades = localidadServicio.listarTodasLocalidads();
+        modelo.put("localidades", listaLocalidades);
+        modelo.put("sexo", Sexo.values());
         modelo.put("title", "Lista de Partidos - NosFalta1");;
         return "listar-partidos.html";
     }
