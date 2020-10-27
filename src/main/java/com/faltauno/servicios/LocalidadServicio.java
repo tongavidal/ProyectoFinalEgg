@@ -85,6 +85,15 @@ public void editarLocalidad(String id, String nombre) throws ErrorServicio {
             return localidad;
         }
     }
+    
+    @Transactional
+    public Localidad buscarLocalidadPorId(String idLocalidad) throws ErrorServicio{
+        Localidad localidad = localidadRepositorio.findById(idLocalidad).get();
+        if (localidad == null){
+            throw new ErrorServicio("No existe la locación");
+        }
+        return localidad;
+    }
 
     private Localidad verificarExistenciaLocalidad(String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
