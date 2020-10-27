@@ -338,6 +338,10 @@ a.has-dropdown {
     padding-right: 5px;
 }
 
+a.fas.fa-user.has-dropdown.usuario {
+    display: inline;
+}
+
 #fh5co-header,
 #fh5co-counter,
 .fh5co-bg {
