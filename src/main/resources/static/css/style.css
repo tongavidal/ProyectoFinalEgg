@@ -327,6 +327,17 @@ h1 span {
   color: #F85A16 !important;
 }
 
+a.has-dropdown {
+    font-family: "Signika", Arial, sans-serif;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.fa-user:before {
+    font-family: "Font Awesome 5 Free";
+    padding-right: 5px;
+}
+
 #fh5co-header,
 #fh5co-counter,
 .fh5co-bg {
