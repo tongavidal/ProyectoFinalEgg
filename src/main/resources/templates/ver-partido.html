@@ -22,7 +22,7 @@
 						<h1>Informacion de Partido</h1>
 						<h3>Usuario Creador: <span th:text="${partido.creador.nombre}"></span></h3>
 						<h3>Id: <span th:text="${partido.id}"></span></h3>
-						<p>Fecha: <span th:text="${partido.fecha}"></span></p>
+						<p>Fecha: <span th:text="${#dates.format(partido.fecha,'dd-MM-yyyy')}"></span></p>
 						<p>Horario: <span th:text="${partido.horario}"></span></p>
 						<p>Fecha de creación: <span th:text="${partido.fechaCreacion}"></span></p>
 						<p>Localidad: <span th:text="${partido.localidad}"></span></p>
