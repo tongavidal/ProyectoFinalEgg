@@ -221,10 +221,10 @@ public class PartidoControlador {
             modelo.put("title", "Mis Partidos - NosFalta1");
             List<Partido> listaMisPartidos = partidoServicio.listarMisPartidos(idcreador);
             modelo.put("partidos", listaMisPartidos);
-            return ("mis-postulaciones.html");
+            return ("mis-partidos-creados.html");
         } catch (ErrorServicio es) {
             modelo.put("error", es.getMessage());
-            return "partido.html";
+            return "mis-partidos-creados.html";
         }
     }
     
@@ -257,6 +257,19 @@ public class PartidoControlador {
                 return "redirect:/partido/listar-partidos";
             }
         return "redirect:/partido/listar-partidos";
+    }
+    
+    @PostMapping("/ver-partido")
+    public  String verPartido(ModelMap modelo, @RequestParam(required = false) String idlocalidad, @RequestParam(required = false) String idpartido) throws ErrorServicio{
+        try{
+        modelo.put("title", "Partido Seleccioando - NosFalta1");
+        Partido partido = partidoServicio.traerPartido(idpartido);
+        modelo.put("partidos", partido);
+        return "ver-partido.html";
+        }catch (ErrorServicio es) {
+            modelo.put("mensaje", es.getMessage());
+            return "ver-partido.html";
+        }
     }
     
     
