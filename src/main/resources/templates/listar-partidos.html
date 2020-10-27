@@ -19,7 +19,7 @@
 				<div class="row">
 					<h2>Buscar Partidos</h2>
 					<div class="col-lg-12 search">
-						<form th:action="@{/partido/listar-partidos-ok}">
+						<form th:action="@{/partido/listar-partidos-ok}" method="post">
 							<div class="form-row">
 								<div th:if="${mensajeerror != null}"
 									class="col-md-12 alert alert-danger" role="alert">
