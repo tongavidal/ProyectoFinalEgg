@@ -48,9 +48,16 @@ public class PartidoControlador {
     
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
-        modelo.put("title", "Lista de Partidos - NosFalta1");
-        modelo.put("partidos", partidoRepositorio.findAll());
+        modelo.put("title", "Lista de Partidos - NosFalta1");;
         return "listar-partidos.html";
+    }
+    
+    @PostMapping("/listar-partidos-ok")
+    public  String listarPartidosFiltrados(ModelMap modelo, @RequestParam String idlocalidad, @RequestParam(required = false) String Sexo){
+        modelo.put("title", "Lista de Partidos - NosFalta1");
+        List<Partido> listaPartidosFiltrados = partidoServicio.listarPartidosFiltrados(idlocalidad, Sexo);
+        modelo.put("partidos", listaPartidosFiltrados);
+        return ("listar-partidos-ok.html");
     }
     
     
@@ -103,7 +110,6 @@ public class PartidoControlador {
         }
     }
 
-    
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/confirmar-postulado")
     public String confirmarpostulado(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
@@ -206,12 +212,11 @@ public class PartidoControlador {
         return "alta-partido.html";
     }
 
-    @GetMapping("/mis-partidos")
-    public String misPartidos(ModelMap modelo, String idCreador) throws ErrorServicio {
-        modelo.put("title", "Registrarse - NosFalta1");
+    @GetMapping("/mis-partidos/{idcreador}")
+    public String misPartidos(ModelMap modelo, @PathVariable String idcreador) throws ErrorServicio {
         try {
-            modelo.put("title", "Registrarse - NosFalta1");
-            List<Partido> listaMisPartidos = partidoServicio.listarMisPartidos(idCreador);
+            modelo.put("title", "Mis Partidos - NosFalta1");
+            List<Partido> listaMisPartidos = partidoServicio.listarMisPartidos(idcreador);
             modelo.put("partidos", listaMisPartidos);
             return ("mis-postulaciones.html");
         } catch (ErrorServicio es) {

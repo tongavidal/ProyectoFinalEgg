@@ -32,24 +32,25 @@ public class PartidoServicio {
 
     @Autowired
     private PartidoRepositorio partidoRepositorio;
-    
+
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-    
+
     @Autowired
     private LocalidadRepositorio localidadRepositorio;
-    
-     @Autowired
+
+    @Autowired
     private EstablecimientoRepositorio establecimientoRepositorio;
+
     /* CREACION DE PARTIDO */
     @Transactional
-    public void crearPartido(String idEstablecimiento,String idlocalidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio, Usuario creador, /*String obsVacante, String obsEstablecimiento,*/ Sexo sexo, Date fecha)throws ErrorServicio {
+    public void crearPartido(String idEstablecimiento, String idlocalidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio, Usuario creador, /*String obsVacante, String obsEstablecimiento,*/ Sexo sexo, Date fecha) throws ErrorServicio {
 
         Localidad localidad = localidadRepositorio.getOne(idlocalidad);
-        Establecimiento establecimiento=establecimientoRepositorio.getOne(idEstablecimiento);
+        Establecimiento establecimiento = establecimientoRepositorio.getOne(idEstablecimiento);
         validadr(establecimiento, localidad, cantJugador, cantVacantes, precio, fecha);
         Partido p = new Partido();
-        
+
         p.setEstablecimiento(establecimiento);
         p.setLocalidad(localidad);
         p.setCantJugador(cantJugador);
@@ -67,12 +68,12 @@ public class PartidoServicio {
         partidoRepositorio.save(p);
 
     }
-    
+
     @Transactional
-    public void modificarPartido(String idpartido, String idlocalidad, String idEstablecimiento, /*Integer cantJugador,*/ Integer horario, /*Integer cantVacantes,*/ Double precio, /*Usuario creador, String obsVacante, String obsEstablecimiento,*/ Sexo sexo, Date fecha) throws ErrorServicio{
+    public void modificarPartido(String idpartido, String idlocalidad, String idEstablecimiento, /*Integer cantJugador,*/ Integer horario, /*Integer cantVacantes,*/ Double precio, /*Usuario creador, String obsVacante, String obsEstablecimiento,*/ Sexo sexo, Date fecha) throws ErrorServicio {
 
         Localidad localidad = localidadRepositorio.findById(idlocalidad).get();
-        Establecimiento establecimiento=establecimientoRepositorio.findById(idEstablecimiento).get();
+        Establecimiento establecimiento = establecimientoRepositorio.findById(idEstablecimiento).get();
         Partido p = partidoRepositorio.findById(idpartido).get();
 
         p.setLocalidad(localidad);
@@ -86,10 +87,8 @@ public class PartidoServicio {
         p.setSexo(sexo);
         p.setFecha(fecha); //Fecha del partido
         p.setHorario(horario);//Horario del partido
-               
 
         partidoRepositorio.save(p);
-
     }
 
     //buscar partido por **localidad** , estado true, fecha de partido no vencida y sexo
@@ -112,13 +111,13 @@ public class PartidoServicio {
     }
 
     //Traer Partido
-    public Partido traerPartido(String idPartido) throws ErrorServicio{
+    public Partido traerPartido(String idPartido) throws ErrorServicio {
         Partido p = partidoRepositorio.findById(idPartido).get();
         return p;
     }
 
     //validar si hay o no vacantes
-    public Boolean validarVacantes(Partido partido) throws ErrorServicio{
+    public Boolean validarVacantes(Partido partido) throws ErrorServicio {
         Boolean vacante = false;
         int cont = 0;
         for (Usuario u : partido.getJugConfirmados()) {
@@ -133,7 +132,7 @@ public class PartidoServicio {
     }
 
     //contar vacantes
-    public Integer contarVacantes(Partido partido) throws ErrorServicio{
+    public Integer contarVacantes(Partido partido) throws ErrorServicio {
         Integer vacante = partido.getCantVacantes();
         for (Usuario u : partido.getJugConfirmados()) {
             vacante--;
@@ -143,64 +142,61 @@ public class PartidoServicio {
 
     //cargar postulado
     @Transactional
-    public void cargarPostulado(Partido partido, String idUsuario)throws ErrorServicio{
-            
-       List<Usuario> usuList = new ArrayList<>();
-       System.out.println();
-       //Recorro y cargo la lista de usuarios postulados
-       for (Usuario u : partido.getJugPostulados()) {            
-           usuList.add(u);
+    public void cargarPostulado(Partido partido, String idUsuario) throws ErrorServicio {
+
+        List<Usuario> usuList = new ArrayList<>();
+        System.out.println();
+        //Recorro y cargo la lista de usuarios postulados
+        for (Usuario u : partido.getJugPostulados()) {
+            usuList.add(u);
         }
-       //Agrego el postulado a la lista
-       usuList.add(usuarioRepositorio.getOne(idUsuario));
-       //Agrego la lista actualizada
-       partido.setJugPostulados(usuList);
-       //Guardo el partido
-       partidoRepositorio.save(partido);
+        //Agrego el postulado a la lista
+        usuList.add(usuarioRepositorio.getOne(idUsuario));
+        //Agrego la lista actualizada
+        partido.setJugPostulados(usuList);
+        //Guardo el partido
+        partidoRepositorio.save(partido);
     }
-    
-    
+
     //confirmar postulado
     @Transactional
-    public void confirmarPostulado(Partido partido, String idUsuario)throws ErrorServicio{
-            
-       List<Usuario> usuList = new ArrayList<>();
-       //Recorro y cargo la lista de usuarios postulados
-       for (Usuario u : partido.getJugConfirmados()) {            
-           usuList.add(u);
+    public void confirmarPostulado(Partido partido, String idUsuario) throws ErrorServicio {
+
+        List<Usuario> usuList = new ArrayList<>();
+        //Recorro y cargo la lista de usuarios postulados
+        for (Usuario u : partido.getJugConfirmados()) {
+            usuList.add(u);
         }
-       //Agrego el postulado a la lista
-       usuList.add(usuarioRepositorio.getOne(idUsuario));
-       //Agrego la lista actualizada
-       partido.setJugConfirmados(usuList);
-       //Guardo el partido
-       partidoRepositorio.save(partido);
+        //Agrego el postulado a la lista
+        usuList.add(usuarioRepositorio.getOne(idUsuario));
+        //Agrego la lista actualizada
+        partido.setJugConfirmados(usuList);
+        //Guardo el partido
+        partidoRepositorio.save(partido);
     }
-    
-    
+
     //listar postulados
-    public List<Usuario> listarPostulados(Partido partido)throws ErrorServicio{
-    List<Usuario> usuList = null;
-       //Recorro y cargo la lista de usuarios postulados
-       for (Usuario u : partido.getJugPostulados()) {            
-           usuList.add(u);
-        }        
-    return usuList;
-    }
-        
-    
-    //listar confirmados
-    public List<Usuario> listarConfirmados(Partido partido)throws ErrorServicio{
-    List<Usuario> usuList = null;
-       //Recorro y cargo la lista de usuarios postulados
-       for (Usuario u : partido.getJugConfirmados()) {            
-           usuList.add(u);
-        }        
+    public List<Usuario> listarPostulados(Partido partido) throws ErrorServicio {
+        List<Usuario> usuList = null;
+        //Recorro y cargo la lista de usuarios postulados
+        for (Usuario u : partido.getJugPostulados()) {
+            usuList.add(u);
+        }
         return usuList;
     }
-    
+
+    //listar confirmados
+    public List<Usuario> listarConfirmados(Partido partido) throws ErrorServicio {
+        List<Usuario> usuList = null;
+        //Recorro y cargo la lista de usuarios postulados
+        for (Usuario u : partido.getJugConfirmados()) {
+            usuList.add(u);
+        }
+        return usuList;
+    }
+
     @Transactional
-    public void eliminaPostulado(String idPartido, String idUsuario) throws ErrorServicio{
+    public void eliminaPostulado(String idPartido, String idUsuario) throws ErrorServicio {
         //Busco partido por id
         Partido partido = traerPartido(idPartido);
         //Busco usuario por id
@@ -210,74 +206,89 @@ public class PartidoServicio {
         //Guardo el partido con los cambios
         partidoRepositorio.save(partido);
     }
-    
-    public Integer horario(String horario) throws ErrorServicio{
-        if (horario==null || horario.isEmpty()) {
+
+    public Integer horario(String horario) throws ErrorServicio {
+        if (horario == null || horario.isEmpty()) {
             throw new ErrorServicio("Por favor indique un horario para el partido");
-        }else{
-            Integer hora=Integer.parseInt(horario.substring(0, 2));
-            Integer min=Integer.parseInt(horario.substring(3,5));
-            return hora*100+min;
+        } else {
+            Integer hora = Integer.parseInt(horario.substring(0, 2));
+            Integer min = Integer.parseInt(horario.substring(3, 5));
+            return hora * 100 + min;
         }
     }
-    public String horario(Integer horario) throws ErrorServicio{
-        Integer hora=horario/100;
-        Integer min=horario%100;
-        String h="";
-        String m="";
-        if (hora<10) {
-            h="0";
+
+    public String horario(Integer horario) throws ErrorServicio {
+        Integer hora = horario / 100;
+        Integer min = horario % 100;
+        String h = "";
+        String m = "";
+        if (hora < 10) {
+            h = "0";
         }
-        if (min<10){
-            m="0";
+        if (min < 10) {
+            m = "0";
         }
-        h+=Integer.toString(hora);
-        m+=Integer.toString(min);
-        return h+":"+m;
+        h += Integer.toString(hora);
+        m += Integer.toString(min);
+        return h + ":" + m;
     }
-    public List<Partido> listarMisPartidos(String idCreador) throws ErrorServicio{
+
+    public List<Partido> listarMisPartidos(String idCreador) throws ErrorServicio {
         List<Partido> listaMisPartidos = partidoRepositorio.buscarPorCreador(idCreador);
-        if (listaMisPartidos== null){
+        if (listaMisPartidos == null) {
             throw new ErrorServicio("No tenés partidos creados");
         }
         return listaMisPartidos;
     }
-    
-    private void validadr(Establecimiento establecimiento,Localidad localidad, Integer cantJugador, Integer cantVacantes, Double precio/*, Usuario creador, String obsVacante, String obsEstablecimiento*/, Date fecha) throws ErrorServicio{
-        if (establecimiento==null) {
+
+    private void validadr(Establecimiento establecimiento, Localidad localidad, Integer cantJugador, Integer cantVacantes, Double precio/*, Usuario creador, String obsVacante, String obsEstablecimiento*/, Date fecha) throws ErrorServicio {
+        if (establecimiento == null) {
             throw new ErrorServicio("Indique un establecimiento");
         }
-        if (localidad==null) {
+        if (localidad == null) {
             throw new ErrorServicio("Indique una localidad");
         }
-        if (cantJugador==null) {
+        if (cantJugador == null) {
             throw new ErrorServicio("La cantidad de jugadores no debe ser nula");
         }
-        if (cantVacantes==null) {
+        if (cantVacantes == null) {
             throw new ErrorServicio("Indique un nro de vacantes");
         }
-        if (precio==null) {
+        if (precio == null) {
             throw new ErrorServicio("El precio no puede estar vacio");
         }
         /*
         if (creador==null) {
             throw new ErrorServicio("Existe algun problema con su usuario");
         }*/
-        
-        if (fecha==null) {
+
+        if (fecha == null) {
             throw new ErrorServicio("Indique una fecha");
         }
-        
-        
+
     }
-    
+
     @Transactional
-    public void eliminarPartido(String id) throws ErrorServicio{
+    public void eliminarPartido(String id) throws ErrorServicio {
         try {
-            Partido partido=partidoRepositorio.getOne(id);
+            Partido partido = partidoRepositorio.getOne(id);
             partidoRepositorio.delete(partido);
         } catch (Exception e) {
             throw new ErrorServicio("Existe un error al eliminar");
+        }
+    }
+
+    //Busca los partidos filtrados por Localidad y Sexo
+    public List<Partido> listarPartidosFiltrados(String idlocalidad, String sexo) {
+        List<Partido> listaPartidosFiltados = null;
+        Date fechahoy= new Date();
+        // Determino que Query usar, según si Sexo viaja nulo
+        if (sexo == null) {
+            List<Partido> listaPartidosFiltrados = partidoRepositorio.buscarPartidoPorLocalidad(idlocalidad, fechahoy);
+            return listaPartidosFiltrados;
+        } else {
+            List<Partido> listaPartidosFiltrados = partidoRepositorio.buscarPartidoPorLocalidadSexo(idlocalidad, fechahoy, sexo);
+            return listaPartidosFiltados;
         }
     }
 }
