@@ -103,5 +103,5 @@ public void editarLocalidad(String id, String nombre) throws ErrorServicio {
         List<Localidad> listaLocalidades = localidadRepositorio.findAll();
         return listaLocalidades;
     }
-
+    
 }

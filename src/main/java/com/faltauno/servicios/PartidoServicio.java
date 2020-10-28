@@ -42,6 +42,7 @@ public class PartidoServicio {
     @Autowired
     private EstablecimientoRepositorio establecimientoRepositorio;
 
+
     /* CREACION DE PARTIDO */
     @Transactional
     public void crearPartido(String idEstablecimiento, String idlocalidad, Integer cantJugador, Integer horario, Integer cantVacantes, Double precio, Usuario creador, /*String obsVacante, String obsEstablecimiento,*/ Sexo sexo, Date fecha) throws ErrorServicio {
@@ -92,7 +93,7 @@ public class PartidoServicio {
     }
 
     //buscar partido por **localidad** , estado true, fecha de partido no vencida y sexo
-    public List<Partido> buscarPartidoXLocalidad(Localidad localidad, String sexo) throws ErrorServicio {
+    public List<Partido> buscarPartidoXLocalidad(Localidad localidad, Sexo sexo) throws ErrorServicio {
         Date fechaHoy = new Date();
         List<Partido> busqueda = partidoRepositorio.buscarPartidoPorLocalidadSexo(localidad.getId(), fechaHoy, sexo);
         if (busqueda.isEmpty()) {
@@ -280,16 +281,23 @@ public class PartidoServicio {
     }
 
     //Busca los partidos filtrados por Localidad y Sexo
-    public List<Partido> listarPartidosFiltrados(String idlocalidad, String sexo) {
-        List<Partido> listaPartidosFiltados = null;
+    public List<Partido> listarPartidosFiltrados(String idlocalidad, Sexo sexo) throws ErrorServicio{
         Date fechahoy= new Date();
         // Determino que Query usar, según si Sexo viaja nulo
         if (sexo == null) {
             List<Partido> listaPartidosFiltrados = partidoRepositorio.buscarPartidoPorLocalidad(idlocalidad, fechahoy);
+            if (listaPartidosFiltrados == null){
+                Localidad localidad = localidadRepositorio.findById(idlocalidad).get();
+                throw new ErrorServicio("No hay ningún partidos en " + localidad.getNombre() + ". Créalo tú!!");
+            }
             return listaPartidosFiltrados;
-        } else {
+        } else {        
             List<Partido> listaPartidosFiltrados = partidoRepositorio.buscarPartidoPorLocalidadSexo(idlocalidad, fechahoy, sexo);
-            return listaPartidosFiltados;
+            if (listaPartidosFiltrados == null){
+                Localidad localidad = localidadRepositorio.findById(idlocalidad).get();
+                throw new ErrorServicio("No existe ningún partido "+ sexo.name() +" en " + localidad.getNombre() + ". Créalo tú!!");
+            }
+            return listaPartidosFiltrados;
         }
     }
 }

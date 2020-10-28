@@ -65,14 +65,14 @@ public class UsuarioControlador {
         try {
             usuarioServicio.registrarUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
         } catch (ErrorServicio e) {
-
-            List<Localidad> localidades = localidadServicio.listarPaises();
             modelo.put("errorRegistrarse", e.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("apellido", apellido);
             modelo.put("edad", edad);
             modelo.put("mail", mail);
-            modelo.put("localidades", localidades);
+            List<Localidad>listaLocalidades = localidadServicio.listarTodasLocalidads();
+            modelo.put("localidades", listaLocalidades);
+            modelo.put("sexo", Sexo.values());
             modelo.put("clave", clave);
             modelo.put("clave1", clave1);
 
