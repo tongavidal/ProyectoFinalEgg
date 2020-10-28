@@ -80,8 +80,8 @@ public class UsuarioServicio implements  UserDetailsService{
     @Transactional
     public void modificarUsuario(String id, String nombre, String apellido, String edad, String idLocalidad, String mail, String clave, String clave1) throws ErrorServicio {
 
-        Localidad localidad = localidadServicio.buscarLocalidadPorId(idLocalidad);
-    	validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
+                  Localidad localidad = localidadServicio.buscarLocalidadPorId(idLocalidad);
+    	validarEditarUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -156,6 +156,36 @@ public class UsuarioServicio implements  UserDetailsService{
                 throw new ErrorServicio("Ya existe un usuario con este mail");
             }
         }
+        if (clave == "" || clave.isEmpty() || 6 > clave.length()) {
+
+            throw new ErrorServicio("La clave no puede estar vacia y no puede ser menor a 6 digitos");
+        }
+
+    }
+    
+    public void validarEditarUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
+
+        if (nombre == "" || nombre.isEmpty()) {
+
+            throw new ErrorServicio("El nombre no puede estar vacio");
+        }
+        if (apellido == "" || apellido.isEmpty()) {
+
+            throw new ErrorServicio("El apellido no puede estar vacio");
+        }
+        if (edad == "" || edad.isEmpty()) {
+
+            throw new ErrorServicio("La edad no puede estar vacio");
+        }
+        if (localidad == null) {
+
+            throw new ErrorServicio("La localidad no puede estar vacía");
+        }
+        if (mail == "" || mail.isEmpty()) {
+
+            throw new ErrorServicio("El mail no puede estar vacio");
+
+        } 
         if (clave == "" || clave.isEmpty() || 6 > clave.length()) {
 
             throw new ErrorServicio("La clave no puede estar vacia y no puede ser menor a 6 digitos");
