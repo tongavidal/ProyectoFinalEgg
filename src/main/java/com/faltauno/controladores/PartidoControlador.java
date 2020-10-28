@@ -82,6 +82,7 @@ public class PartidoControlador {
             Partido partido=partidoServicio.traerPartido(id);
             modelo.addAttribute("partido",partido);
             modelo.addAttribute("horario",partidoServicio.horario(partido.getHorario()));
+            
         } catch (ErrorServicio e) {
             modelo.addAttribute("error",e.getMessage());
         }
@@ -110,6 +111,7 @@ public class PartidoControlador {
             Partido partido = partidoServicio.traerPartido(idPartido);
             List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
             modelo.put("confirmados", listaConfirmados);
+            modelo.put("fecha", true);
             return "listado-confirmados.html";
         } catch (ErrorServicio es) {
             modelo.put("error", es.getMessage());

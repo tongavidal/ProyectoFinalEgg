@@ -31,16 +31,16 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-md-6">
-										<select name="idLocalidad" class="form-control">
-											<option selected>Elegir Localidad...</option>
+										<select required name="idLocalidad" class="form-control">
+											<option value="" selected>Elegir Localidad...</option>
 											<option th:each="localidad : ${localidades}"
 												th:value="${localidad.id}" th:text="${localidad.nombre}"></option>
 										</select>
 									</div>
 									<div class="row form-group">
 										<div class="col-md-6">
-											<select name="sexo" class="form-control" placeholder="Sexo">
-												<option selected>Elegir el Sexo</option>
+											<select required name="sexo" class="form-control" placeholder="Sexo">
+												<option value="" selected>Elegir el Sexo</option>
 												<option th:each="sex:${sexo}" th:value="${sex}"
 													th:text="${sex}"></option>
 											</select>

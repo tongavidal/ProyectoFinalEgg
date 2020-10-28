@@ -33,15 +33,15 @@
 							<div class="row form-group">
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
-									<input type="date" id="subject" class="form-control"
-										name="fecha"th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"  placeholder="fecha">
+									<input type="hidden" id="usuario" class="form-control"
+										name="idcreador" th:value="${session.usuariosession.id}">
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
-									<input type="hidden" id="usuario" class="form-control"
-										name="idcreador" th:value="${session.usuariosession.id}">
+									<input required type="date" id="subject" class="form-control"
+										name="fecha"th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"  placeholder="fecha">
 								</div>
 							</div>
 							<div class="row form-group">
@@ -53,8 +53,8 @@
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
-									<select name="idLocalidad" class="form-control">
-										<option selected>Selecciona Localidad</option>
+									<select required name="idLocalidad" class="form-control">
+										<option value="" selected>Selecciona Localidad</option>
 										<option th:each="localidad:${localidades}"
 											th:value="${localidad.id}" th:text="${localidad.nombre}"></option>
 									</select>
@@ -62,9 +62,8 @@
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
-									<!-- <label for="subject">Subject</label> -->
-									<select name="idEstablecimiento" class="form-control">
-										<option selected>Selecciona Establecimiento</option>
+									<select required name="idEstablecimiento" class="form-control">
+										<option value="" selected>Selecciona Establecimiento</option>
 										<option th:each="establecimiento:${establecimientos}"
 											th:value="${establecimiento.id}"
 											th:text="${establecimiento.nombre}"></option>
@@ -73,32 +72,26 @@
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
-									<!-- <label for="subject">Subject</label> -->
-									<input type="number" id="subject" class="form-control"
+									<input required type="number" id="subject" class="form-control"
 										name="cantJugadores" placeholder="Cantidad de jugadores">
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
-									<!-- <label for="subject">Subject</label> -->
-									<input type="number" id="subject" class="form-control"
+									<input required type="number" id="subject" class="form-control"
 										name="cantVacantes" placeholder="Cantidad de vacantes libres">
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
-									<!-- <label for="subject">Subject</label> -->
-									<input type="number" id="subject" class="form-control"
+									<input required type="number" id="subject" class="form-control"
 										name="precio" placeholder="Precio por jugador">
 								</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
-									<select name="sexo" class="form-control" placeholder="Sexo">
-										<!--<option th:value="${masculino}">Masculino</option>
-                                        <option th:value="${femenino}">Femenino</option>
-                                        <option th:value="${mixto}">Mixto</option>-->
-										<option selected>Selecciona el Sexo</option>
+									<select required name="sexo" class="form-control">
+										<option value="" selected>Selecciona el Sexo</option>
 										<option th:each="sex:${sexo}" th:value="${sex}"
 											th:text="${sex}"></option>
 									</select>

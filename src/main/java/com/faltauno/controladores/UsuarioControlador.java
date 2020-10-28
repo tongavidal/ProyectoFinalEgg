@@ -82,7 +82,7 @@ public class UsuarioControlador {
         modelo.put("title", "Te has registrado Correctamente! - Tu Biblioteca");
         modelo.put("titulo", "Felicitaciones!!");
         modelo.put("descripcion", "Tu registro como usuario se ha realizado con éxito.");
-        return "exito.html";
+        return "index.html";
     }
     
     @GetMapping("/editar-perfil/{idusuario}")

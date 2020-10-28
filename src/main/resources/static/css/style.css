@@ -719,6 +719,44 @@ a.fas.fa-user.has-dropdown.usuario {
 
 /*End Ver-Partido*/
 
+/* Start listado confirmados */
+form.reputacion {
+  width: 250px;
+  margin: 0 auto;
+  height: 50px;
+}
+
+form.reputacion p {
+  text-align: center;
+}
+
+form.reputacion label {
+  font-size: 20px;
+}
+
+form.reputacion input[type="radio"] {
+  display: none;
+}
+
+form.reputacion label {
+  color: grey;
+}
+
+form.reputacion .clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+form.reputacion label:hover,
+form.reputacion label:hover ~ label {
+  color: orange;
+}
+
+form.reputacion input[type="radio"]:checked ~ label {
+  color: orange;
+}
+/* End listado confirmados */
+
 #fh5co-header .display-tc .btn,
 #fh5co-counter .display-tc .btn,
 .fh5co-cover .display-tc .btn {

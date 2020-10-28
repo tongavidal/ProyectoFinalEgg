@@ -34,13 +34,13 @@
 									</div>
 									<div class="row form-group">
 										<div class="col-md-12">
-											<input type="text" id="mail" class="form-control" name="email"
+											<input required type="text" id="mail" class="form-control" name="email"
 												th:value="${mail}" placeholder="Email">
 										</div>
 									</div>
 									<div class="row form-group">
 										<div class="col-md-12">
-											<input type="password" id="clave" class="form-control"
+											<input required type="password" id="clave" class="form-control"
 												name="clave" th:value="${clave}" placeholder="Contraseña">
 										</div>
 									</div>
@@ -70,7 +70,7 @@
 							jugar!
 						</p>
 						<form th:action="@{/usuario/registrar}" method="post"
-							enctype="multipart/form-data">
+							enctype="multipart/form-data" th:object="${usuario}">
 							<div class="form-row">
 								<div th:if="${errorRegistrarse != null}"
 									class="col-md-12 alert alert-warning" role="alert">
@@ -79,23 +79,23 @@
 							</div>
 							<div class="row form-group">
 								<div class="col-md-6">
-									<input type="text" id="nombre" class="form-control"
+									<input required type="text" id="nombre" class="form-control"
 										name="nombre" th:value="${nombre}" placeholder="Nombre">
 								</div>
 								<div class="col-md-6">
-									<input type="text" id="apellido" class="form-control"
+									<input required type="text" id="apellido" class="form-control"
 										name="apellido" th:value="${apellido}" placeholder="Apellido">
 								</div>
 							</div>
 
 							<div class="row form-group">
 								<div class="col-md-6">
-									<input type="text" id="edad" class="form-control" name="edad"
+									<input required type="text" id="edad" class="form-control" name="edad"
 										th:value="${edad}" placeholder="Edad">
 								</div>
 								<div class="col-md-6">
-									<select name="localidad" class="form-control">
-										<option selected>Elegir Localidad...</option>
+									<select required name="localidad" class="form-control">
+										<option value="" selected>Elegir Localidad...</option>
 										<option th:each="localidad : ${localidades}"
 											th:value="${localidad.id}" th:text="${localidad.nombre}"></option>
 									</select>
@@ -104,32 +104,31 @@
 
 							<div class="row form-group">
 								<div class="col-md-6">
-									<select name="sexo" class="form-control">
-										<!--<option th:value="${masculino}">Masculino</option>
-                                        <option th:value="${femenino}">Femenino</option>
-                                        <option th:value="${mixto}">Mixto</option>-->
-                                        <option selected>Selecciona el Sexo</option>
+									<select required name="sexo" class="form-control">
+										<option value="" selected>Selecciona el Sexo</option>
                                         <option th:each="sex:${sexo}" th:if="${sex.name()!='MIXTO'}" 
                                         th:value="${sex}"
                                         th:text="${sex}"></option>
 									</select>
 								</div>
 								<div class="col-md-6">
-									<input type="text" id="email" class="form-control" name="mail"
+									<input required type="text" id="email" class="form-control" name="mail"
 										th:value="${mail}" placeholder="Email">
 								</div>
 							</div>
-							
+							<div th:each="posicion:${posiciones}">
+                                <input type="checkbox" th:text="' '+${posicion.posicion}" th:field="${usuario.posiciones}" th:value="${posicion.id}" name="posicion" class="form-check-label" >
+                            </div>
 							<div class="row form-group">
 								<div class="col-md-12">
-									<input type="password" id="clave" class="form-control" name="clave"
+									<input required type="password" id="clave" class="form-control" name="clave"
 										th:value="${clave}" placeholder="Ingresá la Contraseña">
 								</div>
 							</div>
 							
 							<div class="row form-group">
 								<div class="col-md-12">
-									<input type="password" id="clave1" class="form-control" name="clave1"
+									<input required type="password" id="clave1" class="form-control" name="clave1"
 										th:value="${clave1}" placeholder="Repetí la Contraseña">
 								</div>
 							</div>
