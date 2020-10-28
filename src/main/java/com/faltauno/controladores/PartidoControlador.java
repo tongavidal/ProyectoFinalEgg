@@ -100,7 +100,7 @@ public class PartidoControlador {
     public String listarpostulados(ModelMap modelo, @PathVariable String idpartido) throws ErrorServicio {
         try {
             List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
-            modelo.put("listado-postulados", postulados);
+            modelo.put("postulados", postulados);
         } catch (Exception ex) {
             modelo.put("mensaje", ex.getMessage());
             return "listado-postulados.html";
@@ -165,22 +165,23 @@ public class PartidoControlador {
             return ("listado-postulados");
         }
     }
-
+    
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/postularse")
-    public String postularse(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
+    public String postularse(ModelMap modelo,@RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
 
         try {
-            Partido partido = partidoServicio.traerPartido(idpartido);
-            partidoServicio.cargarPostulado(partido, idpostulado);
-            //vuelvo a cargar postulados para mostrar
-            //List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
-            //modelo.put("listado-postulados", postulados);
+                Partido partido = partidoServicio.traerPartido(idpartido);
+                partidoServicio.cargarPostulado(partido, idpostulado);
+                //vuelvo a cargar postulados para mostrar
+                //List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
+                //modelo.put("listado-postulados", postulados);
 
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
 
         }
-        modelo.put("partido", partidoRepositorio.getOne(idpartido));
+        modelo.put("partidos", partidoRepositorio.getOne(idpartido));
         return "ver-partido.html";
     }
 

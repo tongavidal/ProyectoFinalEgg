@@ -80,7 +80,7 @@ public class UsuarioServicio implements  UserDetailsService{
     @Transactional
     public void modificarUsuario(String id, String nombre, String apellido, String edad, String idLocalidad, String mail, String clave, String clave1) throws ErrorServicio {
 
-                  Localidad localidad = localidadServicio.buscarLocalidadPorId(idLocalidad);
+        Localidad localidad = localidadServicio.buscarLocalidadPorId(idLocalidad);
     	validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);

@@ -23,7 +23,9 @@
 						<h3>Usuario Creador: <span th:text="${partido.creador.nombre}"></span></h3>
 						<h3>Id: <span th:text="${partido.id}"></span></h3>
 						<p>Fecha: <span th:text="${#dates.format(partido.fecha,'dd-MM-yyyy')}"></span></p>
-						<p>Horario: <span th:text="${partido.horario}"></span></p>
+						<p>Horario: <span th:if="${partido.horario.toString().length()==1}" th:text="${partido.horario.toString()+'0:00'}"></span>
+                                                            <span th:if="${partido.horario.toString().length()==3}" th:text="${partido.horario.toString().substring(0, 1)+':'+partido.horario.toString().substring(1, 3)}"></span>
+                                                            <span th:if="${partido.horario.toString().length()==4}" th:text="${partido.horario.toString().substring(0, 2)+':'+partido.horario.toString().substring(2, 4)}"></span></p>
 						<p>Fecha de creación: <span th:text="${partido.fechaCreacion}"></span></p>
 						<p>Localidad: <span th:text="${partido.localidad}"></span></p>
 						<p>Establecimiento: <span th:text="${partido.establecimiento}"></span></p>
@@ -39,12 +41,16 @@
 					</div>
 
 					<div class="col-md-6 animate-box img-lateral">
-
-						<a th:href="@{/partido/postularse(idpartido=__${partido.id}__,idpostulado=__${session.usuariosession.id}__)}" th:if="${session.usuariosession.id != partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Postularse</a>
-						<a th:href="@{/partido/listar-postulados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Postulados</a>
-						<a th:href="@{/partido/listar-confirmados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Confirmados</a>
-						<a th:href="@{/partido/modificar_partido/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Editar</a>
-						<a th:href="@{/partido/eliminar_partido/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Cancelar</a>
+                                                
+                                                <a th:if="${session.usuariosession==null}" th:href="@{/usuario/registrarse}"  class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Postularse</a>
+						
+                                                <span th:if="${session.usuariosession!=null}">
+                                                    <a th:href="@{/partido/postularse(idpartido=__${partido.id}__,idpostulado=__${session.usuariosession.id}__)}" th:if="${session.usuariosession.id != partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Postularse</a>
+                                                    <a th:href="@{/partido/listar-postulados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Postulados</a>
+                                                    <a th:href="@{/partido/listar-confirmados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Confirmados</a>
+                                                    <a th:href="@{/partido/modificar_partido/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Editar</a>
+                                                    <a th:href="@{/partido/eliminar_partido/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Cancelar</a>
+                                                </span>
 					</div>
 				</div>
 			</div>
