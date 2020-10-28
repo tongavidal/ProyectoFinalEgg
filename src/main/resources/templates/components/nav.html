@@ -21,7 +21,7 @@
 						<li th:if="${session.usuariosession == null}"><a  th:href="@{/usuario/registrarse}">Registrarse</a></li>
 						<li class="has-dropdown"><a th:if="${session.usuariosession != null}" class="fas fa-user has-dropdown usuario" th:text="${session.usuariosession.nombre }"></a>
 							<ul class="dropdown">
-								<li><a th:if="${session.usuariosession != null}" th:href="@{/partido/editar-perfil/__${session.usuariosession.id}__}">Ver Perfil</a></li>
+								<li><a th:if="${session.usuariosession != null}" th:href="@{/usuario/ver-perfil/__${session.usuariosession.id}__}">Ver Perfil</a></li>
 								<li><a th:if="${session.usuariosession != null}" th:href="@{/logout}">Salir</a></li>
 							</ul>
 						</li>

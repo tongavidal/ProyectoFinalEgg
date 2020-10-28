@@ -11,7 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.faltauno.entidades.Localidad;
 import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
+import com.faltauno.repositorios.UsuarioRepositorio;
 import com.faltauno.servicios.LocalidadServicio;
+import com.faltauno.servicios.ReputacionServicio;
 import com.faltauno.servicios.UsuarioServicio;
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +24,13 @@ public class UsuarioControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
-
+    
+    @Autowired
+    private ReputacionServicio reputacionServicio;
+    
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+    
     @Autowired
     private LocalidadServicio localidadServicio;
 
@@ -63,7 +71,7 @@ public class UsuarioControlador {
             @RequestParam Localidad localidad, @RequestParam String clave, String clave1) {
 
         try {
-            usuarioServicio.registrarUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
+            usuarioServicio.registrarUsuario(archivo,nombre, apellido, edad, localidad, mail, clave, clave1);
         } catch (ErrorServicio e) {
             modelo.put("errorRegistrarse", e.getMessage());
             modelo.put("nombre", nombre);
@@ -97,7 +105,7 @@ public class UsuarioControlador {
         try{
             usuarioServicio.modificarUsuario(idusuario, nombre, apellido, edad, idLocalidad, mail, clave, clave1);
             return ("listar-perfil.html");
-        } catch (ErrorServicio es) {
+        }catch (ErrorServicio es) {
             modelo.put("error", es.getMessage());
             return "editar-perfil.html";
         }
@@ -109,7 +117,13 @@ public class UsuarioControlador {
         return "buscar-usuario";
     }
     
-    
+    @GetMapping("/ver-perfil/{idUsuario}")
+    public String verPerfil(ModelMap modelo,@PathVariable String idUsuario){
+        modelo.put("title", "Perfil - NosFalta1");
+        modelo.put("usuario",usuarioRepositorio.getOne(idUsuario));
+        modelo.put("reputacionU", reputacionServicio.promedioReputacion(idUsuario));
+        return "ver-perfil.html";
+    }
     
     
     

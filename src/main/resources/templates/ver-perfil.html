@@ -15,7 +15,7 @@
 
 		<header id="fh5co-header" class="fh5co-cover partidos alta-partido"
 			role="banner" data-stellar-background-ratio="0.5">
-			<div class="container pt-30" th:each="usuario:${usuarios}">
+			<div class="container pt-30" th:object="${usuario}">
 				<div class="row equal">
 					<div class="col-md-6 animate-box">
 
@@ -24,8 +24,8 @@
 						<p>Email: <span th:text="${usuario.mail}"></span></p>
 						<p>Edad: <span th:text="${usuario.edad}"></span></p>
 						<p>Sexo: <span th:text="${usuario.sexo}"></span></p>
-						<p>Localidad: <span th:text="${usuario.localidad}"></span></p>
-						<p>Posicion: <span th:text="${usuario.posicion}"></span></p>
+						<p>Localidad: <span th:text="${usuario.localidad.nombre}"></span></p>
+						<p>Posicion: <span th:text="${usuario.posiciones}"></span></p>
 						<p>Fecha de creación: <span th:text="${usuario.fechaCreacion}"></span></p>
 
 						<a th:href="@{/usuario/editar_usuario/__${usuario.id}__}" th:if="${session.usuariosession.id == usuario.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Editar</a>
@@ -35,7 +35,7 @@
 					</div>
 
 					<div class="col-md-6 animate-box img-lateral">
-						<img th:src="@{upload/} + ${usuario.foto.id}" th:alt="${usuario.foto.nombre}" th:title="${libro.foto.nombre}">
+						<img th:if=${usuario.foto!=null} th:src="@{/upload/} + ${usuario.foto.id}" th:alt="${usuario.foto.nombre}" th:title="${usuario.foto.nombre}">
 
 						<table class="table">
 							<thead class="thead-dark">
@@ -44,16 +44,17 @@
 									<th scope="col">Puntaje</th>
 								</tr>
 							</thead>
-							<tbody  th:each="partido:${partidos}">
+							<tbody  th:each="reputacion:${reputacionU}">
 								<tr>
-									<td th:text="${usuario.reputacion.puntualidad}">Puntualidad:</td>
+                                                                        <td th:text="${reputacion.getKey()}"></td>
+									<td th:text="${reputacion.getValue()}"></td>
 								</tr>
-								<tr>
+								<!--<tr>
 									<td th:text="${usuario.reputacion.habilidad}">Habilidad:</td>
 								</tr>
 								<tr>	
 									<td th:text="${usuario.reputacion.fairplay}">Fairplay:</td>
-								</tr>
+								</tr>-->
 							</tbody>
 						</table>
 						

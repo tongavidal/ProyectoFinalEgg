@@ -63,4 +63,10 @@ public class FotoServicio {
         }
         return null;
     }
+    
+    public Foto buscarPorId(String idFoto) throws ErrorServicio {
+
+        return fotoRepositorio.findById(idFoto).get();
+    }
+
 }

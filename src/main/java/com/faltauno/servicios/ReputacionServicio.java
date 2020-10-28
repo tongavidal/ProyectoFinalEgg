@@ -8,8 +8,10 @@ package com.faltauno.servicios;
 import com.faltauno.entidades.Reputacion;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.ReputacionRepositorio;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.TreeMap;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -105,5 +107,13 @@ public class ReputacionServicio {
     
     public Reputacion devolverReputacion(String id){
         return reputacionRepositorio.getOne(id);
+    }
+    
+    public TreeMap<String,Integer> promedioReputacion(String id){
+        TreeMap<String,Integer> promedio=new TreeMap<>();
+        promedio.put("Puntualidad",promPuntualidad(id));
+        promedio.put("Habilidad",promHabilidad(id));
+        promedio.put("FairPlay",promFairplay(id));
+        return promedio;
     }
 }
