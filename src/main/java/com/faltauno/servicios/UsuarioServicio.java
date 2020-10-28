@@ -5,6 +5,7 @@
  */
 package com.faltauno.servicios;
 
+import com.faltauno.entidades.Foto;
 import com.faltauno.entidades.Localidad;
 import com.faltauno.entidades.Reputacion;
 import com.faltauno.entidades.Usuario;
@@ -26,6 +27,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -42,9 +44,12 @@ public class UsuarioServicio implements  UserDetailsService{
     
     @Autowired
     private LocalidadServicio localidadServicio;
-
+    
+    @Autowired
+    private FotoServicio fotoServicio;
+    
     @Transactional
-    public void registrarUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
+    public void registrarUsuario(MultipartFile archivo,String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
 
         validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
 
@@ -62,7 +67,10 @@ public class UsuarioServicio implements  UserDetailsService{
         //Encripto clave
         String encriptada = new BCryptPasswordEncoder().encode(clave);
         u.setClave(encriptada);
-
+        
+        Foto foto=fotoServicio.guardar(archivo);
+        u.setFoto(foto);
+        
         usuarioRepositorio.save(u);
         
        // notificacionServicio.enviar("Bienvenido a la webapp FaltaUno", "Alta de usuario Falta Uno", u.getMail());
