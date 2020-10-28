@@ -143,14 +143,14 @@ public class PartidoControlador {
             modelo.put("mensaje", ex.getMessage());
             List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
 
-            modelo.put("listado-postulados", postulados);
+            modelo.put("postulados", postulados);
             return "listado-postulados";
         }
 
         //vuelvo a cargar postulados para mostrar
         List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
 
-        modelo.put("listado-postulados", postulados);
+        modelo.put("postulados", postulados);
         return "listado-postulados";
     }
 
