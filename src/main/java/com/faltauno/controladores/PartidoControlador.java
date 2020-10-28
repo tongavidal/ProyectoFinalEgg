@@ -69,8 +69,9 @@ public class PartidoControlador {
         } catch (ErrorServicio es) {
             modelo.put("error", es.getMessage());
             List<Localidad> listaLocalidades = localidadServicio.listarTodasLocalidads();
-            modelo.put("localidad", idLocalidad);
+            modelo.put("localidades", listaLocalidades);
             modelo.put("sexo", Sexo.values());
+            modelo.put("alta", "Crear Partido");
             return "listar-partidos.html";
         }
     }
@@ -115,6 +116,7 @@ public class PartidoControlador {
             Partido partido = partidoServicio.traerPartido(idPartido);
             List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
             modelo.put("confirmados", listaConfirmados);
+            modelo.put("fecha", true);
             return "listado-confirmados.html";
         } catch (ErrorServicio es) {
             modelo.put("error", es.getMessage());

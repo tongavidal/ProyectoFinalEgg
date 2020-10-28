@@ -33,6 +33,9 @@
                                                 <span th:if="${partido.horario.toString().length()==3}" th:text="${partido.horario.toString().substring(0, 1)+':'+partido.horario.toString().substring(1, 3)}"></span>
                                                 <span th:if="${partido.horario.toString().length()==4}" th:text="${partido.horario.toString().substring(0, 2)+':'+partido.horario.toString().substring(0, 2)}"></span></p>
                                     <p>Precio: <span th:text="${partido.precio}"></span></p>
+                                    <p>Localidad: <span th:text="${partido.localidad.nombre}"></span></p>
+                                    <p>Establecimiento: <span th:text="${partido.establecimiento.nombre}"></span></p>
+                                    <p>Tipo Partido: <span th:text="${partido.sexo}"></span></p>
                                     <br>
                                     
                                     <a th:href="@{/partido/ver-partido(idpartido=__${partido.id}__)}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Partido</a>
