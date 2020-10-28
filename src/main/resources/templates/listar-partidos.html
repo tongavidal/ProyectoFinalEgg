@@ -34,7 +34,7 @@
 								</div>
 								<div class="form-row">
 									<div class="form-group col-md-6">
-										<select name="idLocalidad" class="form-control">
+										<select required name="idLocalidad" class="form-control">
 											<option value="" selected>Elegir Localidad...</option>
 											<option th:each="localidad : ${localidades}"
 												th:value="${localidad.id}" th:text="${localidad.nombre}"></option>

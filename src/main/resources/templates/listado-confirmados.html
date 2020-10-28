@@ -35,9 +35,7 @@
                                     
                                     <a th:href="@{/partido/ver-perfil/__${postulado.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Perfil</a>
                                     
-                                    <a th:href="@{/partido/eliminar_partido/__${partido.id}__}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</a>
-                                    
-                                    <a th:href="@{/partido/confirmar-postulado(idpartido=__${partido.id}__,idpostulado=__${session.usuariosession.id}__)}" class="btn btn-primary btn-sm bpostularse"><i class="far fa-trash-alt"></i>Confirmar Postulado</a>
+                                    <a th:href="@{/partido/cancelar-postulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn btn-primary btn-sm bpostularse"><i class="far fa-trash-alt"></i>Cancelar Confirmado</a>
                                     
                                     
                                 </div>
