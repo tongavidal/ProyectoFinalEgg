@@ -286,14 +286,14 @@ public class PartidoServicio {
         // Determino que Query usar, según si Sexo viaja nulo
         if (sexo == null) {
             List<Partido> listaPartidosFiltrados = partidoRepositorio.buscarPartidoPorLocalidad(idlocalidad, fechahoy);
-            if (listaPartidosFiltrados == null){
+            if (listaPartidosFiltrados.isEmpty()){
                 Localidad localidad = localidadRepositorio.findById(idlocalidad).get();
                 throw new ErrorServicio("No hay ningún partidos en " + localidad.getNombre() + ". Créalo tú!!");
             }
             return listaPartidosFiltrados;
         } else {        
             List<Partido> listaPartidosFiltrados = partidoRepositorio.buscarPartidoPorLocalidadSexo(idlocalidad, fechahoy, sexo);
-            if (listaPartidosFiltrados == null){
+            if (listaPartidosFiltrados.isEmpty()){
                 Localidad localidad = localidadRepositorio.findById(idlocalidad).get();
                 throw new ErrorServicio("No existe ningún partido "+ sexo.name() +" en " + localidad.getNombre() + ". Créalo tú!!");
             }

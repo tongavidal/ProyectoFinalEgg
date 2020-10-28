@@ -69,8 +69,9 @@ public class PartidoControlador {
         } catch (ErrorServicio es) {
             modelo.put("error", es.getMessage());
             List<Localidad> listaLocalidades = localidadServicio.listarTodasLocalidads();
-            modelo.put("localidad", idLocalidad);
+            modelo.put("localidades", listaLocalidades);
             modelo.put("sexo", Sexo.values());
+            modelo.put("alta", "Crear Partido");
             return "listar-partidos.html";
         }
     }
