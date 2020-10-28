@@ -25,10 +25,10 @@
 						<p>Fecha: <span th:text="${#dates.format(partido.fecha,'dd-MM-yyyy')}"></span></p>
 						<p>Horario: <span th:text="${partido.horario}"></span></p>
 						<p>Fecha de creación: <span th:text="${partido.fechaCreacion}"></span></p>
-						<p>Localidad: <span th:text="${partido.localidad}"></span></p>
-						<p>Establecimiento: <span th:text="${partido.establecimiento}"></span></p>
+						<p>Localidad: <span th:text="${partido.localidad.nombre}"></span></p>
+						<p>Establecimiento: <span th:text="${partido.establecimiento.nombre}"></span></p>
 						<p>Precio: <span th:text="${partido.precio}"></span></p>	
-						<p>Observaciones del establecimiento: <span th:text="${partido.obsEstablecimiento}"></span></p>
+						<p>Observaciones del establecimiento: <span th:text="${partido.obsEstablecimiento} ==null ? ${partido.obsEstablecimiento} : 'No hay observaciones' "></span></p>
 						<p>Cantidad de jugadores: <span th:text="${partido.cantJugador}"></span></p>
 						<p>Cantidad de vacantes disponibles: <span th:text="${partido.cantVacantes}"></span></p>
 						<p>Observaciones acerca de las vacantes: <span th:text="${partido.obsVacante}"></span></p>
@@ -38,7 +38,7 @@
 
 					</div>
 
-					<div class="col-md-6 animate-box img-lateral">
+					<div class="col-md-3 animate-box botonera">
 
 						<a th:href="@{/partido/postularse(idpartido=__${partido.id}__,idpostulado=__${session.usuariosession.id}__)}" th:if="${session.usuariosession.id != partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Postularse</a>
 						<a th:href="@{/partido/listar-postulados/__${partido.id}__}" th:if="${session.usuariosession.id == partido.creador.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Postulados</a>

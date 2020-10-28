@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="components/head::head"></head>
+
+<body>
+
+	<div class="fh5co-loader"></div>
+
+	<div id="page">
+		<nav th:replace="components/nav::nav"></nav>
+
+		<header id="fh5co-header" class="fh5co-cover partidos alta-partido" role="banner" data-stellar-background-ratio="0.5">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 animate-box">
+						<br>
+						<h1>Editar Perfil</h1>
+						<form th:action="@{/usuario/editar-perfil}" method="post" enctype="multipart/form-data">
+							<div class="form-row">
+								<div th:if="${error != null}" class="col-md-12 alert alert-danger" role="alert">
+									<p th:text="${error}"></p>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input th:value="${usuario.id}" type="text" id="subject" class="form-control" name="idusuario" >
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input th:value="${usuario.nombre}" type="text" id="subject" class="form-control" name="nombre" placeholder="Nombre">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input th:value="${usuario.apellido}" type="text" id="subject" class="form-control" name="apellido" placeholder="Apellido">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input th:value="${usuario.edad}" type="number" id="subject" class="form-control" name="edad" placeholder="Edad">
+								</div>
+							</div>	
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input th:value="${usuario.mail}" type="email" id="subject" class="form-control" name="mail" placeholder="Email">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<select name="idLocalidad" class="form-control">
+										
+										<option th:each="localidad:${localidades}" th:value="${localidad.id}" th:text="${localidad.nombre}" th:selected="${usuario.localidad!=null && localidad.id==usuario.localidad.id}"></option>
+											
+									</select>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input type="password" id="subject" class="form-control" name="clave" placeholder="Ingrese clave">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input type="password" id="subject" class="form-control" name="clave1" placeholder="Repetir clave">
+								</div>
+							</div>
+							</div>
+							<!--BOTON DE MODIFICAR-->
+					<div class="row form-group">
+						<div class="col-md-12">
+							<input type="submit" value="Modificar"
+										class="btn btn-primary">
+						</div>
+					</div>
+							<br>
+							<br>
+							<br>
+							<br>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</header>
+
+
+
+		<!--COMENTO FOOTER-->
+		<!--<footer th:replace="components/footer::footer"></footer>-->
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+
+	<scripts th:replace="/components/scripts::scripts"></scripts>
+
+
+
+</body>
+</html>
