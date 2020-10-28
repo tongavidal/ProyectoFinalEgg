@@ -22,24 +22,25 @@
                             <input type="search" class="form-control" id="input-search" placeholder="Buscar Postulados..." >
                         </div>
                         <div class="searchable-container">
-                            <div th:each="postulado:${listado-postulados}" class="items col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
+                            <div th:each="postulado:${postulados}" class="items col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
                                 <div class="info-block block-info clearfix">
                                     <div class="square-box pull-left">
                                         <span class="glyphicon glyphicon-user glyphicon-lg"></span>
                                     </div>
                                     <h4>Nombre: <span th:text="${postulado.nombre + ' ' + postulado.apellido }"></span></h4>
-                                    <p>Posiciones: <span th:each="pos:${postulado.posiciones}"></span><br>
-                                    			<span th:text="${pos.posicion}"></span></p>
+                                   <!--  <p>Posiciones: <span th:each="pos:${postulado.posiciones}"></span><br>
+                                    			<span th:text="${pos.posicion}"></span></p> 
+                                   -->
                                     <p>Reputación:</p>
                                     <br>
                                     
                                     <a th:href="@{/partido/ver-perfil/__${postulado.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Perfil</a>
                                     
-                                    <a th:href="@{/partido/eliminar_partido/__${partido.id}__}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</a>
+                                   <a th:href="@{/partido/eliminarpostulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</a>
                                     
-                                    <a th:href="@{/partido/confirmar-postulado(idpartido=__${partido.id}__,idpostulado=__${session.usuariosession.id}__)}" class="btn btn-primary btn-sm bpostularse"><i class="far fa-trash-alt"></i>Confirmar Postulado</a>
+                                    <a th:href="@{/partido/confirmar-postulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn btn-primary btn-sm bpostularse"><i class="far fa-trash-alt"></i>Confirmar Postulado</a>
                                     
-                                    
+                                   
                                 </div>
                             </div>
                         </div>

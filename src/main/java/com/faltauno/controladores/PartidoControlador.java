@@ -61,7 +61,7 @@ public class PartidoControlador {
     @PostMapping("/listar-partidos-ok")
     public String listarPartidosFiltrados(ModelMap modelo, @RequestParam String idLocalidad, @RequestParam(required = false) Sexo sexo)
             throws ErrorServicio {
-       try {
+        try {
             modelo.put("title", "Lista de Partidos - NosFalta1");
             List<Partido> listaPartidosFiltrados = partidoServicio.listarPartidosFiltrados(idLocalidad, sexo);
             modelo.put("partidos", listaPartidosFiltrados);
@@ -100,7 +100,8 @@ public class PartidoControlador {
     public String listarpostulados(ModelMap modelo, @PathVariable String idpartido) throws ErrorServicio {
         try {
             List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
-            modelo.put("listado-postulados", postulados);
+            modelo.put("postulados", postulados);
+            modelo.put("idpartido", idpartido);
         } catch (Exception ex) {
             modelo.put("mensaje", ex.getMessage());
             return "listado-postulados.html";
@@ -125,14 +126,14 @@ public class PartidoControlador {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-    @PostMapping("/confirmar-postulado")
+    @GetMapping("/confirmar-postulado")
     public String confirmarpostulado(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
 
         try {
             //Consulto si ya no estan completo los postulados y guardo confirmado
             if (partidoServicio.validarVacantes(partidoServicio.traerPartido(idpartido))) {
 
-                partidoServicio.confirmarPostulado(partidoServicio.traerPartido(idpartido), idpartido);
+                partidoServicio.confirmarPostulado(partidoServicio.traerPartido(idpartido), idpostulado);
                 modelo.put("mensaje", "El jugador fue confirmado con exito");
 
             } else {
@@ -140,6 +141,9 @@ public class PartidoControlador {
             } //<< muestro mensaje caso contrario            
         } catch (ErrorServicio ex) {
             modelo.put("mensaje", ex.getMessage());
+            List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
+
+            modelo.put("listado-postulados", postulados);
             return "listado-postulados";
         }
 
@@ -157,9 +161,9 @@ public class PartidoControlador {
         try {
             partidoServicio.eliminaPostulado(idPartido, idUsuario);
             Partido partido = partidoServicio.traerPartido(idPartido);
-            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            List<Usuario> listaConfirmados = partidoServicio.listarPostulados(partido);
             modelo.put("confirmados", listaConfirmados);
-            return "listado-confirmados.html";
+            return "listado-postulados.html";
         } catch (ErrorServicio es) {
             modelo.put("error", es.getMessage());
             return ("listado-postulados");
@@ -177,16 +181,15 @@ public class PartidoControlador {
             //vuelvo a cargar postulados para mostrar
             //List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
             //modelo.put("listado-postulados", postulados);
-            
-            
-        return "ver-partido.html";
+
+            return "ver-partido.html";
 
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
 
         }
-        
-        Partido partido = partidoServicio.traerPartido(idpartido);               
+
+        Partido partido = partidoServicio.traerPartido(idpartido);
         modelo.put("partidos", partido);
         return "ver-partido.html";
     }
