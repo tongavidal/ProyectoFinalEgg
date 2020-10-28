@@ -166,21 +166,28 @@ public class PartidoControlador {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/postularse")
     public String postularse(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
 
         try {
             Partido partido = partidoServicio.traerPartido(idpartido);
+            modelo.put("partidos", partido);
             partidoServicio.cargarPostulado(partido, idpostulado);
             //vuelvo a cargar postulados para mostrar
             //List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
             //modelo.put("listado-postulados", postulados);
+            
+            
+        return "ver-partido.html";
 
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
 
         }
-        modelo.put("partido", partidoRepositorio.getOne(idpartido));
+        
+        Partido partido = partidoServicio.traerPartido(idpartido);               
+        modelo.put("partidos", partido);
         return "ver-partido.html";
     }
 
