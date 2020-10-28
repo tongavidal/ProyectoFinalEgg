@@ -99,17 +99,26 @@ public class UsuarioControlador {
         modelo.put("title", "Editar Perfil - NosFalta1");
         Usuario usuario = usuarioRepositorio.findById(idusuario).get();
         modelo.put("usuario", usuario);
+        List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
+        modelo.put("localidades", localidades);
         return "editar-perfil.html";
     }
+
     
-    @PostMapping("editar-perfil/{idusuario}")
-    public String editarPerfilPost(ModelMap modelo, @PathVariable String idusuario, @RequestParam String nombre, @RequestParam String apellido,
+    @PostMapping("/editar-perfil")
+    public String editarPerfilPost(ModelMap modelo, @RequestParam String idusuario, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String edad, @RequestParam String idLocalidad, @RequestParam String mail, @RequestParam String clave, @RequestParam String clave1) throws ErrorServicio{
         try{
             usuarioServicio.modificarUsuario(idusuario, nombre, apellido, edad, idLocalidad, mail, clave, clave1);
+            Usuario usuario = usuarioRepositorio.findById(idusuario).get();
+            modelo.put("usuario", usuario);
             return ("listar-perfil.html");
         }catch (ErrorServicio es) {
+            Usuario usuario = usuarioRepositorio.findById(idusuario).get();
+            modelo.put("usuario", usuario);
             modelo.put("error", es.getMessage());
+            List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
+            modelo.put("localidades", localidades);
             return "editar-perfil.html";
         }
     }
