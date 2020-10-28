@@ -31,18 +31,19 @@
                                         <span class="glyphicon glyphicon-user glyphicon-lg"></span>
                                     </div>
                                     <h4>Nombre: <span th:text="${postulado.nombre + ' ' + postulado.apellido }"></span></h4>
-<!--                                     <p>Posiciones: <span th:each="pos:${postulado.posiciones}"></span><br> -->
-<!--                                     			<span th:text="${pos.posicion}"></span></p> -->
+                                   <!--  <p>Posiciones: <span th:each="pos:${postulado.posiciones}"></span><br>
+                                    			<span th:text="${pos.posicion}"></span></p> 
+                                   -->
                                     <p>Reputación:</p>
                                     <br>
                                     
                                     <a th:href="@{/partido/ver-perfil/__${postulado.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Perfil</a>
                                     
-                                   	<a th:href="@{/partido/eliminarpostulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn btn-primary btn-sm bpostularse"><i class="far fa-trash-alt"></i>Eliminar Postulado</a>
+                                   <a th:href="@{/partido/eliminarpostulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</a>
                                     
                                     <a th:href="@{/partido/confirmar-postulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn btn-primary btn-sm bpostularse"><i class="far fa-trash-alt"></i>Confirmar Postulado</a>
                                     
-                                    
+                                   
                                 </div>
                             </div>
                         </div>
