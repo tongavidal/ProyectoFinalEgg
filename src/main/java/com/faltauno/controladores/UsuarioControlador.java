@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.faltauno.entidades.Localidad;
+import com.faltauno.entidades.Usuario;
 import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.UsuarioRepositorio;
@@ -96,6 +97,8 @@ public class UsuarioControlador {
     @GetMapping("/editar-perfil/{idusuario}")
     public String editarPerfiGet(ModelMap modelo, @PathVariable String idusuario){
         modelo.put("title", "Editar Perfil - NosFalta1");
+        Usuario usuario = usuarioRepositorio.findById(idusuario).get();
+        modelo.put("usuario", usuario);
         return "editar-perfil.html";
     }
     
