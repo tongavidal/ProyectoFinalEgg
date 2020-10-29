@@ -167,7 +167,7 @@ public class PartidoServicio {
         for (Usuario u : listaPostulados) {
             if (u.getId().equals(idUsuario)) {
                 System.out.println(u.getId() + " " + idUsuario);
-                throw new ErrorServicio("¿Ganas de pisarla y encarar? ya estás postulado a este partido.");
+                throw new ErrorServicio("Ya estás postulado a este partido.");
             }
         }
     }
