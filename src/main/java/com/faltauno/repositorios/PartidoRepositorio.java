@@ -30,7 +30,7 @@ public interface PartidoRepositorio extends JpaRepository<Partido, String> {
     public List<Partido> prueba(@Param("idlocalidad") String idlocalidad);
     
     //traer partido por creador
-     @Query("Select p from Partido p where p.creador.id = :idcreador and p.estado!=false")
+     @Query("Select p from Partido p where p.creador.id = :idcreador")
     public List<Partido> buscarPorCreador(@Param("idcreador")String idcreador);
     
     //buscar partido por localidad, estado true y que partido no vencido

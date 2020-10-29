@@ -110,17 +110,19 @@ public class PartidoControlador {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-    @GetMapping("/listar-confirmados/{idPartido}")
-    public String listarConfirmados(ModelMap modelo, @PathVariable String idPartido) throws ErrorServicio {
+    @GetMapping("/listar-confirmados/{idpartido}")
+    public String listarConfirmados(ModelMap modelo, @PathVariable String idpartido) throws ErrorServicio {
         modelo.put("title", "Registrarse - NosFalta1");
         try {
-            Partido partido = partidoServicio.traerPartido(idPartido);
+            Partido partido = partidoServicio.traerPartido(idpartido);
             List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
             modelo.put("confirmados", listaConfirmados);
             modelo.put("fecha", true);
+            modelo.put("idpartido", idpartido);
             return "listado-confirmados.html";
         } catch (ErrorServicio es) {
             modelo.put("error", es.getMessage());
+            modelo.put("idpartido", idpartido);
             return "listado-confirmados.html";
         }
     }
@@ -134,23 +136,23 @@ public class PartidoControlador {
             if (partidoServicio.validarVacantes(partidoServicio.traerPartido(idpartido))) {
 
                 partidoServicio.confirmarPostulado(partidoServicio.traerPartido(idpartido), idpostulado);
-                modelo.put("mensaje", "El jugador fue confirmado con exito");
+                modelo.put("mensajeexito", "El jugador fue confirmado con exito");
 
             } else {
                 modelo.put("mensaje", "Ya no hay mas vacantes");
             } //<< muestro mensaje caso contrario            
         } catch (ErrorServicio ex) {
-            modelo.put("mensaje", ex.getMessage());
+            modelo.put("mensajeerror", ex.getMessage());
             List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
-
-            modelo.put("listado-postulados", postulados);
+            
+            modelo.put("postulados", postulados);
             return "listado-postulados";
         }
 
         //vuelvo a cargar postulados para mostrar
         List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
 
-        modelo.put("listado-postulados", postulados);
+        modelo.put("postulados", postulados);
         return "listado-postulados";
     }
 

@@ -36,6 +36,8 @@
                                     <p>Localidad: <span th:text="${partido.localidad.nombre}"></span></p>
                                     <p>Establecimiento: <span th:text="${partido.establecimiento.nombre}"></span></p>
                                     <p>Tipo Partido: <span th:text="${partido.sexo}"></span></p>
+                                    <p>Estado Del Partido: <span th:if="${partido.estado != true}" class="text-danger"> Cancelado</span>
+                                    					   <span th:if="${partido.estado != false}" class="text-success"> Activo</span></p>
                                     <br>
                                     
                                     <a th:href="@{/partido/ver-partido(idpartido=__${partido.id}__)}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Partido</a>

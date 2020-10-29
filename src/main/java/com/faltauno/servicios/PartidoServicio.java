@@ -178,7 +178,7 @@ public class PartidoServicio {
 
     //listar postulados
     public List<Usuario> listarPostulados(Partido partido) throws ErrorServicio {
-        List<Usuario> usuList = null;
+        List<Usuario> usuList = new ArrayList();
         //Recorro y cargo la lista de usuarios postulados
         for (Usuario u : partido.getJugPostulados()) {
             usuList.add(u);
@@ -188,7 +188,7 @@ public class PartidoServicio {
 
     //listar confirmados
     public List<Usuario> listarConfirmados(Partido partido) throws ErrorServicio {
-        List<Usuario> usuList = null;
+        List<Usuario> usuList = new ArrayList();
         //Recorro y cargo la lista de usuarios postulados
         for (Usuario u : partido.getJugConfirmados()) {
             usuList.add(u);
