@@ -21,6 +21,12 @@
                         <div class="col-lg-12 search">
                             <input type="search" class="form-control" id="input-search" placeholder="Buscar Postulados..." >
                         </div>
+                        <div th:if="${mensajeerror != null}" class="col-md-12 alert alert-danger" role="alert">
+							<h4 th:text="${mensajeerror}"></h4>
+						</div>
+						<div th:if="${mensajeexito != null}" class="col-md-12 alert alert-success" role="success">
+							<h4 th:text="${mensajeexito}"></h4>
+						</div>
                         <div class="searchable-container">
                             <div th:each="postulado:${postulados}" class="items col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
                                 <div class="info-block block-info clearfix">
@@ -33,7 +39,7 @@
                                     <p>Reputación:<span th:text="${postulado.reputacion}"></span><br></p>
                                     
                                     
-                                    <a th:href="@{/partido/ver-perfil/__${postulado.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Perfil</a>
+                                    <a th:href="@{/usuario/ver-perfil/__${postulado.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Perfil</a>
                                     
                                    <a th:href="@{/partido/eliminarpostulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</a>
                                     
