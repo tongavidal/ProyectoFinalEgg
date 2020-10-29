@@ -241,6 +241,10 @@ public class UsuarioServicio implements  UserDetailsService{
         } catch (Exception e) {
             throw new ErrorServicio("Cosas pasaron");
         }
-        
     }
+    
+    public Usuario buscarUsuarioPorId(String idUsuario){
+        Usuario usuario = usuarioRepositorio.findById(idUsuario).get();
+        return usuario;
+    } 
 }

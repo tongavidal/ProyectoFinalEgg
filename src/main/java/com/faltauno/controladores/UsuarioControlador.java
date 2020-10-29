@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.faltauno.entidades.Localidad;
+import com.faltauno.entidades.Usuario;
 import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.UsuarioRepositorio;
@@ -96,17 +97,28 @@ public class UsuarioControlador {
     @GetMapping("/editar-perfil/{idusuario}")
     public String editarPerfiGet(ModelMap modelo, @PathVariable String idusuario){
         modelo.put("title", "Editar Perfil - NosFalta1");
+        Usuario usuario = usuarioRepositorio.findById(idusuario).get();
+        modelo.put("usuario", usuario);
+        List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
+        modelo.put("localidades", localidades);
         return "editar-perfil.html";
     }
+
     
-    @PostMapping("editar-perfil/{idusuario}")
-    public String editarPerfilPost(ModelMap modelo, @PathVariable String idusuario, @RequestParam String nombre, @RequestParam String apellido,
+    @PostMapping("/editar-perfil")
+    public String editarPerfilPost(ModelMap modelo, @RequestParam String idusuario, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String edad, @RequestParam String idLocalidad, @RequestParam String mail, @RequestParam String clave, @RequestParam String clave1) throws ErrorServicio{
         try{
             usuarioServicio.modificarUsuario(idusuario, nombre, apellido, edad, idLocalidad, mail, clave, clave1);
+            Usuario usuario = usuarioRepositorio.findById(idusuario).get();
+            modelo.put("usuario", usuario);
             return ("listar-perfil.html");
         }catch (ErrorServicio es) {
+            Usuario usuario = usuarioRepositorio.findById(idusuario).get();
+            modelo.put("usuario", usuario);
             modelo.put("error", es.getMessage());
+            List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
+            modelo.put("localidades", localidades);
             return "editar-perfil.html";
         }
     }
