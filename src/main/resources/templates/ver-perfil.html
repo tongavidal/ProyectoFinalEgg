@@ -28,8 +28,9 @@
 						<p>Posicion: <span th:text="${usuario.posiciones}"></span></p>
 						<p>Fecha de creación: <span th:text="${usuario.fechaCreacion}"></span></p>
 
-						<a th:href="@{/usuario/editar-perfil/__${usuario.id}__}" th:if="${session.usuariosession.id == usuario.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Editar</a>
-
+						<span th:if="${session.usuariosession.id != null}">
+                                                <a th:href="@{/usuario/editar-perfil/__${usuario.id}__}" th:if="${session.usuariosession.id == usuario.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Editar</a>
+                                                </span>
 						
 
 					</div>

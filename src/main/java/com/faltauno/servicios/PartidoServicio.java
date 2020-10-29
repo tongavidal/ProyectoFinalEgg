@@ -162,18 +162,24 @@ public class PartidoServicio {
     //confirmar postulado
     @Transactional
     public void confirmarPostulado(Partido partido, String idUsuario) throws ErrorServicio {
-
+      boolean existe = false;
         List<Usuario> usuList = new ArrayList<>();
         //Recorro y cargo la lista de usuarios postulados
         for (Usuario u : partido.getJugConfirmados()) {
             usuList.add(u);
+            //verifico si el usuario ya esta confirmado en la lista
+            if(u.getId().equals(idUsuario)){
+            existe = true;
+            }
         }
+        if(!existe){
         //Agrego el postulado a la lista
         usuList.add(usuarioRepositorio.getOne(idUsuario));
         //Agrego la lista actualizada
         partido.setJugConfirmados(usuList);
         //Guardo el partido
         partidoRepositorio.save(partido);
+        }
     }
 
     //listar postulados
