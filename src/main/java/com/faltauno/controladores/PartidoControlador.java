@@ -221,6 +221,8 @@ public class PartidoControlador {
         List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
         modelo.put("localidades", localidades);
         modelo.put("sexo", Sexo.values());
+        List<Establecimiento> establecimientos = establecimientoServicio.listaEstablecimientos();
+        modelo.put("establecimientos", establecimientos);
         return "alta-partido.html";
     }
 
