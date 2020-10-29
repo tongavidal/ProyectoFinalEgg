@@ -186,12 +186,10 @@ public class PartidoControlador {
 
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
-
+            Partido partido = partidoServicio.traerPartido(idpartido);
+            modelo.put("partidos", partido);
+            return "ver-partido.html";
         }
-
-        Partido partido = partidoServicio.traerPartido(idpartido);
-        modelo.put("partidos", partido);
-        return "ver-partido.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
@@ -287,6 +285,5 @@ public class PartidoControlador {
             return "ver-partido.html";
         }
     }
-    
 
 }
