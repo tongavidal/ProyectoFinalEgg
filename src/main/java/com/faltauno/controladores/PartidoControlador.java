@@ -169,10 +169,9 @@ public class PartidoControlador {
             return ("listado-postulados");
         }
     }
-
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/postularse")
-    public String postularse(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
+    public String postularse(ModelMap modelo,@RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
 
         try {
             Partido partido = partidoServicio.traerPartido(idpartido);
@@ -223,6 +222,8 @@ public class PartidoControlador {
         List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
         modelo.put("localidades", localidades);
         modelo.put("sexo", Sexo.values());
+        List<Establecimiento> establecimientos = establecimientoServicio.listaEstablecimientos();
+        modelo.put("establecimientos", establecimientos);
         return "alta-partido.html";
     }
 

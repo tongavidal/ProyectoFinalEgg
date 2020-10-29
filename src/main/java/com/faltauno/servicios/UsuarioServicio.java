@@ -9,6 +9,7 @@ import com.faltauno.entidades.Foto;
 import com.faltauno.entidades.Localidad;
 import com.faltauno.entidades.Reputacion;
 import com.faltauno.entidades.Usuario;
+import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
 import com.faltauno.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
@@ -49,9 +50,9 @@ public class UsuarioServicio implements  UserDetailsService{
     private FotoServicio fotoServicio;
     
     @Transactional
-    public void registrarUsuario(MultipartFile archivo,String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
+    public void registrarUsuario(MultipartFile archivo,String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1,Sexo sexo) throws ErrorServicio {
 
-        validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
+        validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave, clave1,sexo);
 
         Usuario u = new Usuario();
         //u.setId(UUID.randomUUID().toString().substring(0, 8));
@@ -63,7 +64,7 @@ public class UsuarioServicio implements  UserDetailsService{
         u.setAcceso("1");
         u.setFechaCreacion(new Date());
         u.setEstado(false);
-
+        u.setSexo(sexo);
         //Encripto clave
         String encriptada = new BCryptPasswordEncoder().encode(clave);
         u.setClave(encriptada);
@@ -128,7 +129,7 @@ public class UsuarioServicio implements  UserDetailsService{
         }
     }
 
-    public void validarRegistroUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
+    public void validarRegistroUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1,Sexo sexo) throws ErrorServicio {
 
         if (nombre == "" || nombre.isEmpty()) {
 
@@ -159,6 +160,9 @@ public class UsuarioServicio implements  UserDetailsService{
         if (clave == "" || clave.isEmpty() || 6 > clave.length()) {
 
             throw new ErrorServicio("La clave no puede estar vacia y no puede ser menor a 6 digitos");
+        }
+        if (sexo==null) {
+            throw new ErrorServicio("El campo sexo no debe ser nulo");
         }
 
     }
