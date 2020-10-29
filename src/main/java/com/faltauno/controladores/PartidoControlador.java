@@ -48,6 +48,7 @@ public class PartidoControlador {
 
     @Autowired
     private ReputacionServicio reputacionServicio;
+    
 
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
@@ -288,5 +289,10 @@ public class PartidoControlador {
             return "ver-partido.html";
         }
     }
-
+    @GetMapping("/mis-postulaciones/{idusuario}")
+    public String misPostulaciones(ModelMap modelo,@PathVariable String idusuario){
+        
+    }
+    
+    
 }
