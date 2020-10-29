@@ -25,11 +25,12 @@
 						<p>Edad: <span th:text="${usuario.edad}"></span></p>
 						<p>Sexo: <span th:text="${usuario.sexo}"></span></p>
 						<p>Localidad: <span th:text="${usuario.localidad.nombre}"></span></p>
-						<p>Posicion: <span th:text="${usuario.posiciones}"></span></p>
+						<p>Posicion: <span th:text="${usuario.posiciones.toString()}"></span></p>
 						<p>Fecha de creación: <span th:text="${usuario.fechaCreacion}"></span></p>
 
-						<a th:href="@{/usuario/editar-perfil/__${usuario.id}__}" th:if="${session.usuariosession.id == usuario.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Editar</a>
-
+						<span th:if="${session.usuariosession.id != null}">
+                                                <a th:href="@{/usuario/editar-perfil/__${usuario.id}__}" th:if="${session.usuariosession.id == usuario.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Editar</a>
+                                                </span>
 						
 
 					</div>

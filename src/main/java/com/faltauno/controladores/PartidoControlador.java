@@ -144,7 +144,7 @@ public class PartidoControlador {
         } catch (ErrorServicio ex) {
             modelo.put("mensajeerror", ex.getMessage());
             List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
-            
+
             modelo.put("postulados", postulados);
             return "listado-postulados";
         }
@@ -171,10 +171,9 @@ public class PartidoControlador {
             return ("listado-postulados");
         }
     }
-
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/postularse")
-    public String postularse(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
+    public String postularse(ModelMap modelo,@RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
 
         try {
             Partido partido = partidoServicio.traerPartido(idpartido);
@@ -188,12 +187,10 @@ public class PartidoControlador {
 
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
-
+            Partido partido = partidoServicio.traerPartido(idpartido);
+            modelo.put("partidos", partido);
+            return "ver-partido.html";
         }
-
-        Partido partido = partidoServicio.traerPartido(idpartido);
-        modelo.put("partidos", partido);
-        return "ver-partido.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
@@ -227,6 +224,8 @@ public class PartidoControlador {
         List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
         modelo.put("localidades", localidades);
         modelo.put("sexo", Sexo.values());
+        List<Establecimiento> establecimientos = establecimientoServicio.listaEstablecimientos();
+        modelo.put("establecimientos", establecimientos);
         return "alta-partido.html";
     }
 

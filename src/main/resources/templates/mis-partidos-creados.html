@@ -31,7 +31,7 @@
                                     <p>Fecha: <span th:text="${partido.fecha}"></span></p>
                                     <p>Horario: <span th:if="${partido.horario.toString().length()==1}" th:text="${partido.horario.toString()+'0:00'}"></span>
                                                 <span th:if="${partido.horario.toString().length()==3}" th:text="${partido.horario.toString().substring(0, 1)+':'+partido.horario.toString().substring(1, 3)}"></span>
-                                                <span th:if="${partido.horario.toString().length()==4}" th:text="${partido.horario.toString().substring(0, 2)+':'+partido.horario.toString().substring(0, 2)}"></span></p>
+                                                <span th:if="${partido.horario.toString().length()==4}" th:text="${partido.horario.toString().substring(0, 2)+':'+partido.horario.toString().substring(2, 4)}"></span></p>
                                     <p>Precio: <span th:text="${partido.precio}"></span></p>
                                     <p>Localidad: <span th:text="${partido.localidad.nombre}"></span></p>
                                     <p>Establecimiento: <span th:text="${partido.establecimiento.nombre}"></span></p>

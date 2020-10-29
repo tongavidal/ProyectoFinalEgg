@@ -145,6 +145,8 @@ public class PartidoServicio {
     @Transactional
     public void cargarPostulado(Partido partido, String idUsuario) throws ErrorServicio {
 
+        verificarDuplicacionPostulado(partido, idUsuario);
+        
         List<Usuario> usuList = new ArrayList<>();
         System.out.println();
         //Recorro y cargo la lista de usuarios postulados
@@ -159,21 +161,38 @@ public class PartidoServicio {
         partidoRepositorio.save(partido);
     }
 
+    @Transactional
+    public void verificarDuplicacionPostulado(Partido partido, String idUsuario) throws ErrorServicio {
+        List<Usuario> listaPostulados = listarPostulados(partido);
+        for (Usuario u : listaPostulados) {
+            if (u.getId().equals(idUsuario)) {
+                System.out.println(u.getId() + " " + idUsuario);
+                throw new ErrorServicio("¿Ganas de pisarla y encarar? ya estás postulado a este partido.");
+            }
+        }
+    }
+
     //confirmar postulado
     @Transactional
     public void confirmarPostulado(Partido partido, String idUsuario) throws ErrorServicio {
-
+      boolean existe = false;
         List<Usuario> usuList = new ArrayList<>();
         //Recorro y cargo la lista de usuarios postulados
         for (Usuario u : partido.getJugConfirmados()) {
             usuList.add(u);
+            //verifico si el usuario ya esta confirmado en la lista
+            if(u.getId().equals(idUsuario)){
+            existe = true;
+            }
         }
+        if(!existe){
         //Agrego el postulado a la lista
         usuList.add(usuarioRepositorio.getOne(idUsuario));
         //Agrego la lista actualizada
         partido.setJugConfirmados(usuList);
         //Guardo el partido
         partidoRepositorio.save(partido);
+        }
     }
 
     //listar postulados
@@ -281,21 +300,21 @@ public class PartidoServicio {
     }
 
     //Busca los partidos filtrados por Localidad y Sexo
-    public List<Partido> listarPartidosFiltrados(String idlocalidad, Sexo sexo) throws ErrorServicio{
-        Date fechahoy= new Date();
+    public List<Partido> listarPartidosFiltrados(String idlocalidad, Sexo sexo) throws ErrorServicio {
+        Date fechahoy = new Date();
         // Determino que Query usar, según si Sexo viaja nulo
         if (sexo == null) {
             List<Partido> listaPartidosFiltrados = partidoRepositorio.buscarPartidoPorLocalidad(idlocalidad, fechahoy);
-            if (listaPartidosFiltrados.isEmpty()){
+            if (listaPartidosFiltrados.isEmpty()) {
                 Localidad localidad = localidadRepositorio.findById(idlocalidad).get();
                 throw new ErrorServicio("No hay ningún partidos en " + localidad.getNombre() + ". Créalo tú!!");
             }
             return listaPartidosFiltrados;
-        } else {        
+        } else {
             List<Partido> listaPartidosFiltrados = partidoRepositorio.buscarPartidoPorLocalidadSexo(idlocalidad, fechahoy, sexo);
-            if (listaPartidosFiltrados.isEmpty()){
+            if (listaPartidosFiltrados.isEmpty()) {
                 Localidad localidad = localidadRepositorio.findById(idlocalidad).get();
-                throw new ErrorServicio("No existe ningún partido "+ sexo.name() +" en " + localidad.getNombre() + ". Créalo tú!!");
+                throw new ErrorServicio("No existe ningún partido " + sexo.name() + " en " + localidad.getNombre() + ". Créalo tú!!");
             }
             return listaPartidosFiltrados;
         }

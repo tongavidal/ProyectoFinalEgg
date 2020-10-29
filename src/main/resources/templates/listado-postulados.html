@@ -34,11 +34,10 @@
                                         <span class="glyphicon glyphicon-user glyphicon-lg"></span>
                                     </div>
                                     <h4>Nombre: <span th:text="${postulado.nombre + ' ' + postulado.apellido }"></span></h4>
-                                   <!--  <p>Posiciones: <span th:each="pos:${postulado.posiciones}"></span><br>
-                                    			<span th:text="${pos.posicion}"></span></p> 
-                                   -->
-                                    <p>Reputación:</p>
-                                    <br>
+                                    <p>Posiciones: <span th:text="${postulado.posiciones.toString()}"></span><br>
+                                    <p>Localidad:  <span th:text="${postulado.localidad.nombre}"></span><br>			
+                                    <p>Reputación:<span th:text="${postulado.reputacion}"></span><br></p>
+                                    
                                     
                                     <a th:href="@{/usuario/ver-perfil/__${postulado.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Perfil</a>
                                     
