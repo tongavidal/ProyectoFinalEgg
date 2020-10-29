@@ -192,6 +192,8 @@ public class PartidoServicio {
         partido.setJugConfirmados(usuList);
         //Guardo el partido
         partidoRepositorio.save(partido);
+        } else {
+            throw new ErrorServicio("Ni que fuera Messi! Este jugador ya está confirmado"); 
         }
     }
 
