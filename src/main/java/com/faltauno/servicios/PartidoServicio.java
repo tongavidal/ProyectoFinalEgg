@@ -171,8 +171,7 @@ public class PartidoServicio {
         List<Usuario> listaPostulados = partidoRepositorio.findById(partido.getId()).get().getJugPostulados();;
         for (Usuario u : listaPostulados) {
             if (u.getId().equals(idUsuario)) {
-                System.out.println(u.getId() + " " + idUsuario);
-                throw new ErrorServicio("Ya estás postulado a este partido.");
+                throw new ErrorServicio("¿Tantas ganas de pisarla y encarar? Ya estás postulado a este partido.");
             }
         }
     }
@@ -190,13 +189,15 @@ public class PartidoServicio {
                 existe = true;
             }
         }
-        if (!existe) {
-            //Agrego el postulado a la lista
-            usuList.add(usuarioRepositorio.getOne(idUsuario));
-            //Agrego la lista actualizada
-            partido.setJugConfirmados(usuList);
-            //Guardo el partido
-            partidoRepositorio.save(partido);
+        if(!existe){
+        //Agrego el postulado a la lista
+        usuList.add(usuarioRepositorio.getOne(idUsuario));
+        //Agrego la lista actualizada
+        partido.setJugConfirmados(usuList);
+        //Guardo el partido
+        partidoRepositorio.save(partido);
+        } else {
+            throw new ErrorServicio("Ni que fuera Messi! Este jugador ya está confirmado"); 
         }
     }
 
@@ -361,4 +362,16 @@ public class PartidoServicio {
             return listaPartidosFiltrados;
         }
     }
+    
+    @Transactional
+    public void cancelarPostulado(String idPartido, String idConfirmado) throws ErrorServicio{
+        Partido partido = traerPartido(idPartido);
+        for (Usuario u : partido.getJugConfirmados()) {
+            if (u.getId().equals(idConfirmado)){
+                partido.getJugConfirmados().remove(u);
+                break;
+            }
+        }
+    }
+    
 }
