@@ -26,5 +26,9 @@ public class PortalControlador {
         public String ver_perfil(){
             return "ver_perfil.html";
         }
-
+        
+        @GetMapping("/contacto")
+        public String contacto(){
+            return "contacto";
+        }
 }

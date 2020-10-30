@@ -61,7 +61,7 @@
 										th:text="${partido.horario.toString().substring(0, 2)+':'+partido.horario.toString().substring(2, 4)}"></span>
 								</p>
 								<p>
-									Precio: <span th:text="${partido.precio}"></span>
+									Precio: <span th:text="${partido.precio} + '$'"></span>
 								</p>
 								<p>
 									Localidad: <span th:text="${partido.localidad.nombre}"></span>

@@ -34,7 +34,7 @@
                                     <h4>Nombre: <span th:text="${partido.creador}"></span></h4>
                                     <p>Fecha: <span th:text="${#dates.format(partido.fecha, 'dd MMMM yyyy')}"></span></p>
                                     <p>Horario: <span th:text="${partido.horario}"></span></p>
-                                    <p>Precio: <span th:text="${partido.precio}"></span></p>
+                                    <p>Precio: <span th:text="${partido.precio} + '$'"></span></p>
                                     <br>
                                     <button type="button" class="btn btn-sm bver"><a th:href="@{/modificar_partido/__${partido.id}__}"><i class="fas fa-edit"></i> Modificar</button>
                                     <button type="button" class="btn btn-sm bver"><a th:href="@{/eliminar_pais/__${partido.id}__}"><i class="far fa-trash-alt"></i> Eliminar</button>
