@@ -28,7 +28,11 @@
 						<p>Edad: <span th:text="${usuario.edad}"></span></p>
 						<p>Sexo: <span th:text="${usuario.sexo}"></span></p>
 						<p>Localidad: <span th:text="${usuario.localidad.nombre}"></span></p>
-						<p>Posicion: <span th:text="${usuario.posiciones.toString()}"></span></p>
+						<p>Posicion:
+                                                    <span th:each="posicion:${posiciones}">
+                                                    <span th:text="${posicion.posicion} "></span>
+                                                    </span>
+                                                    </p>
 						<p>Fecha de creación: <span th:text="${#dates.format(usuario.fechaCreacion,'dd MMMM yyyy')}"></span></p>
 
 						<span th:if="${session.usuariosession.id != null}">

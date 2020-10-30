@@ -116,4 +116,10 @@ public class ReputacionServicio {
         promedio.put("FairPlay",promFairplay(id));
         return promedio;
     }
+    
+    public Integer promedioReputacionTotal(String id){
+        Integer total;
+        total = (promPuntualidad(id)+promHabilidad(id)+promFairplay(id))/3;
+        return total;
+    }
 }
