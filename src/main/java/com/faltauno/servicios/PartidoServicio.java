@@ -374,4 +374,10 @@ public class PartidoServicio {
         }
     }
     
+    @Transactional 
+    public List<Partido> listarMisPostulaciones (String idPostulado){
+        List<Partido> listaMisPostulaciones = partidoRepositorio.listaMisPostulaciones(idPostulado);
+        return listaMisPostulaciones;
+    }
+    
 }

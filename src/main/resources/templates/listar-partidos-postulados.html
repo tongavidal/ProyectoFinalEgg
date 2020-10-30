@@ -42,12 +42,12 @@
 									<span class="glyphicon glyphicon-user glyphicon-lg"></span>
 								</div>
 								<h4>
-									Nombre: <span
+									Creador: <span
 										th:text="${partido.creador.nombre + ' ' + partido.creador.apellido }"></span>
 								</h4>
 								<p>
 <!-- 									Fecha: <span th:text="${partido.fecha}"></span> -->
-									Fecha: <span th:text="${#dates.format(partido.fecha, 'dd 'de' MMMM yyyy')}"></span>
+									Fecha: <span th:text="${#dates.format(partido.fecha, 'dd MMMM yyyy')}"></span>
 								</p>
 								<p>
 									Horario: <span

@@ -49,7 +49,6 @@ public class PartidoControlador {
 
     @Autowired
     private ReputacionServicio reputacionServicio;
-    
 
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
@@ -318,10 +317,16 @@ public class PartidoControlador {
             return "ver-partido.html";
         }
     }
+
     @GetMapping("/mis-postulaciones/{idusuario}")
-    public String misPostulaciones(ModelMap modelo,@PathVariable String idusuario){
-     return "mis-postulaciones.html";    
+    public String misPostulaciones(ModelMap modelo, @PathVariable String idusuario) {
+        modelo.put("title", "Mis Postulaciones-NosFalta1");
+        List<Partido> listaMisPostulaciones = partidoServicio.listarMisPostulaciones(idusuario);
+        modelo.put("partidos", listaMisPostulaciones);
+        if (listaMisPostulaciones == null){
+            modelo.put("error", "No te has postulado a ningún partido");
+        }
+        return "listar-partidos-postulados.html";
     }
-    
-    
-}
+
+    }
