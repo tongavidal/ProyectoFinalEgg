@@ -116,6 +116,7 @@ public class UsuarioControlador {
         modelo.put("usuario", usuario);
         List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
         modelo.put("localidades", localidades);
+        modelo.put("posiciones",posicionRepositorio.findAll());
         return "editar-perfil.html";
     }
 
@@ -126,13 +127,14 @@ public class UsuarioControlador {
             usuarioServicio.modificarUsuario(idusuario, nombre, apellido, edad, idLocalidad, mail, clave, clave1);
             Usuario usuario = usuarioRepositorio.findById(idusuario).get();
             modelo.put("usuario", usuario);
-            return ("listar-perfil.html");
+            return ("redirect:/usuario/ver-perfil/" + idusuario);
         } catch (ErrorServicio es) {
             Usuario usuario = usuarioRepositorio.findById(idusuario).get();
             modelo.put("usuario", usuario);
             modelo.put("error", es.getMessage());
             List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
             modelo.put("localidades", localidades);
+            modelo.put("posiciones",posicionRepositorio.findAll());
             return "editar-perfil.html";
         }
     }
