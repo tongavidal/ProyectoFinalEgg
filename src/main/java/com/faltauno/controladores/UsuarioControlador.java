@@ -27,13 +27,13 @@ public class UsuarioControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
-    
+
     @Autowired
     private ReputacionServicio reputacionServicio;
-    
+
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-    
+
     @Autowired
     private LocalidadServicio localidadServicio;
     
@@ -42,7 +42,7 @@ public class UsuarioControlador {
     
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
-        modelo.put("title", "Ingresá - Tu Biblioteca");
+        modelo.put("title", "Ingresá - NosFalta1");
         List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
         modelo.put("localidades", localidades);
         modelo.put("sexo", Sexo.values());
@@ -66,13 +66,17 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/registrarse")
-    public String registrarse(ModelMap modelo) {
+    public String registrarse(@RequestParam(required = false) String error, ModelMap modelo) {
         modelo.put("title", "Registrarse - NosFalta1");
         List<Localidad> localidades = localidadServicio.listarPaises();
         modelo.put("localidades", localidades);
         modelo.put("sexo", Sexo.values());
         modelo.addAttribute("usuario",new Usuario());
         modelo.put("posiciones",posicionRepositorio.findAll());
+        if (error != null) {
+            modelo.put("error", "Mail o contraseña incorrecta");
+            return "registrarse.html";
+        }
         return "registrarse.html";
     }
 
@@ -88,7 +92,7 @@ public class UsuarioControlador {
             modelo.put("apellido", apellido);
             modelo.put("edad", edad);
             modelo.put("mail", mail);
-            List<Localidad>listaLocalidades = localidadServicio.listarTodasLocalidads();
+            List<Localidad> listaLocalidades = localidadServicio.listarTodasLocalidads();
             modelo.put("localidades", listaLocalidades);
             modelo.put("sexo", Sexo.values());
             modelo.addAttribute("usuario",new Usuario());
@@ -99,14 +103,14 @@ public class UsuarioControlador {
             return "registrarse.html";
         }
 
-        modelo.put("title", "Te has registrado Correctamente! - Tu Biblioteca");
+        modelo.put("title", "Te has registrado Correctamente! - NosFalta1");
         modelo.put("titulo", "Felicitaciones!!");
         modelo.put("descripcion", "Tu registro como usuario se ha realizado con éxito.");
         return "index.html";
     }
-    
+
     @GetMapping("/editar-perfil/{idusuario}")
-    public String editarPerfiGet(ModelMap modelo, @PathVariable String idusuario){
+    public String editarPerfiGet(ModelMap modelo, @PathVariable String idusuario) {
         modelo.put("title", "Editar Perfil - NosFalta1");
         Usuario usuario = usuarioRepositorio.findById(idusuario).get();
         modelo.put("usuario", usuario);
@@ -115,16 +119,15 @@ public class UsuarioControlador {
         return "editar-perfil.html";
     }
 
-    
     @PostMapping("/editar-perfil")
     public String editarPerfilPost(ModelMap modelo, @RequestParam String idusuario, @RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String edad, @RequestParam String idLocalidad, @RequestParam String mail, @RequestParam String clave, @RequestParam String clave1) throws ErrorServicio{
-        try{
+            @RequestParam String edad, @RequestParam String idLocalidad, @RequestParam String mail, @RequestParam String clave, @RequestParam String clave1) throws ErrorServicio {
+        try {
             usuarioServicio.modificarUsuario(idusuario, nombre, apellido, edad, idLocalidad, mail, clave, clave1);
             Usuario usuario = usuarioRepositorio.findById(idusuario).get();
             modelo.put("usuario", usuario);
             return ("listar-perfil.html");
-        }catch (ErrorServicio es) {
+        } catch (ErrorServicio es) {
             Usuario usuario = usuarioRepositorio.findById(idusuario).get();
             modelo.put("usuario", usuario);
             modelo.put("error", es.getMessage());
@@ -133,21 +136,21 @@ public class UsuarioControlador {
             return "editar-perfil.html";
         }
     }
-    
+
     @GetMapping("/buscar-usuario")
-    public String buscarUsuarioGet(ModelMap modelo){
+    public String buscarUsuarioGet(ModelMap modelo) {
         modelo.put("title", "Buscar Usuario - NosFalta1");
         return "buscar-usuario";
     }
-    
+
     @GetMapping("/ver-perfil/{idUsuario}")
-    public String verPerfil(ModelMap modelo,@PathVariable String idUsuario){
+    public String verPerfil(ModelMap modelo, @PathVariable String idUsuario) {
         modelo.put("title", "Perfil - NosFalta1");
         modelo.put("usuario",usuarioRepositorio.getOne(idUsuario));
-        modelo.put("reputacionU", reputacionServicio.promedioReputacion(idUsuario));
+        modelo.put("fairplay", reputacionServicio.promFairplay(idUsuario));
+        modelo.put("habilidad", reputacionServicio.promHabilidad(idUsuario));
+        modelo.put("puntualidad", reputacionServicio.promPuntualidad(idUsuario));
         return "ver-perfil.html";
     }
-    
-    
-    
+
 }

@@ -7,15 +7,17 @@
 
 	<div class="fh5co-loader"></div>
 
-	<div id="page">
+	<div id="page_editar_perfil">
 		<nav th:replace="components/nav::nav"></nav>
 
-		<header id="fh5co-header" class="fh5co-cover partidos alta-partido" role="banner" data-stellar-background-ratio="0.5">
+		<header id="fh5co-header" class="fh5co-cover perfil editar img-fondo">
+			<div class="container pt-30">
+				<h1>Editar Perfil</h1>
+			</div>
+		</header>
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6 animate-box">
-						<br>
-						<h1>Editar Perfil</h1>
 						<form th:action="@{/usuario/editar-perfil}" method="post" enctype="multipart/form-data">
 							<div class="form-row">
 								<div th:if="${error != null}" class="col-md-12 alert alert-danger" role="alert">
@@ -84,7 +86,6 @@
 					</div>
 				</div>
 			</div>
-		</header>
 
 
 

@@ -8,25 +8,24 @@
 
 	<div class="fh5co-loader"></div>
 
-	<div id="page">
+	<div id="page_buscar_partidos">
+		
 		<nav th:replace="components/nav::nav"></nav>
 
-		<header id="fh5co-header" class="fh5co-cover partidos"> </header>
-
-		<div id="fh5co-services" class="fh5co-bg-section lista-partido">
-
-			<div class="container">
+		<header id="fh5co-header" class="fh5co-cover partidos buscar-partidos img-fondo">
+			<div class="container pt-30">
+				<h1>Buscar Partidos</h1>
+			</div>
+		</header>
+			<div class="pt-30"></div>
+			<div class="container pt-30">
 				<div class="row">
-					<h2>Buscar Partidos</h2>
 					<div class="col-lg-12 search">
 						<form th:action="@{/partido/listar-partidos-ok}" method="post">
 							<div class="form-row">
 								<div th:if="${error != null}"
 									class="col-md-12 alert alert-danger" role="alert">
-									<h4 th:text="${error}"></h4>
-									<span th:if="${alta != null}" class="col-md-6">
-										<a th:href="@{/partido/alta-partido}" th:text="${alta}" class="btn btn-primary"></a>
-									</span>
+									<span th:text="${error}"></span><a th:if="${alta != null}" th:href="@{/partido/alta-partido}" th:text="${alta}" class="btn btn-primary btn-altapartido"></a>
 								</div>
 								<div th:if="${mensajeexito != null}" role="alert"
 									class="col-md-12 alert alert-success animate-box text-center">
@@ -62,17 +61,19 @@
 					</div>
 				</div>
 			</div>
-		</div>
+			
+			<div class="pt-40"></div>
+			<div class="pt-40"></div>
 
-		<scripts th:replace="/components/scripts::scripts"></scripts>
+		
 		<footer th:replace="components/footer::footer"></footer>
 	</div>
-	<!--FontAwesome-->
-	<script src="https://kit.fontawesome.com/893bee3809.js"
-		crossorigin="anonymous"></script>
+	
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 	</div>
+	
+	<scripts th:replace="/components/scripts::scripts"></scripts>
 
 
 </body>
