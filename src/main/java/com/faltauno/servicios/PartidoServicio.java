@@ -379,5 +379,12 @@ public class PartidoServicio {
         List<Partido> listaMisPostulaciones = partidoRepositorio.listaMisPostulaciones(idPostulado);
         return listaMisPostulaciones;
     }
+
+    public boolean fecha(Date fecha){
+        Date hoy=new Date();
+        return hoy.before(fecha);
+    }
+
+
     
 }

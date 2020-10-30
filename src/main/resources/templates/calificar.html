@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="components/head::head"></head>
+
+<body>
+
+	<div class="fh5co-loader"></div>
+
+	<div id="page_editar_perfil">
+		<nav th:replace="components/nav::nav"></nav>
+
+		<header id="fh5co-header" class="fh5co-cover perfil editar img-fondo">
+			<div class="container pt-30">
+				<h1>Calificar Jugador</h1>
+			</div>
+		</header>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 animate-box">
+						<form th:action="@{/reputacion/calificar_usuario}" method="post">
+							<div class="form-row">
+								<div th:if="${error != null}" class="col-md-12 alert alert-danger" role="alert">
+									<p th:text="${error}"></p>
+								</div>
+							</div>
+                                                        <div th:if="${mensajeerror != null}" role="alert"
+                                                                class="col-md-12 alert alert-success animate-box text-center">
+                                                            <h4 th:text="${mensajeerror}"></h4>
+                                                        </div>
+                                                    
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input th:value="${idPartido}" type="hidden" id="subject" class="form-control" name="idPartido">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input th:value="${idUsuario}" type="hidden" id="subject" class="form-control" name="idUsuario">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input  type="number" id="subject" class="form-control" name="puntualidad" placeholder="Puntualidad">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input  type="number" id="subject" class="form-control" name="habilidad" placeholder="Habilidad">
+								</div>
+							</div>	
+							<div class="row form-group">
+								<div class="col-md-12">
+									<input  type="number" id="subject" class="form-control" name="fairPlay" placeholder="FairPlay">
+								</div>
+							</div>
+							
+							
+							
+				        
+
+							<!--BOTON DE MODIFICAR-->
+					<div class="row form-group">
+						<div class="col-md-12">
+							<input type="submit" value="Calificar"
+										class="btn btn-primary">
+						</div>
+					</div>
+							<br>
+							<br>
+							<br>
+							<br>
+
+						</form>
+				</div>
+			</div>
+	</div>
+
+
+
+		<!--COMENTO FOOTER-->
+		<!--<footer th:replace="components/footer::footer"></footer>-->
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+
+	<scripts th:replace="/components/scripts::scripts"></scripts>
+
+
+
+</body>
+</html>

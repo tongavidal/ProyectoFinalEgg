@@ -22,6 +22,10 @@
 						<input type="search" class="form-control" id="input-search"
 							placeholder="Buscar Postulados...">
 					</div>
+                                        <div th:if="!${fecha}" role="alert"
+						class="col-md-12 alert alert-success animate-box text-center">
+						<h4>"El partido ya ha se ha realizado, califica a tus compañeros!!"</h4>
+					</div>
 					<div th:if="${error != null}" class="col-md-12 alert alert-danger"
 						role="alert">
 						<h4 th:text="${error}"></h4>
@@ -34,6 +38,7 @@
 						class="col-md-12 alert alert-success animate-box text-center">
 						<h4 th:text="${mensajeexito}"></h4>
 					</div>
+                                        
 					<div class="searchable-container">
 						<div th:each="confirmado:${confirmados}"
 							class="items col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
@@ -45,19 +50,20 @@
 									Nombre: <span
 										th:text="${confirmado.nombre + ' ' + confirmado.apellido }"></span>
 								</h4>
-								<!--                                     <p>Posiciones: <span th:each="pos:${confirmado.posiciones}"></span><br> -->
-								<!--                                     			<span th:text="${pos.posicion}"></span></p> -->
+								<p>Posiciones: <span th:text="${confirmado.posiciones.toString()}"></span><br>
 								<p>
 									Reputación: <span></span>
 								</p>
 								<br> <a
 									th:href="@{/usuario/ver-perfil/__${confirmado.id}__}"
 									class="btn btn-primary btn-sm bmodificar"><i
-									class="fas fa-edit"></i> Ver Perfil</a> <a
-									th:href="@{/partido/cancelar-confirmado(idpartido=__${idpartido}__,idconfirmado=__${confirmado.id}__)}"
-									class="btn btn-primary btn-sm bpostularse"><i
-									class="far fa-trash-alt"></i>Cancelar Confirmado</a>
-
+									class="fas fa-edit"></i> Ver Perfil</a> 
+                                                                        <a th:if="${fecha}" th:href="@{/partido/cancelar-confirmado(idpartido=__${idpartido}__,idconfirmado=__${confirmado.id}__)}"
+									class="btn btn-primary btn-sm bpostularse"><i class="far fa-trash-alt"></i>Cancelar Confirmado</a>
+									
+                                                                        <a th:if="!${fecha}" th:href="@{/reputacion/calificar(idpartido=__${idpartido}__,idconfirmado=__${confirmado.id}__)}"
+									class="btn btn-primary btn-sm bpostularse"><i class="far fa-trash-alt"></i>Calificar</a>
+									
 
 							</div>
 						</div>
