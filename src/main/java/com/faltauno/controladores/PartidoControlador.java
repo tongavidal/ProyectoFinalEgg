@@ -48,6 +48,7 @@ public class PartidoControlador {
 
     @Autowired
     private ReputacionServicio reputacionServicio;
+    
 
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
@@ -61,7 +62,7 @@ public class PartidoControlador {
     @PostMapping("/listar-partidos-ok")
     public String listarPartidosFiltrados(ModelMap modelo, @RequestParam String idLocalidad, @RequestParam(required = false) Sexo sexo)
             throws ErrorServicio {
-       try {
+        try {
             modelo.put("title", "Lista de Partidos - NosFalta1");
             List<Partido> listaPartidosFiltrados = partidoServicio.listarPartidosFiltrados(idLocalidad, sexo);
             modelo.put("partidos", listaPartidosFiltrados);
@@ -100,7 +101,8 @@ public class PartidoControlador {
     public String listarpostulados(ModelMap modelo, @PathVariable String idpartido) throws ErrorServicio {
         try {
             List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
-            modelo.put("listado-postulados", postulados);
+            modelo.put("postulados", postulados);
+            modelo.put("idpartido", idpartido);
         } catch (Exception ex) {
             modelo.put("mensaje", ex.getMessage());
             return "listado-postulados.html";
@@ -109,60 +111,90 @@ public class PartidoControlador {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-    @GetMapping("/listar-confirmados/{idPartido}")
-    public String listarConfirmados(ModelMap modelo, @PathVariable String idPartido) throws ErrorServicio {
+    @GetMapping("/listar-confirmados/{idpartido}")
+    public String listarConfirmados(ModelMap modelo, @PathVariable String idpartido) throws ErrorServicio {
         modelo.put("title", "Registrarse - NosFalta1");
         try {
-            Partido partido = partidoServicio.traerPartido(idPartido);
+            Partido partido = partidoServicio.traerPartido(idpartido);
             List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
             modelo.put("confirmados", listaConfirmados);
             modelo.put("fecha", true);
+            modelo.put("idpartido", idpartido);
             return "listado-confirmados.html";
         } catch (ErrorServicio es) {
             modelo.put("error", es.getMessage());
+            modelo.put("idpartido", idpartido);
             return "listado-confirmados.html";
         }
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-    @PostMapping("/confirmar-postulado")
+    @GetMapping("/confirmar-postulado")
     public String confirmarpostulado(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
 
         try {
             //Consulto si ya no estan completo los postulados y guardo confirmado
             if (partidoServicio.validarVacantes(partidoServicio.traerPartido(idpartido))) {
 
-                partidoServicio.confirmarPostulado(partidoServicio.traerPartido(idpartido), idpartido);
-                modelo.put("mensaje", "El jugador fue confirmado con exito");
+                partidoServicio.confirmarPostulado(partidoServicio.traerPartido(idpartido), idpostulado);
+                modelo.put("mensajeexito", "El jugador fue confirmado con exito");
 
             } else {
                 modelo.put("mensaje", "Ya no hay mas vacantes");
+
             } //<< muestro mensaje caso contrario            
         } catch (ErrorServicio ex) {
-            modelo.put("mensaje", ex.getMessage());
+            modelo.put("mensajeerror", ex.getMessage());
+            List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
+            modelo.put("postulados", postulados);
             return "listado-postulados";
         }
 
         //vuelvo a cargar postulados para mostrar
         List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
 
-        modelo.put("listado-postulados", postulados);
+        modelo.put("postulados", postulados);
         return "listado-postulados";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
-    @PostMapping("/eliminarpostulado")
-    public String eliminarPostulado(ModelMap modelo, @PathVariable String idPartido, @PathVariable String idUsuario) throws ErrorServicio {
-        modelo.put("title", "Registrarse - NosFalta1");
+    @GetMapping("/eliminarpostulado")
+    public String eliminarPostulado(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idpostulado) throws ErrorServicio {
+        modelo.put("title", "Lista de Postulados - NosFalta1");
         try {
-            partidoServicio.eliminaPostulado(idPartido, idUsuario);
-            Partido partido = partidoServicio.traerPartido(idPartido);
-            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            partidoServicio.eliminaPostulado(idpartido, idpostulado);
+            Partido partido = partidoServicio.traerPartido(idpartido);
+            List<Usuario> listaConfirmados = partidoServicio.listarPostulados(partido);
             modelo.put("confirmados", listaConfirmados);
-            return "listado-confirmados.html";
+            return "listado-postulados.html";
         } catch (ErrorServicio es) {
             modelo.put("error", es.getMessage());
             return ("listado-postulados");
+        }
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
+    @GetMapping("/cancelar-confirmado")
+    public String cancelarConfirmado(ModelMap modelo, @RequestParam String idpartido, @RequestParam String idconfirmado) throws ErrorServicio {
+        modelo.put("title", "Lista de Confirmados - NosFalta1");
+        Partido partido = partidoServicio.traerPartido(idpartido);
+        System.out.println(idpartido);
+        System.out.println(idconfirmado);
+        try {
+            partidoServicio.cancelarPostulado(idpartido, idconfirmado);
+            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            modelo.put("confirmados", listaConfirmados);
+            modelo.put("fecha", true);
+            modelo.put("idpartido", idpartido);
+            modelo.put("mensajeexito", "Jugador eliminado de lista de confirmados");
+            return "listado-postulados";
+        } catch (ErrorServicio es) {
+            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            modelo.put("confirmados", listaConfirmados);
+            modelo.put("fecha", true);
+            modelo.put("idpartido", idpartido);
+            modelo.put("mensajeerror", "No se puedo eliminar al jugador de la lista de confirmados");
+            return "listado-postulados";
         }
     }
 
@@ -177,18 +209,15 @@ public class PartidoControlador {
             //vuelvo a cargar postulados para mostrar
             //List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
             //modelo.put("listado-postulados", postulados);
-            
-            
-        return "ver-partido.html";
+
+            return "ver-partido.html";
 
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
-
+            Partido partido = partidoServicio.traerPartido(idpartido);
+            modelo.put("partidos", partido);
+            return "ver-partido.html";
         }
-        
-        Partido partido = partidoServicio.traerPartido(idpartido);               
-        modelo.put("partidos", partido);
-        return "ver-partido.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
@@ -222,6 +251,8 @@ public class PartidoControlador {
         List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
         modelo.put("localidades", localidades);
         modelo.put("sexo", Sexo.values());
+        List<Establecimiento> establecimientos = establecimientoServicio.listaEstablecimientos();
+        modelo.put("establecimientos", establecimientos);
         return "alta-partido.html";
     }
 
@@ -284,5 +315,10 @@ public class PartidoControlador {
             return "ver-partido.html";
         }
     }
-
+    @GetMapping("/mis-postulaciones/{idusuario}")
+    public String misPostulaciones(ModelMap modelo,@PathVariable String idusuario){
+     return "mis-postulaciones.html";    
+    }
+    
+    
 }
