@@ -287,6 +287,17 @@ public class PartidoControlador {
             modelo.put("mensaje", es.getMessage());
             return "ver-partido.html";
         }
-    }
-
+      
+        }
+@GetMapping("/mis-postulaciones{idusuario}")
+public String misPostulaciones(ModelMap modelo, @PathVariable String idusuario){
+    
+    modelo.put("title", "Mis Postulaciones-NosFalta1");
+    List<Partido>listaMisPostulaciones= partidoServicio.listarMisPostulaciones(idusuario);
+    modelo.put("partidos",listaMisPostulaciones);
+    return "mis-postulaciones.html";
+    
+        
+    
+}
 }

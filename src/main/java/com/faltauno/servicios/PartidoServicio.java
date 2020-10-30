@@ -319,4 +319,8 @@ public class PartidoServicio {
             return listaPartidosFiltrados;
         }
     }
+
+    public List<Partido> listarMisPostulaciones(String idusuario) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
