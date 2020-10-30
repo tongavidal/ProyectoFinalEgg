@@ -3,7 +3,7 @@
 
 <head th:replace="components/head::head"></head>
 
-<body>
+<body id="home">
 
 	<div class="fh5co-loader"></div>
 
@@ -17,9 +17,9 @@
 					<div class="col-md-8 col-md-offset-2 text-center">
 						<div class="display-t">
 							<div class="display-tc animate-box" data-animate-effect="fadeIn">
-								<h1><img src="/images/home.png" alt=""></h1>
+								<h1><img class="img-fluid" src="/images/home.png" alt=""></h1>
 								<p>
-									<a th:href="@{/usuario/login}" class="btn btn-primary popup-vimeo">LOGIN</a>
+									<a th:href="@{/usuario/login}" class="btn btn-primary">Ingresar</a>
 								</p>
 							</div>
 						</div>
@@ -52,7 +52,7 @@
 							<h3>Postulate como jugador</h3>
 							<p>Unite a distintos partidos y no te quedes sin jugar!</p>
 							<p>
-								<a href="#" class="btn btn-primary btn-outline btn-sm">Mas..
+								<a th:href="@{/partido/listar-partidos}" class="btn btn-primary btn-outline btn-sm">Mas..
 									<i class="icon-arrow-right"></i>
 								</a>
 							</p>

@@ -8,19 +8,16 @@
 
 	<div class="fh5co-loader"></div>
 
-	<div id="page_lista_partidos">
+	<div id="page">
 		<nav th:replace="components/nav::nav"></nav>
 
-		<header id="fh5co-header" class="fh5co-cover partidos lista-partidos img-fondo">
-			<div class="container pt-30">
-				<h1>Lista de Partidos</h1>
-			</div>
-		</header>
+		<header id="fh5co-header" class="fh5co-cover partidos"> </header>
 
 		<div id="fh5co-services" class="fh5co-bg-section lista-partido">
 
 			<div class="container">
 				<div class="row">
+					<h2>Mis Postulaciones</h2>
 					<div class="col-lg-12 search">
 						<input type="search" class="form-control" id="input-search"
 							placeholder="Filtrar partidos...">
@@ -39,7 +36,7 @@
 					</div>
 					<div class="searchable-container">
 						<div th:each="partido:${partidos}"
-							class="items col-xs-12 col-sm-4 col-md-4 col-lg-4 clearfix">
+							class="items col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 							<div class="info-block block-info clearfix">
 								<div class="square-box pull-left">
 									<span class="glyphicon glyphicon-user glyphicon-lg"></span>
@@ -49,7 +46,8 @@
 										th:text="${partido.creador.nombre + ' ' + partido.creador.apellido }"></span>
 								</h4>
 								<p>
-									Fecha: <span th:text="${#dates.format(partido.fecha, 'dd MMMM yyyy')}"></span>
+<!-- 									Fecha: <span th:text="${partido.fecha}"></span> -->
+									Fecha: <span th:text="${#dates.format(partido.fecha, 'dd 'de' MMMM yyyy')}"></span>
 								</p>
 								<p>
 									Horario: <span
@@ -62,16 +60,6 @@
 								</p>
 								<p>
 									Precio: <span th:text="${partido.precio}"></span>
-								</p>
-								<p>
-									Localidad: <span th:text="${partido.localidad.nombre}"></span>
-								</p>
-								<p>
-									Establecimiento: <span
-										th:text="${partido.establecimiento.nombre}"></span>
-								</p>
-								<p>
-									Tipo Partido: <span th:text="${partido.sexo}"></span>
 								</p>
 								<p>
 									Estado Del Partido: <span th:if="${partido.estado != true}"

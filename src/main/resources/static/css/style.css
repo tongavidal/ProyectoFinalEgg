@@ -10,13 +10,31 @@
 *   Template Style 
 *
 * ======================================================= */
-body {
+
+html, body{
+  display: flex;
   font-family: "Signika", Arial, sans-serif;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.7;
   color: #828282;
   background: #fff;
+  flex-direction: column;
+  height:100vh;
+  margin 0;
+}
+
+body#home {
+  font-family: "Signika", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #828282;
+  background: #fff;
+}
+
+scripts {
+    display: none;
 }
 
 body#partidos{
@@ -78,9 +96,13 @@ h1, h2, h3, h4, h5, h6, figure {
   margin: 0 0 20px 0;
 }
 
-h1 span {
+h1 span, h4 span, h3 span {
 	color: #F85A16;
-} 
+}
+
+img.img-fluid {
+    width: 100%;
+}
 
 /* Espacios p para paddings y m para Margins (t=top, l=left, r=right, b=bottom) */
 .p-10 {
@@ -119,6 +141,42 @@ h1 span {
 .pt-40 {
 	padding-top: 40px;	
 }
+.m-10 {
+	margin: 10px;	
+}
+.m-15 {
+	margin: 15px;	
+}
+.m-20 {
+	margin: 20px;	
+}
+.m-25 {
+	margin: 25px;	
+}
+.m-30 {
+	margin: 30px;	
+}
+.mt-10 {
+	margin-top: 10px;	
+}
+.mt-15 {
+	margin-top: 15px;	
+}
+.mt-20 {
+	margin-top: 20px;	
+}
+.mt-25 {
+	margin-top: 25px;	
+}
+.mt-30 {
+	margin-top: 30px;	
+}
+.mt-35 {
+	margin-top: 35px;	
+}
+.mt-40 {
+	margin-top: 40px;	
+}
 
 .equal {
   display: -webkit-box;
@@ -126,6 +184,10 @@ h1 span {
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
+}
+img.imgperfil {
+    max-width: 50%;
+    height: auto;
 }
 .equal > [class*='col-'] {
   display: flex;
@@ -356,11 +418,7 @@ a.fas.fa-user.has-dropdown.usuario {
 }
 
 .fh5co-bg {
-  background-size: cover;
-  background-position: center center;
-  position: relative;
-  width: 100%;
-  float: left;
+  background: rgba(0, 0, 0, 0.9);
 }
 
 .fh5co-bg .overlay {
@@ -697,6 +755,112 @@ a.fas.fa-user.has-dropdown.usuario {
 /* End Ver-Partido */
 
 /* Start Partidos */
+	/* Start Ver Partidos */
+	#page_ver_partido {
+	    position: relative;
+	    overflow-x: hidden;
+	    width: 100%;
+	    height: 100%;
+	    -webkit-transition: 0.5s;
+	    -o-transition: 0.5s;
+	    transition: 0.5s;
+	}
+	#page_ver_partido .fh5co-cover.partidos.alta-partido.img-fondo, .fh5co-cover.partidos.img-fondo {
+		background-image: url(/images/cancha2.jpg);
+		background-position: center 63%;
+	    background-size: cover;
+	    background-repeat: no-repeat;
+	    min-height: 100px;
+	}
+	#page_ver_partido .fh5co-cover.partidos.alta-partido h1 {
+		color: #ffffff;
+	}
+	#page_ver_partido .btn {
+	    margin-right: 0px;
+	    margin-bottom: 0px;
+	    font-family: "Archivo", Arial, sans-serif;
+	    font-size: 13px;
+	    font-weight: 400;
+	    -webkit-border-radius: 30px;
+	    -moz-border-radius: 30px;
+	    -ms-border-radius: 30px;
+	    border-radius: 30px;
+	    -webkit-transition: 0.5s;
+	    -o-transition: 0.5s;
+	    transition: 0.5s;
+	    padding: 8px 15px;
+	}
+	#page_ver_partido .boton {
+	    display: inline;
+	    padding: 10px 5px;
+	}
+	#page_ver_partido .boton:first-child {
+	    display: inline;
+	    padding: 10px 5px 10px 15px;
+	}
+	/*End Ver Partidos */
+	
+	/* Start Buscar Partidos */
+	#page_buscar_partidos .fh5co-cover.partidos.buscar-partidos.img-fondo {
+		background-image: url(/images/cancha2.jpg);
+		background-position: center 63%;
+	    background-size: cover;
+	    background-repeat: no-repeat;
+	    min-height: 100px;
+	}
+	#page_buscar_partidos .fh5co-cover.partidos.buscar-partidos h1 {
+		color: #ffffff;
+	}
+	a.btn.btn-primary.btn-altapartido {
+	    border: none;
+	    margin-left: 10px;
+	    padding: 5px 10px;
+	    font-size: 13px;
+	}
+	/* End Buscar Partidos */
+	
+	/* Start Buscar Partidos */
+	#page_lista_partidos .fh5co-cover.partidos.lista-partidos.img-fondo {
+		background-image: url(/images/cancha2.jpg);
+		background-position: center 63%;
+	    background-size: cover;
+	    background-repeat: no-repeat;
+	    min-height: 100px;
+	}
+	#page_lista_partidos .fh5co-cover.partidos.lista-partidos h1 {
+		color: #ffffff;
+	}
+	a.btn.btn-primary.btn-altapartido {
+	    border: none;
+	    margin-left: 10px;
+	    padding: 5px 10px;
+	    font-size: 13px;
+	}
+	/* End Lista Partidos */
+
+/* Start Perfil */
+	#page_editar_perfil .fh5co-cover.perfil.editar.img-fondo, #page_ver_perfil .fh5co-cover.perfil.ver.img-fondo {
+		background-image: url(/images/cancha2.jpg);
+		background-position: center 63%;
+	    background-size: cover;
+	    background-repeat: no-repeat;
+	    min-height: 100px;
+	}
+	#page_editar_perfil .fh5co-cover.perfil.editar h1, #page_ver_perfil .fh5co-cover.perfil.ver h1 {
+		color: #ffffff;
+	}
+	a.btn.btn-primary.btn-altapartido {
+	    border: none;
+	    margin-left: 10px;
+	    padding: 5px 10px;
+	    font-size: 13px;
+	}
+	.fh5co-cover.perfil {
+    height: auto;
+    margin-top: 95px;
+}
+	/* End Perfil */
+
 .fh5co-cover.partidos {
   height: auto;
   margin-top: 95px;
@@ -706,12 +870,15 @@ a.fas.fa-user.has-dropdown.usuario {
   margin-bottom: 30px;
 }
 
-.lista-partido .bmodificar{
-  color: green;
+.bver{
+  	background-color: #ededed;
+	border: 1px solid red !important;
+  	color: #F85A16;
+  	font-size: 12px !important;
 }
-
-.lista-partido .beliminar{
-  color: red;
+.bver:hover, .bver:focus, .bver:active {
+    background: rgba(248, 90, 22, 0.50) !important;
+    border: 1px solid #F85A16 !important;
 }
 
 .fh5co-cover.partidos.alta-partido .img-lateral {
@@ -808,7 +975,7 @@ form.reputacion input[type="radio"]:checked ~ label {
 #fh5co-blog,
 #fh5co-contact,
 #fh5co-footer {
-  padding: 7em 0;
+  padding: 4em 0;
   clear: both;
 }
 

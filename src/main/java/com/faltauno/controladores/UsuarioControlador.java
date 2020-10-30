@@ -12,12 +12,13 @@ import com.faltauno.entidades.Localidad;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
+import com.faltauno.repositorios.PosicionRepositorio;
 import com.faltauno.repositorios.UsuarioRepositorio;
 import com.faltauno.servicios.LocalidadServicio;
 import com.faltauno.servicios.ReputacionServicio;
 import com.faltauno.servicios.UsuarioServicio;
 import java.util.List;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
@@ -35,13 +36,18 @@ public class UsuarioControlador {
 
     @Autowired
     private LocalidadServicio localidadServicio;
-
+    
+    @Autowired
+    private PosicionRepositorio posicionRepositorio;
+    
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
         modelo.put("title", "Ingresá - NosFalta1");
         List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
         modelo.put("localidades", localidades);
         modelo.put("sexo", Sexo.values());
+        modelo.addAttribute("usuario",new Usuario());
+        modelo.put("posiciones",posicionRepositorio.findAll());
         if (error != null) {
             modelo.put("error", "Nombre de usuario o clave incorrectos.");
             return "registrarse.html";
@@ -65,6 +71,8 @@ public class UsuarioControlador {
         List<Localidad> localidades = localidadServicio.listarPaises();
         modelo.put("localidades", localidades);
         modelo.put("sexo", Sexo.values());
+        modelo.addAttribute("usuario",new Usuario());
+        modelo.put("posiciones",posicionRepositorio.findAll());
         if (error != null) {
             modelo.put("error", "Mail o contraseña incorrecta");
             return "registrarse.html";
@@ -73,10 +81,11 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/registrar")
-    public String registrar(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String edad, @RequestParam String mail,
-            @RequestParam Localidad localidad, @RequestParam String clave, String clave1, @RequestParam Sexo sexo) {
+    public String registrar(ModelMap modelo,@ModelAttribute("usuario") Usuario usuario, MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String edad, @RequestParam String mail,
+            @RequestParam Localidad localidad, @RequestParam String clave, String clave1,@RequestParam Sexo sexo) {
+
         try {
-            usuarioServicio.registrarUsuario(archivo, nombre, apellido, edad, localidad, mail, clave, clave1, sexo);
+            usuarioServicio.registrarUsuario(usuario.getPosiciones(),archivo,nombre, apellido, edad, localidad, mail, clave, clave1,sexo);
         } catch (ErrorServicio e) {
             modelo.put("errorRegistrarse", e.getMessage());
             modelo.put("nombre", nombre);
@@ -86,6 +95,8 @@ public class UsuarioControlador {
             List<Localidad> listaLocalidades = localidadServicio.listarTodasLocalidads();
             modelo.put("localidades", listaLocalidades);
             modelo.put("sexo", Sexo.values());
+            modelo.addAttribute("usuario",new Usuario());
+            modelo.put("posiciones",posicionRepositorio.findAll());
             modelo.put("clave", clave);
             modelo.put("clave1", clave1);
 
@@ -135,8 +146,10 @@ public class UsuarioControlador {
     @GetMapping("/ver-perfil/{idUsuario}")
     public String verPerfil(ModelMap modelo, @PathVariable String idUsuario) {
         modelo.put("title", "Perfil - NosFalta1");
-        modelo.put("usuario", usuarioRepositorio.getOne(idUsuario));
-        modelo.put("reputacionU", reputacionServicio.promedioReputacion(idUsuario));
+        modelo.put("usuario",usuarioRepositorio.getOne(idUsuario));
+        modelo.put("fairplay", reputacionServicio.promFairplay(idUsuario));
+        modelo.put("habilidad", reputacionServicio.promHabilidad(idUsuario));
+        modelo.put("puntualidad", reputacionServicio.promPuntualidad(idUsuario));
         return "ver-perfil.html";
     }
 
