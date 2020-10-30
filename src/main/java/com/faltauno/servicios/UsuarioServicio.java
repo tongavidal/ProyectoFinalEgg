@@ -7,6 +7,7 @@ package com.faltauno.servicios;
 
 import com.faltauno.entidades.Foto;
 import com.faltauno.entidades.Localidad;
+import com.faltauno.entidades.Posicion;
 import com.faltauno.entidades.Reputacion;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.enumeraciones.Sexo;
@@ -50,9 +51,9 @@ public class UsuarioServicio implements  UserDetailsService{
     private FotoServicio fotoServicio;
     
     @Transactional
-    public void registrarUsuario(MultipartFile archivo,String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1,Sexo sexo) throws ErrorServicio {
+    public void registrarUsuario(List<Posicion> posiciones,MultipartFile archivo,String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1,Sexo sexo) throws ErrorServicio {
 
-        validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave, clave1,sexo);
+        validarRegistroUsuario(posiciones,nombre, apellido, edad, localidad, mail, clave, clave1,sexo);
 
         Usuario u = new Usuario();
         //u.setId(UUID.randomUUID().toString().substring(0, 8));
@@ -65,6 +66,7 @@ public class UsuarioServicio implements  UserDetailsService{
         u.setFechaCreacion(new Date());
         u.setEstado(false);
         u.setSexo(sexo);
+        u.setPosiciones(posiciones);
         //Encripto clave
         String encriptada = new BCryptPasswordEncoder().encode(clave);
         u.setClave(encriptada);
@@ -129,7 +131,7 @@ public class UsuarioServicio implements  UserDetailsService{
         }
     }
 
-    public void validarRegistroUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1,Sexo sexo) throws ErrorServicio {
+    public void validarRegistroUsuario(List<Posicion>posiciones,String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1,Sexo sexo) throws ErrorServicio {
 
         if (nombre == "" || nombre.isEmpty()) {
 
@@ -163,6 +165,9 @@ public class UsuarioServicio implements  UserDetailsService{
         }
         if (sexo==null) {
             throw new ErrorServicio("El campo sexo no debe ser nulo");
+        }
+        if (posiciones.isEmpty()) {
+            throw new ErrorServicio("Seleccione al menos una posicion");
         }
 
     }

@@ -87,5 +87,4 @@ public class Reputacion {
         this.fairplay = fairplay;
     }
     
-    
 }
