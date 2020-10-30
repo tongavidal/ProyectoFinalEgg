@@ -34,9 +34,9 @@
                                         <span class="glyphicon glyphicon-user glyphicon-lg"></span>
                                     </div>
                                     <h4>Nombre: <span th:text="${postulado.nombre + ' ' + postulado.apellido }"></span></h4>
-                                    <p>Posiciones: <span th:text="${postulado.posiciones.toString()}"></span><br>
-                                    <p>Localidad:  <span th:text="${postulado.localidad.nombre}"></span><br>			
-                                   <!-- <p>Reputación:<span th:text="${postulado.}"></span><br></p> -->
+                                   <p>Posiciones: <span th:text="${postulado.posiciones}"></span><br>
+                                   <p>Localidad:  <span th:text="${postulado.localidad}"></span><br>
+                                    <p>Reputación: <span th:text="${postulado.reputacion}"> </span>/5<br></p>
                                     
                                     
                                     <a th:href="@{/usuario/ver-perfil/__${postulado.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Perfil</a>
