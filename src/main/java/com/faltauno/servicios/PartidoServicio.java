@@ -166,8 +166,7 @@ public class PartidoServicio {
         List<Usuario> listaPostulados = listarPostulados(partido);
         for (Usuario u : listaPostulados) {
             if (u.getId().equals(idUsuario)) {
-                System.out.println(u.getId() + " " + idUsuario);
-                throw new ErrorServicio("Ya estás postulado a este partido.");
+                throw new ErrorServicio("¿Tantas ganas de pisarla y encarar? Ya estás postulado a este partido.");
             }
         }
     }
@@ -321,4 +320,16 @@ public class PartidoServicio {
             return listaPartidosFiltrados;
         }
     }
+    
+    @Transactional
+    public void cancelarPostulado(String idPartido, String idConfirmado) throws ErrorServicio{
+        Partido partido = traerPartido(idPartido);
+        for (Usuario u : partido.getJugConfirmados()) {
+            if (u.getId().equals(idConfirmado)){
+                partido.getJugConfirmados().remove(u);
+                break;
+            }
+        }
+    }
+    
 }
