@@ -58,6 +58,13 @@
 									</select>
 								</div>
 							</div>
+                                                        <div class="row form-group">
+								<div class="col-md-12">
+									<div th:each="posicion:${posiciones}">
+                                		<input type="checkbox" th:text="' '+${posicion.posicion}" th:field="${usuario.posiciones}" th:value="${posicion.id}" name="posicion" class="form-check-label" >
+                            		</div>
+								</div>
+							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
 									<input type="password" id="subject" class="form-control" name="clave" placeholder="Ingrese clave">
