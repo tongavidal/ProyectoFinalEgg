@@ -166,7 +166,7 @@ public class PartidoControlador {
         try {
             partidoServicio.eliminaPostulado(idpartido, idpostulado);
             Partido partido = partidoServicio.traerPartido(idpartido);
-            List<Usuario> listaConfirmados = partidoServicio.listarPostulados(partido);
+            List<PostuladoCompuesto> listaConfirmados = partidoServicio.listarPostulados(idpartido);
             modelo.put("confirmados", listaConfirmados);
             return "listado-postulados.html";
         } catch (ErrorServicio es) {
