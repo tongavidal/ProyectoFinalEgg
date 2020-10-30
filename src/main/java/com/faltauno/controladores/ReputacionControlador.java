@@ -1,9 +1,12 @@
 
 package com.faltauno.controladores;
 
+import com.faltauno.entidades.Partido;
+import com.faltauno.entidades.Usuario;
 import com.faltauno.errores.ErrorServicio;
+import com.faltauno.servicios.PartidoServicio;
 import com.faltauno.servicios.ReputacionServicio;
-import com.faltauno.servicios.UsuarioServicio;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,23 +22,47 @@ public class ReputacionControlador {
     @Autowired
     private ReputacionServicio reputacionServicio;
     
-     @Autowired
-    private UsuarioServicio usuarioServicio;
+    @Autowired
+    private PartidoServicio partidoServicio;
+    
+    
     
     @GetMapping("/calificar")
-    public String calificar(ModelMap modelo){
-        modelo.put("title", "Calificar - NosFalta1");
-        return "calificar.html";
+    public String calificar(ModelMap modelo,@RequestParam String idpartido,@RequestParam String idconfirmado) throws ErrorServicio{
+        try {
+            modelo.put("title", "Calificar - NosFalta1");
+            modelo.put("idPartido",idpartido);
+            modelo.put("idUsuario",idconfirmado);
+            reputacionServicio.comprobarCalificacion(idconfirmado, idpartido);
+            return "calificar.html"; 
+        } catch (ErrorServicio e) {
+            modelo.put("error",e.getMessage());
+            Partido partido = partidoServicio.traerPartido(idpartido);
+            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            modelo.put("confirmados", listaConfirmados);
+            modelo.put("fecha", false);
+            modelo.put("idpartido", idpartido);
+           return "listado-confirmados.html";
+        }
     }
     
     @PostMapping("/calificar_usuario")
-    public String calificar_usuario(ModelMap modelo,@RequestParam String idUsuario,@RequestParam Integer puntualidad,@RequestParam Integer habilidad,@RequestParam Integer fairPlay){
+    public String calificar_usuario(ModelMap modelo,@RequestParam String idPartido,@RequestParam String idUsuario,@RequestParam Integer puntualidad,@RequestParam Integer habilidad,@RequestParam Integer fairPlay){
         try {
-            reputacionServicio.agregarReputacion(puntualidad, habilidad, fairPlay);
-            usuarioServicio.agregarReputacionUsuario(idUsuario, reputacionServicio.devolverReputacion(idUsuario));
+            reputacionServicio.agregarReputacion(idUsuario,idPartido,puntualidad, habilidad, fairPlay);
+            Partido partido = partidoServicio.traerPartido(idPartido);
+            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            modelo.put("confirmados", listaConfirmados);
+            modelo.put("fecha", false);
+            modelo.put("idpartido", idPartido);
+           return "listado-confirmados.html";
         } catch (ErrorServicio e) {
+            modelo.put("title", "Calificar - NosFalta1");
+            modelo.put("idPartido",idPartido);
+            modelo.put("idUsuario",idUsuario);
             modelo.put("mensajeerror",e.getMessage());
+            return "calificar.html";
         }
-        return "calificar.html";
+        
     }
 }

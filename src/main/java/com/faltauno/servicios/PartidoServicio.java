@@ -332,4 +332,8 @@ public class PartidoServicio {
         }
     }
     
+    public boolean fecha(Date fecha){
+        Date hoy=new Date();
+        return hoy.before(fecha);
+    }
 }
