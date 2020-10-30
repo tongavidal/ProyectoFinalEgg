@@ -45,21 +45,24 @@
 									<th scope="col">Puntaje</th>
 								</tr>
 							</thead>
-							<tbody  th:each="reputacion:${reputacionU}">
+							<tbody>								
 								<tr>
-                                                                        <td th:text="${reputacion.getKey()}"></td>
-									<td th:text="${reputacion.getValue()}"></td>
-								</tr>
-								<!--<tr>
-									<td th:text="${usuario.reputacion.habilidad}">Habilidad:</td>
+									<td>Habilidad:</td>
+                                                                        <td><span th:text="${habilidad}"></span> /5</td>
 								</tr>
 								<tr>	
-									<td th:text="${usuario.reputacion.fairplay}">Fairplay:</td>
-								</tr>-->
+									<td>Fairplay:</td>
+                                                                        <td><span th:text="${fairplay}"></span> /5</td>
+								</tr>
+                                                                <tr>	
+									<td>Puntualidad:</td>
+                                                                        <td><span th:text="${puntualidad}"></span> /5</td>
+								</tr>
 							</tbody>
 						</table>
 						
-					</div>
+					</div> 
+                               
 				</div>
 			</div>
 		</header>
