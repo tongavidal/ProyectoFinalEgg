@@ -48,6 +48,7 @@ public class PartidoControlador {
 
     @Autowired
     private ReputacionServicio reputacionServicio;
+    
 
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
@@ -140,11 +141,11 @@ public class PartidoControlador {
 
             } else {
                 modelo.put("mensaje", "Ya no hay mas vacantes");
+
             } //<< muestro mensaje caso contrario            
         } catch (ErrorServicio ex) {
             modelo.put("mensajeerror", ex.getMessage());
             List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
-
             modelo.put("postulados", postulados);
             return "listado-postulados";
         }
@@ -288,5 +289,10 @@ public class PartidoControlador {
             return "ver-partido.html";
         }
     }
-
+    @GetMapping("/mis-postulaciones/{idusuario}")
+    public String misPostulaciones(ModelMap modelo,@PathVariable String idusuario){
+     return "mis-postulaciones.html";    
+    }
+    
+    
 }
