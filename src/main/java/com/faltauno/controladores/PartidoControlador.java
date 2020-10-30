@@ -291,7 +291,7 @@ public class PartidoControlador {
     }
     @GetMapping("/mis-postulaciones/{idusuario}")
     public String misPostulaciones(ModelMap modelo,@PathVariable String idusuario){
-        
+     return "mis-postulaciones.html";    
     }
     
     
