@@ -25,8 +25,8 @@
                             <p>Fecha: <span th:text="${#dates.format(partido.fecha,'dd-MM-yyyy')}"></span></p>
                             <p>Horario: <span th:text="${partido.horario}"></span></p>
                             <p>Fecha de creación: <span th:text="${partido.fechaCreacion}"></span></p>
-                            <p>Localidad: <span th:text="${partido.localidad}"></span></p>
-                            <p>Establecimiento: <span th:text="${partido.establecimiento}"></span></p>
+                            <p>Localidad: <span th:text="${partido.localidad.nombre}"></span></p>
+                            <p>Establecimiento: <span th:text="${partido.establecimiento.nombre}"></span></p>
                             <p>Precio: <span th:text="${partido.precio}"></span></p>	
                             <p>Observaciones del establecimiento: <span th:text="${partido.obsEstablecimiento}"></span></p>
                             <p>Cantidad de jugadores: <span th:text="${partido.cantJugador}"></span></p>
