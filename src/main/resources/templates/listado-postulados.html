@@ -39,11 +39,11 @@
                                    <!-- <p>Reputación:<span th:text="${postulado.}"></span><br></p> -->
                                     
                                     
-                                    <a th:href="@{/usuario/ver-perfil/__${postulado.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Perfil</a>
+                                    <a th:href="@{/usuario/ver-perfil/__${postulado.id}__}" class="btn btn-sm bver"><i class="fas fa-eye"></i> Ver Perfil</a>
                                     
-                                   <a th:href="@{/partido/eliminarpostulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</a>
+                                   <a th:href="@{/partido/eliminarpostulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn btn-sm bver"><i class="far fa-trash-alt"></i> Eliminar</a>
                                     
-                                    <a th:href="@{/partido/confirmar-postulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn btn-primary btn-sm bpostularse"><i class="far fa-trash-alt"></i>Confirmar Postulado</a>
+                                    <a th:href="@{/partido/confirmar-postulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn bver btn-sm bver"><i class="fa fa-check-circle-o"></i> Confirmar Postulado</a>
                                     
                                    
                                 </div>

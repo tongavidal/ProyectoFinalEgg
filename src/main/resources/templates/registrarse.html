@@ -51,12 +51,6 @@
 												class="btn btn-primary">
 										</div>
 									</div>
-
-									<!-- 							<div class="text-center mt-4 font-weight-light"> -->
-									<!-- 										Ya estas registrado? <a th:href="@{login}" -->
-									<!-- 											class="text-primary">Ingresar</a> -->
-									<!-- 									</div> -->
-
 								</form>
 							</div>
 						</div>
@@ -118,6 +112,7 @@
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
+								<label for="archivo">Seleccioná las posiciones en las que jugás</label>
 									<div th:each="posicion:${posiciones}">
                                 		<input type="checkbox" th:text="' '+${posicion.posicion}" th:field="${usuario.posiciones}" th:value="${posicion.id}" name="posicion" class="form-check-label" >
                             		</div>
@@ -150,11 +145,6 @@
 										class="btn btn-primary">
 								</div>
 							</div>
-
-							<!-- 							<div class="text-center mt-4 font-weight-light"> -->
-							<!-- 										Ya estas registrado? <a th:href="@{login}" -->
-							<!-- 											class="text-primary">Ingresar</a> -->
-							<!-- 									</div> -->
 
 						</form>
 					</div>
