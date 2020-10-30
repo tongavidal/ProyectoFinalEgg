@@ -238,8 +238,14 @@ public class UsuarioServicio implements  UserDetailsService{
     
     public void agregarReputacionUsuario(String id,Reputacion reputacion) throws ErrorServicio{
         try {
+            List<Reputacion> reputaciones=new ArrayList<>();
             Usuario usuario=usuarioRepositorio.getOne(id);
-            usuario.getReputacion().add(reputacion);
+            for (Reputacion r : usuario.getReputacion()) {
+                reputaciones.add(r);
+            }
+            
+            reputaciones.add(reputacion);
+            usuario.setReputacion(reputaciones);
             usuarioRepositorio.save(usuario); 
         } catch (Exception e) {
             throw new ErrorServicio("Cosas pasaron");

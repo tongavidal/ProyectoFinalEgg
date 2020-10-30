@@ -4,70 +4,94 @@
 
 <head th:replace="components/head::head"></head>
 
-<body>
+<body id="resto">
 
-	<div class="fh5co-loader">
-		
-	</div>
+	<div class="fh5co-loader"></div>
 
 	<div id="page_ver_perfil">
 		<nav th:replace="components/nav::nav"></nav>
 
 		<header id="fh5co-header" class="fh5co-cover perfil ver img-fondo">
-		<div class="container pt-30">
-				<h1>Editar Perfil</h1>
+			<div class="container pt-30">
+				<h1>Ver Perfil</h1>
 			</div>
 		</header>
-			<div class="container pt-30" th:object="${usuario}">
-				<div class="row equal">
-					<div class="col-md-6 animate-box">
+		<div class="container pt-30" th:object="${usuario}">
+			<div class="row equal">
+				<div class="col-md-6 animate-box">
 
-						<h3>Nombre: <span th:text="${usuario.nombre}"></span></h3>
-						<h3>Apellido: <span th:text="${usuario.apellido}"></span></h3>
-						<p>Email: <span th:text="${usuario.mail}"></span></p>
-						<p>Edad: <span th:text="${usuario.edad}"></span></p>
-						<p>Sexo: <span th:text="${usuario.sexo}"></span></p>
-						<p>Localidad: <span th:text="${usuario.localidad.nombre}"></span></p>
-						<p>Posicion: <span th:text="${usuario.posiciones.toString()}"></span></p>
-						<p>Fecha de creación: <span th:text="${#dates.format(usuario.fechaCreacion,'dd MMMM yyyy')}"></span></p>
+					<h3>
+						Nombre: <span th:text="${usuario.nombre}"></span>
+					</h3>
+					<h3>
+						Apellido: <span th:text="${usuario.apellido}"></span>
+					</h3>
+					<p>
+						Email: <span th:text="${usuario.mail}"></span>
+					</p>
+					<p>
+						Edad: <span th:text="${usuario.edad}"></span>
+					</p>
+					<p>
+						Sexo: <span th:text="${usuario.sexo}"></span>
+					</p>
+					<p>
+						Localidad: <span th:text="${usuario.localidad.nombre}"></span>
+					</p>
+					<p>Posicion:
+                                                    <span th:each="posicion:${posiciones}">
+                                                    <span th:text="${posicion.posicion} "></span>
+                                                    </span>
+                                                    </p>
+					<p>
+						Fecha de creación: <span
+							th:text="${#dates.format(usuario.fechaCreacion,'dd MMMM yyyy')}"></span>
+					</p>
 
-						<span th:if="${session.usuariosession.id != null}">
-                                                <a th:href="@{/usuario/editar-perfil/__${usuario.id}__}" th:if="${session.usuariosession.id == usuario.id}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Editar</a>
-                                                </span>
-						
+					<span th:if="${session.usuariosession.id != null}"> <a
+						th:href="@{/usuario/editar-perfil/__${usuario.id}__}"
+						th:if="${session.usuariosession.id == usuario.id}"
+						class="btn btn-primary btn-sm bmodificar"><i
+							class="fas fa-edit"></i> Editar</a>
+					</span>
 
-					</div>
 
-					<div class="col-md-6 animate-box">
-						<img class="imgperfil" th:if=${usuario.foto!=null} th:src="@{/upload/} + ${usuario.foto.id}" th:alt="${usuario.nombre}" th:title="${usuario.nombre}">
-						<img class="imgperfil" th:if=${usuario.foto==null} src="/images/defaultprofile.png" th:alt="${usuario.nombre}" th:title="${usuario.nombre}">
-						<table class="table">
-							<thead class="thead-dark">
-								<tr>
-									<th scope="col">Item</th>
-									<th scope="col">Puntaje</th>
-								</tr>
-							</thead>
-							<tbody>								
-								<tr>
-									<td>Habilidad:</td>
-                                                                        <td><span th:text="${habilidad}"></span> /5</td>
-								</tr>
-								<tr>	
-									<td>Fairplay:</td>
-                                                                        <td><span th:text="${fairplay}"></span> /5</td>
-								</tr>
-                                                                <tr>	
-									<td>Puntualidad:</td>
-                                                                        <td><span th:text="${puntualidad}"></span> /5</td>
-								</tr>
-							</tbody>
-						</table>
-						
-					</div> 
-                               
 				</div>
+
+				<div class="col-md-6 animate-box">
+					<img class="imgperfil" th:if=${usuario.foto!=null}
+						th:src="@{/upload/} + ${usuario.foto.id}"
+						th:alt="${usuario.nombre}" th:title="${usuario.nombre}"> <img
+						class="imgperfil" th:if=${usuario.foto==null}
+						src="/images/defaultprofile.png" th:alt="${usuario.nombre}"
+						th:title="${usuario.nombre}">
+					<table class="table">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col">Item</th>
+								<th scope="col">Puntaje</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Habilidad:</td>
+								<td><span th:text="${habilidad}"></span> /5</td>
+							</tr>
+							<tr>
+								<td>Fairplay:</td>
+								<td><span th:text="${fairplay}"></span> /5</td>
+							</tr>
+							<tr>
+								<td>Puntualidad:</td>
+								<td><span th:text="${puntualidad}"></span> /5</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+
 			</div>
+		</div>
 
 
 

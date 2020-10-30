@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.faltauno.entidades.Localidad;
+import com.faltauno.entidades.Posicion;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
@@ -116,6 +117,7 @@ public class UsuarioControlador {
         modelo.put("usuario", usuario);
         List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
         modelo.put("localidades", localidades);
+        modelo.put("posiciones",posicionRepositorio.findAll());
         return "editar-perfil.html";
     }
 
@@ -126,13 +128,14 @@ public class UsuarioControlador {
             usuarioServicio.modificarUsuario(idusuario, nombre, apellido, edad, idLocalidad, mail, clave, clave1);
             Usuario usuario = usuarioRepositorio.findById(idusuario).get();
             modelo.put("usuario", usuario);
-            return ("listar-perfil.html");
+            return ("redirect:/usuario/ver-perfil/" + idusuario);
         } catch (ErrorServicio es) {
             Usuario usuario = usuarioRepositorio.findById(idusuario).get();
             modelo.put("usuario", usuario);
             modelo.put("error", es.getMessage());
             List<Localidad> localidades = localidadServicio.listarTodasLocalidads();
             modelo.put("localidades", localidades);
+            modelo.put("posiciones",posicionRepositorio.findAll());
             return "editar-perfil.html";
         }
     }
@@ -144,9 +147,11 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/ver-perfil/{idUsuario}")
-    public String verPerfil(ModelMap modelo, @PathVariable String idUsuario) {
+    public String verPerfil(ModelMap modelo,@PathVariable String idUsuario){
+        List<Posicion> posiciones = usuarioRepositorio.getOne(idUsuario).getPosiciones();
         modelo.put("title", "Perfil - NosFalta1");
         modelo.put("usuario",usuarioRepositorio.getOne(idUsuario));
+        modelo.put("posiciones",posiciones);
         modelo.put("fairplay", reputacionServicio.promFairplay(idUsuario));
         modelo.put("habilidad", reputacionServicio.promHabilidad(idUsuario));
         modelo.put("puntualidad", reputacionServicio.promPuntualidad(idUsuario));

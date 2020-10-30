@@ -5,9 +5,11 @@
  */
 package com.faltauno.servicios;
 
+import com.faltauno.compuestos.PostuladoCompuesto;
 import com.faltauno.entidades.Establecimiento;
 import com.faltauno.entidades.Localidad;
 import com.faltauno.entidades.Partido;
+import com.faltauno.entidades.Posicion;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
@@ -41,6 +43,9 @@ public class PartidoServicio {
 
     @Autowired
     private EstablecimientoRepositorio establecimientoRepositorio;
+
+    @Autowired
+    private ReputacionServicio reputacionServicio;
 
 
     /* CREACION DE PARTIDO */
@@ -146,7 +151,7 @@ public class PartidoServicio {
     public void cargarPostulado(Partido partido, String idUsuario) throws ErrorServicio {
 
         verificarDuplicacionPostulado(partido, idUsuario);
-        
+
         List<Usuario> usuList = new ArrayList<>();
         System.out.println();
         //Recorro y cargo la lista de usuarios postulados
@@ -163,7 +168,7 @@ public class PartidoServicio {
 
     @Transactional
     public void verificarDuplicacionPostulado(Partido partido, String idUsuario) throws ErrorServicio {
-        List<Usuario> listaPostulados = listarPostulados(partido);
+        List<Usuario> listaPostulados = partidoRepositorio.findById(partido.getId()).get().getJugPostulados();;
         for (Usuario u : listaPostulados) {
             if (u.getId().equals(idUsuario)) {
                 throw new ErrorServicio("¿Tantas ganas de pisarla y encarar? Ya estás postulado a este partido.");
@@ -174,14 +179,14 @@ public class PartidoServicio {
     //confirmar postulado
     @Transactional
     public void confirmarPostulado(Partido partido, String idUsuario) throws ErrorServicio {
-      boolean existe = false;
+        boolean existe = false;
         List<Usuario> usuList = new ArrayList<>();
         //Recorro y cargo la lista de usuarios postulados
         for (Usuario u : partido.getJugConfirmados()) {
             usuList.add(u);
             //verifico si el usuario ya esta confirmado en la lista
-            if(u.getId().equals(idUsuario)){
-            existe = true;
+            if (u.getId().equals(idUsuario)) {
+                existe = true;
             }
         }
         if(!existe){
@@ -197,13 +202,50 @@ public class PartidoServicio {
     }
 
     //listar postulados
-    public List<Usuario> listarPostulados(Partido partido) throws ErrorServicio {
-        List<Usuario> usuList = new ArrayList();
+    public List<PostuladoCompuesto> listarPostulados(String idpartido) throws ErrorServicio {
+        PostuladoCompuesto p = new PostuladoCompuesto();
+        List<PostuladoCompuesto> postulados = new ArrayList<>();
+        List<Usuario> listPostulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
         //Recorro y cargo la lista de usuarios postulados
-        for (Usuario u : partido.getJugPostulados()) {
-            usuList.add(u);
+        for (Usuario u : listPostulados) {
+
+            p.setId(u.getId());
+            p.setNombre(u.getNombre());
+            p.setApellido(u.getApellido());
+            p.setEdad(u.getEdad());
+            p.setMail(idpartido);
+            p.setLocalidad(u.getLocalidad().getNombre());
+            p.setFoto(u.getFoto());
+            p.setFechaAlta(u.getFechaCreacion());
+
+            //Transformo posiciones en cadena de texto y lo paso
+            List<Posicion> posiciones = u.getPosiciones();
+            int cont = 0;
+            String textPosiciones = "";
+            for (Posicion pos : posiciones) {
+                if (cont == 0) {
+                    textPosiciones = pos.getPosicion();
+                } else {
+                    textPosiciones = textPosiciones + ", " + pos.getPosicion();
+                }
+                cont++;
+            }
+            //cargo finalmente las posiciones
+            p.setPosiciones(textPosiciones);
+
+            //Cargo el promedio general de su reputacion
+            p.setReputacion(reputacionServicio.promedioReputacionTotal(u.getId()));
+
+            //Consulto estado y seteto en modo texto
+            if (u.getEstado()) {
+                p.setEstado("Activo");
+            } else {
+                p.setEstado("Inactivo");
+            }
+
+            postulados.add(p);
         }
-        return usuList;
+        return postulados;
     }
 
     //listar confirmados
@@ -346,5 +388,12 @@ public class PartidoServicio {
         }
         return listaMisPostulaciones;
     }
+
+    public boolean fecha(Date fecha){
+        Date hoy=new Date();
+        return hoy.before(fecha);
+    }
+
+
     
 }

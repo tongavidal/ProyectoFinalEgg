@@ -5,8 +5,10 @@
  */
 package com.faltauno.servicios;
 
+import com.faltauno.entidades.Partido;
 import com.faltauno.entidades.Reputacion;
 import com.faltauno.errores.ErrorServicio;
+import com.faltauno.repositorios.PartidoRepositorio;
 import com.faltauno.repositorios.ReputacionRepositorio;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +32,40 @@ public class ReputacionServicio {
     @Autowired
     private UsuarioServicio usuarioServicio;
     
+    @Autowired
+    private PartidoRepositorio partidoRepositorio;
+    
     @Transactional
-    public void agregarReputacion(Integer puntualidad,Integer habilidad,Integer fairplay) throws ErrorServicio{
+    public void agregarReputacion(String idUsuario, String idPartido, Integer puntualidad, Integer habilidad, Integer fairplay) throws ErrorServicio {
         validar(puntualidad, habilidad, fairplay);
-        Reputacion reputacion=new Reputacion();
+        Partido partido = partidoRepositorio.getOne(idPartido);
+        Reputacion reputacion = new Reputacion();
         reputacion.setPuntualidad(puntualidad);
         reputacion.setFairplay(fairplay);
         reputacion.setHabilidad(habilidad);
+        reputacion.setPartido(partido);
         reputacionRepositorio.save(reputacion);
+        usuarioServicio.agregarReputacionUsuario(idUsuario, reputacion);
+
     }
+    
+    public void comprobarCalificacion(String idUsuario,String idPartido) throws ErrorServicio{
+        List<Reputacion> reputaciones=usuarioServicio.reputaciones(idUsuario);
+        Partido partido=partidoRepositorio.getOne(idPartido);
+        Boolean calificado=false;
+        for (Reputacion r : reputaciones) {
+            if (r.getPartido() != null) {
+                if (r.getPartido().equals(partido)) {
+                    calificado = true;
+                    break;
+                }
+            }
+        }
+        if (calificado) {
+             throw new ErrorServicio("Usted ya calificó a este usuario");
+        }
+    }
+    
     
     @Transactional
     public void modificar(String id,Integer puntualidad,Integer habilidad,Integer fairplay) throws ErrorServicio{
@@ -58,13 +85,13 @@ public class ReputacionServicio {
     
     private void validar(Integer puntualidad,Integer habilidad,Integer fairplay) throws ErrorServicio{
         if (puntualidad==null) {
-            throw new ErrorServicio("Dato Nulo");
+            throw new ErrorServicio("Califique en puntualidad");
         }
         if (habilidad==null) {
-            throw new ErrorServicio("Dato Nulo");
+            throw new ErrorServicio("Califique en habilidad");
         }
         if (fairplay==null) {
-            throw new ErrorServicio("Dato Nulo");
+            throw new ErrorServicio("Califique en fairplay");
         }
     }
     
@@ -115,5 +142,11 @@ public class ReputacionServicio {
         promedio.put("Habilidad",promHabilidad(id));
         promedio.put("FairPlay",promFairplay(id));
         return promedio;
+    }
+    
+    public Integer promedioReputacionTotal(String id){
+        Integer total;
+        total = (promPuntualidad(id)+promHabilidad(id)+promFairplay(id))/3;
+        return total;
     }
 }
