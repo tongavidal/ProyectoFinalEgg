@@ -205,6 +205,7 @@ public class PartidoControlador {
             Partido partido = partidoServicio.traerPartido(idpartido);
             modelo.put("partidos", partido);
             partidoServicio.cargarPostulado(partido, idpostulado);
+            modelo.put("mensajeexito", "Prepará los cortos! Te postulaste con éxito.");
             //vuelvo a cargar postulados para mostrar
             //List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
             //modelo.put("listado-postulados", postulados);
@@ -273,7 +274,6 @@ public class PartidoControlador {
         try {
             partidoServicio.modificarPartido(id, idLocalidad, idEstablecimiento, partidoServicio.horario(horario), precio, sexo, fecha);
             //modelo.put("mensajeexito","El partido fue modificado con exito");
-
         } catch (ErrorServicio e) {
             List<Localidad> localidades = localidadServicio.listarPaises();
             modelo.put("localidades", localidades);

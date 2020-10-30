@@ -334,7 +334,16 @@ public class PartidoServicio {
     
     @Transactional 
     public List<Partido> listarMisPostulaciones (String idPostulado){
-        List<Partido> listaMisPostulaciones = partidoRepositorio.listaMisPostulaciones(idPostulado);
+        List<Partido> listaPartidos = partidoRepositorio.listaMisPostulaciones(idPostulado);
+        List<Partido> listaMisPostulaciones = new ArrayList();
+        for (Partido p : listaPartidos) {
+            for (Usuario u : p.getJugPostulados()) {
+                if (u.getId().equals(idPostulado)){
+                    listaMisPostulaciones.add(p);
+                    break;
+                }
+            }
+        }
         return listaMisPostulaciones;
     }
     
