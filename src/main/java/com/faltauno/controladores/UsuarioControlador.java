@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.faltauno.entidades.Localidad;
+import com.faltauno.entidades.Posicion;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
@@ -145,9 +146,11 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/ver-perfil/{idUsuario}")
-    public String verPerfil(ModelMap modelo, @PathVariable String idUsuario) {
+    public String verPerfil(ModelMap modelo,@PathVariable String idUsuario){
+        List<Posicion> posiciones = usuarioRepositorio.getOne(idUsuario).getPosiciones();
         modelo.put("title", "Perfil - NosFalta1");
         modelo.put("usuario",usuarioRepositorio.getOne(idUsuario));
+        modelo.put("posiciones",posiciones);
         modelo.put("fairplay", reputacionServicio.promFairplay(idUsuario));
         modelo.put("habilidad", reputacionServicio.promHabilidad(idUsuario));
         modelo.put("puntualidad", reputacionServicio.promPuntualidad(idUsuario));

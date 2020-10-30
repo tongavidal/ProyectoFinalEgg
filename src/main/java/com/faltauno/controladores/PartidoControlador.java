@@ -1,5 +1,6 @@
 package com.faltauno.controladores;
 
+import com.faltauno.compuestos.PostuladoCompuesto;
 import com.faltauno.entidades.Establecimiento;
 import com.faltauno.entidades.Localidad;
 import com.faltauno.entidades.Partido;
@@ -48,7 +49,6 @@ public class PartidoControlador {
 
     @Autowired
     private ReputacionServicio reputacionServicio;
-    
 
     @GetMapping("/listar-partidos")
     public String partidos(ModelMap modelo) {
@@ -100,7 +100,7 @@ public class PartidoControlador {
     @GetMapping("/listar-postulados/{idpartido}")
     public String listarpostulados(ModelMap modelo, @PathVariable String idpartido) throws ErrorServicio {
         try {
-            List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
+            List<PostuladoCompuesto> postulados = partidoServicio.listarPostulados(idpartido);
             modelo.put("postulados", postulados);
             modelo.put("idpartido", idpartido);
         } catch (Exception ex) {
@@ -145,13 +145,14 @@ public class PartidoControlador {
             } //<< muestro mensaje caso contrario            
         } catch (ErrorServicio ex) {
             modelo.put("mensajeerror", ex.getMessage());
-            List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
+            List<PostuladoCompuesto> postulados = partidoServicio.listarPostulados(idpartido);
+
             modelo.put("postulados", postulados);
             return "listado-postulados.html";
         }
 
         //vuelvo a cargar postulados para mostrar
-        List<Usuario> postulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
+        List<PostuladoCompuesto> postulados = partidoServicio.listarPostulados(idpartido);
 
         modelo.put("postulados", postulados);
         modelo.put("idpartido", idpartido);
@@ -165,7 +166,7 @@ public class PartidoControlador {
         try {
             partidoServicio.eliminaPostulado(idpartido, idpostulado);
             Partido partido = partidoServicio.traerPartido(idpartido);
-            List<Usuario> listaConfirmados = partidoServicio.listarPostulados(partido);
+            List<PostuladoCompuesto> listaConfirmados = partidoServicio.listarPostulados(idpartido);
             modelo.put("confirmados", listaConfirmados);
             return "listado-postulados.html";
         } catch (ErrorServicio es) {
@@ -257,6 +258,7 @@ public class PartidoControlador {
         return "alta-partido.html";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/mis-partidos/{idcreador}")
     public String misPartidos(ModelMap modelo, @PathVariable String idcreador) throws ErrorServicio {
         try {
@@ -316,10 +318,16 @@ public class PartidoControlador {
             return "ver-partido.html";
         }
     }
+
     @GetMapping("/mis-postulaciones/{idusuario}")
-    public String misPostulaciones(ModelMap modelo,@PathVariable String idusuario){
-     return "mis-postulaciones.html";    
+    public String misPostulaciones(ModelMap modelo, @PathVariable String idusuario) {
+        modelo.put("title", "Mis Postulaciones-NosFalta1");
+        List<Partido> listaMisPostulaciones = partidoServicio.listarMisPostulaciones(idusuario);
+        modelo.put("partidos", listaMisPostulaciones);
+        if (listaMisPostulaciones == null){
+            modelo.put("error", "No te has postulado a ningún partido");
+        }
+        return "listar-partidos-postulados.html";
     }
-    
-    
-}
+
+    }
