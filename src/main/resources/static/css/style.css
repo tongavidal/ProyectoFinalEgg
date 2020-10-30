@@ -11,7 +11,20 @@
 *
 * ======================================================= */
 
-body {
+html, body{
+  display: flex;
+  font-family: "Signika", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #828282;
+  background: #fff;
+  flex-direction: column;
+  height:100vh;
+  margin 0;
+}
+
+body#home {
   font-family: "Signika", Arial, sans-serif;
   font-weight: 400;
   font-size: 18px;
