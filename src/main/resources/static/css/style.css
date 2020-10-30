@@ -187,11 +187,7 @@ img.img-fluid {
 }
 img.imgperfil {
     max-width: 50%;
-    
-    width:300px;
-    height:300px;
-    border-radius:130px;
-    border:10px solid #666;
+    height: auto;
 }
 .equal > [class*='col-'] {
   display: flex;
