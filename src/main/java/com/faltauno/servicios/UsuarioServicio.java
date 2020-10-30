@@ -26,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -218,12 +219,9 @@ public class UsuarioServicio implements  UserDetailsService{
             HttpSession session = attr.getRequest().getSession(true);
             session.setAttribute("usuariosession", user);
 
-
-           User userOK = new User(user.getMail(), user.getClave(), permisos);
-
+            User userOK = new User(user.getMail(), user.getClave(), permisos);
             return userOK;
         } else {
-
             return null;
         }
 
