@@ -144,7 +144,9 @@ public class UsuarioControlador {
     public String verPerfil(ModelMap modelo,@PathVariable String idUsuario){
         modelo.put("title", "Perfil - NosFalta1");
         modelo.put("usuario",usuarioRepositorio.getOne(idUsuario));
-        modelo.put("reputacionU", reputacionServicio.promedioReputacion(idUsuario));
+        modelo.put("fairplay", reputacionServicio.promFairplay(idUsuario));
+        modelo.put("habilidad", reputacionServicio.promHabilidad(idUsuario));
+        modelo.put("puntualidad", reputacionServicio.promPuntualidad(idUsuario));
         return "ver-perfil.html";
     }
     
