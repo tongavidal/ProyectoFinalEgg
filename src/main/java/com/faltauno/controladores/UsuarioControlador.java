@@ -122,10 +122,10 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/editar-perfil")
-    public String editarPerfilPost(ModelMap modelo, @RequestParam String idusuario, @RequestParam String nombre, @RequestParam String apellido,
+    public String editarPerfilPost(ModelMap modelo,@RequestParam List<Posicion> posiciones,@RequestParam String idusuario, @RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String edad, @RequestParam String idLocalidad, @RequestParam String mail, @RequestParam String clave, @RequestParam String clave1) throws ErrorServicio {
         try {
-            usuarioServicio.modificarUsuario(idusuario, nombre, apellido, edad, idLocalidad, mail, clave, clave1);
+            usuarioServicio.modificarUsuario(idusuario,posiciones, nombre, apellido, edad, idLocalidad, mail, clave, clave1);
             Usuario usuario = usuarioRepositorio.findById(idusuario).get();
             modelo.put("usuario", usuario);
             return ("redirect:/usuario/ver-perfil/" + idusuario);
