@@ -15,6 +15,7 @@
 								<li><a th:href="@{/partido/listar-partidos}" >Buscar Partidos</a></li>
 								<li><a th:href="@{/partido/alta-partido}">Crear Partido</a></li>
 								<li><a th:if="${session.usuariosession != null}" th:href="@{/partido/mis-partidos/__${session.usuariosession.id}__}">Mis Partidos</a></li>
+								<li><a th:if="${session.usuariosession != null}" th:href="@{/partido/mis-postulaciones/__${session.usuariosession.id}__}">Mis Postulaciones</a></li>
 							</ul>
 						</li>
 						<li th:if="${session.usuariosession == null}"><a th:href="@{/usuario/login}">Ingresar</a></li>
