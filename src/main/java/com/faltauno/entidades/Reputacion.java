@@ -86,5 +86,5 @@ public class Reputacion {
     public void setFairplay(Integer fairplay) {
         this.fairplay = fairplay;
     }
-    
+
 }
