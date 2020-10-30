@@ -529,6 +529,15 @@ a.fas.fa-user.has-dropdown.usuario {
   left: 0;
   right: 0;
 }
+.fh5co-cover .overlay.registrarse {
+  z-index: 0;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0, 0.3);
+}
 .fh5co-cover > .fh5co-container {
   position: relative;
   z-index: 10;
@@ -950,6 +959,17 @@ form.reputacion input[type="radio"]:checked ~ label {
   color: orange;
 }
 /* End listado confirmados */
+
+/* Start Registrarse */
+.checkbox-inline {
+	color: #fff !important;
+}
+.checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+    position: relative;
+    margin-left: 0px;
+    margin-top: 4px \9;
+}
+/* End Registrarse */
 
 #fh5co-header .display-tc .btn,
 #fh5co-counter .display-tc .btn,
