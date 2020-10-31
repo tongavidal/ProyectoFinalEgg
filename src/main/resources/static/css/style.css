@@ -868,6 +868,44 @@ a.fas.fa-user.has-dropdown.usuario {
 	}
 	/* End Lista Partidos */
 
+/* Start Calificaciones */
+#form {
+  width: 250px;
+  margin: 0 auto;
+  height: 50px;
+}
+
+#form p {
+  text-align: center;
+}
+
+#form label {
+  font-size: 20px;
+}
+
+.clasificacion input[type="radio"] {
+  display: none;
+}
+
+.clasificacion label {
+  color: grey;
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+.clasificacion label:hover,
+.clasificacion label:hover ~ label {
+  color: orange;
+}
+
+.clasificacion input[type="radio"]:checked ~ label {
+  color: orange;
+}
+/* End Calificaciones */
+
 /* Start Perfil */
 	#page_editar_perfil .fh5co-cover.perfil.editar.img-fondo, #page_ver_perfil .fh5co-cover.perfil.ver.img-fondo {
 		background-image: url(/images/cancha2.jpg);

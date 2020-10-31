@@ -203,12 +203,13 @@ public class PartidoServicio {
 
     //listar postulados
     public List<PostuladoCompuesto> listarPostulados(String idpartido) throws ErrorServicio {
-        PostuladoCompuesto p = new PostuladoCompuesto();
+    
         List<PostuladoCompuesto> postulados = new ArrayList<>();
         List<Usuario> listPostulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
         //Recorro y cargo la lista de usuarios postulados
         for (Usuario u : listPostulados) {
-
+        	PostuladoCompuesto p = new PostuladoCompuesto();
+        	
             p.setId(u.getId());
             p.setNombre(u.getNombre());
             p.setApellido(u.getApellido());
@@ -244,6 +245,7 @@ public class PartidoServicio {
             }
 
             postulados.add(p);
+            
         }
         return postulados;
     }
@@ -364,7 +366,7 @@ public class PartidoServicio {
     }
     
     @Transactional
-    public void cancelarPostulado(String idPartido, String idConfirmado) throws ErrorServicio{
+    public void cancelarConfirmado(String idPartido, String idConfirmado) throws ErrorServicio{
         Partido partido = traerPartido(idPartido);
         for (Usuario u : partido.getJugConfirmados()) {
             if (u.getId().equals(idConfirmado)){
