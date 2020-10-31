@@ -19,6 +19,7 @@ import com.faltauno.repositorios.PartidoRepositorio;
 import com.faltauno.repositorios.UsuarioRepositorio;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -189,15 +190,15 @@ public class PartidoServicio {
                 existe = true;
             }
         }
-        if(!existe){
-        //Agrego el postulado a la lista
-        usuList.add(usuarioRepositorio.getOne(idUsuario));
-        //Agrego la lista actualizada
-        partido.setJugConfirmados(usuList);
-        //Guardo el partido
-        partidoRepositorio.save(partido);
+        if (!existe) {
+            //Agrego el postulado a la lista
+            usuList.add(usuarioRepositorio.getOne(idUsuario));
+            //Agrego la lista actualizada
+            partido.setJugConfirmados(usuList);
+            //Guardo el partido
+            partidoRepositorio.save(partido);
         } else {
-            throw new ErrorServicio("Ni que fuera Messi! Este jugador ya está confirmado"); 
+            throw new ErrorServicio("Ni que fuera Messi! Este jugador ya está confirmado");
         }
     }
 
@@ -362,12 +363,12 @@ public class PartidoServicio {
             return listaPartidosFiltrados;
         }
     }
-    
+
     @Transactional
-    public void cancelarPostulado(String idPartido, String idConfirmado) throws ErrorServicio{
+    public void cancelarPostulado(String idPartido, String idConfirmado) throws ErrorServicio {
         Partido partido = traerPartido(idPartido);
         for (Usuario u : partido.getJugConfirmados()) {
-            if (u.getId().equals(idConfirmado)){
+            if (u.getId().equals(idConfirmado)) {
                 partido.getJugConfirmados().remove(u);
                 break;
             }
@@ -389,11 +390,84 @@ public class PartidoServicio {
         return listaMisPostulaciones;
     }
 
-    public boolean fecha(Date fecha){
-        Date hoy=new Date();
+    public boolean fecha(Date fecha) {
+        Date hoy = new Date();
         return hoy.before(fecha);
     }
 
+    //traer por el dia de la semana que viene
+    public List<Partido> buscarPartidosXDia(String dia) throws ErrorServicio {
 
+        //que dia es hoy
+        Date fecha = new Date();
+        //avreguaro que dia de la semana es
+        String diaEs = queDiaEs(fecha);
+        
+        
+        //Averiguar la fecha del dia elegido
+        Boolean encontro = false;
+        while(encontro==false){
+        
+          if(dia.equals(diaEs)){          
+            encontro=true;
+          }else{
+          //sumo un dia a la fecha
+          fecha=sumarRestarDiasFecha(fecha, 1);
+          //Averigo que dia de la semana es
+          diaEs=queDiaEs(fecha);
+          }
+        }
+        
+        //hago la consulta y devuelvo los partidos de dicha fecha
+        List<Partido> listaPartidosDia = partidoRepositorio.buscarPartidoPorFecha(fecha);
+        return listaPartidosDia;                
+    }
+
+    public String queDiaEs(Date date) {
+ 
+        String diaNombre = "";
+        
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        
+        int dia = c.get(Calendar.DAY_OF_WEEK);
+        
+        if (dia == Calendar.SUNDAY) {
+            diaNombre="domingo";
+        }
+        if (dia == Calendar.MONDAY) {
+            diaNombre="lunes";
+        }
+        if (dia == Calendar.TUESDAY) {
+            diaNombre="martes";
+        }
+        if (dia == Calendar.WEDNESDAY) {
+            diaNombre="miercoles";
+        }
+        if (dia == Calendar.THURSDAY) {
+            diaNombre="jueves";
+        }
+        if (dia == Calendar.FRIDAY) {
+            diaNombre="viernes";
+        }
+        if (dia == Calendar.SATURDAY) {
+            diaNombre="sabado";
+        }
+                
+        return diaNombre;
+
+    }
     
+    public Date sumarRestarDiasFecha(Date fecha, int dias){
+	
+      Calendar calendar = Calendar.getInstance();
+	
+      calendar.setTime(fecha); // Configuramos la fecha que se recibe
+	
+      calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
+
+      return calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos	 
+	
+ }
+
 }
