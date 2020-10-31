@@ -82,10 +82,10 @@ public class UsuarioServicio implements  UserDetailsService{
     }
 
     @Transactional
-    public void modificarUsuario(String id, String nombre, String apellido, String edad, String idLocalidad, String mail, String clave, String clave1) throws ErrorServicio {
+    public void modificarUsuario(String id,List<Posicion> posiciones, String nombre, String apellido, String edad, String idLocalidad, String mail, String clave, String clave1) throws ErrorServicio {
 
-                  Localidad localidad = localidadServicio.buscarLocalidadPorId(idLocalidad);
-    	validarEditarUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
+        Localidad localidad = localidadServicio.buscarLocalidadPorId(idLocalidad);
+    	validarEditarUsuario(posiciones,nombre, apellido, edad, localidad, mail, clave, clave1);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -93,7 +93,9 @@ public class UsuarioServicio implements  UserDetailsService{
             u.setNombre(nombre);
             u.setApellido(apellido);
             u.setMail(mail);
-
+            u.setEdad(edad);
+            u.setLocalidad(localidad);
+            u.setPosiciones(posiciones);
             //Encripto clave
             String encriptada = new BCryptPasswordEncoder().encode(clave);
             u.setClave(encriptada);
@@ -164,6 +166,9 @@ public class UsuarioServicio implements  UserDetailsService{
 
             throw new ErrorServicio("La clave no puede estar vacia y no puede ser menor a 6 digitos");
         }
+        if (!clave.equals(clave1)) {
+            throw new ErrorServicio("Las claves no coinciden");
+        }
         if (sexo==null) {
             throw new ErrorServicio("El campo sexo no debe ser nulo");
         }
@@ -173,7 +178,7 @@ public class UsuarioServicio implements  UserDetailsService{
 
     }
     
-    public void validarEditarUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
+    public void validarEditarUsuario(List<Posicion>posiciones,String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
 
         if (nombre == "" || nombre.isEmpty()) {
 
@@ -199,6 +204,12 @@ public class UsuarioServicio implements  UserDetailsService{
         if (clave == "" || clave.isEmpty() || 6 > clave.length()) {
 
             throw new ErrorServicio("La clave no puede estar vacia y no puede ser menor a 6 digitos");
+        }
+        if (!clave.equals(clave1)) {
+            throw new ErrorServicio("Las claves no coinciden");
+        }
+        if (posiciones.isEmpty()) {
+            throw new ErrorServicio("Seleccione al menos una posicion");
         }
 
     }
