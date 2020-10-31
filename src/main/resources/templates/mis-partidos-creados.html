@@ -39,13 +39,13 @@
 					</div>
 					<div class="searchable-container">
 						<div th:each="partido:${partidos}"
-							class="items col-xs-12 col-sm-4 col-md-4 col-lg-4 clearfix">
+							class="items col-xs-12 col-sm-6 col-md-4 col-lg-4 clearfix mb-30 mt-15">
 							<div class="info-block block-info clearfix">
 								<div class="square-box pull-left">
 									<span class="glyphicon glyphicon-user glyphicon-lg"></span>
 								</div>
 								<h4>
-									Nombre: <span
+									Creador: <span
 										th:text="${partido.creador.nombre + ' ' + partido.creador.apellido }"></span>
 								</h4>
 								<p>
@@ -79,7 +79,7 @@
 										th:if="${partido.estado != false}" class="text-success">
 										Activo</span>
 								</p>
-								<br> <a
+								<a
 									th:href="@{/partido/ver-partido(idpartido=__${partido.id}__)}"
 									class="btn btn-sm bver"><i
 									class="fas fa-edit"></i> Ver Partido</a>

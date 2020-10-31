@@ -183,20 +183,20 @@ public class PartidoControlador {
         System.out.println(idpartido);
         System.out.println(idconfirmado);
         try {
-            partidoServicio.cancelarPostulado(idpartido, idconfirmado);
+            partidoServicio.cancelarConfirmado(idpartido, idconfirmado);
             List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
             modelo.put("confirmados", listaConfirmados);
             modelo.put("fecha", true);
             modelo.put("idpartido", idpartido);
             modelo.put("mensajeexito", "Jugador eliminado de lista de confirmados");
-            return "listado-postulados";
+            return "listado-confirmados";
         } catch (ErrorServicio es) {
             List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
             modelo.put("confirmados", listaConfirmados);
             modelo.put("fecha", true);
             modelo.put("idpartido", idpartido);
             modelo.put("mensajeerror", "No se puedo eliminar al jugador de la lista de confirmados");
-            return "listado-postulados";
+            return "listado-confirmados";
         }
     }
 

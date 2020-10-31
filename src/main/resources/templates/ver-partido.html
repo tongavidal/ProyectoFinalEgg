@@ -8,7 +8,7 @@
 
 	<div class="fh5co-loader"></div>
 
-	<div id="page_ver_partido">
+	<div id="page" class="page_ver_partido">
 		
 		<nav th:replace="components/nav::nav"></nav>
 
@@ -42,7 +42,7 @@
 		
 		<div class="container pt-30" th:each="partido:${partidos}">
 			<div class="row">
-				<div class="col-md-4 animate-box">
+				<div class="col-md-4 animate-box fadeInUp animated-fast">
 					<h4>
 						Usuario Creador: <span th:text="${partido.creador.nombre + ' ' + partido.creador.apellido }"></span>
 					</h4>
@@ -70,7 +70,7 @@
 					</p>
 
 				</div>
-				<div class="col-md-4 animate-box">
+				<div class="col-md-4 animate-box fadeInUp animated-fast">
 					<p>
 						Jugadores confirmados: <span
 							th:text="${partido.jugConfirmados.size()}"></span>
@@ -93,7 +93,7 @@
 					</p>
 
 				</div>
-				<div class="col-md-4 animate-box">
+				<div class="col-md-4 animate-box fadeInUp animated-fast">
 					<p>
 						Cantidad de vacantes disponibles: <span
 							th:text="${partido.cantVacantes}"></span>
@@ -112,17 +112,17 @@
 
 				</div>
 			</div>
-			<div class="row">
+			<div class="row p-15">
 				<div class="col-md-12 mt-15">
 					<div class="row">
-						<div class="boton" th:if="${session.usuariosession==null}">
+						<div class="boton col-xs-12 col-md-2" th:if="${session.usuariosession==null}">
 							<a th:href="@{/usuario/login}"
 								class="btn bver btn-sm"><i
 								class="fas fa-edit"></i> Postularse</a>
 						</div>
 					</div>
 					<div class="row" th:if="${session.usuariosession!=null}">
-						<div class="boton">
+						<div class="boton col-xs-12 col-md-2">
 							<a
 								th:href="@{/partido/postularse(idpartido=__${partido.id}__,idpostulado=__${session.usuariosession.id}__)}"
 								th:if="${session.usuariosession.id != partido.creador.id}"
@@ -134,19 +134,19 @@
 								Ver Postulados
 							</a>
 						</div>
-						<div class="boton" >
+						<div class="boton col-xs-12 col-md-2">
 							<a th:href="@{/partido/listar-confirmados/__${partido.id}__}"
 								th:if="${session.usuariosession.id == partido.creador.id}"
 								class="btn bver"><i class="fas fa-eye"></i> Ver
 								Confirmados</a>
 						</div>
-						<div class="boton">
+						<div class="boton col-xs-12 col-md-2">
 							<a th:href="@{/partido/modificar_partido/__${partido.id}__}"
 								th:if="${session.usuariosession.id == partido.creador.id}"
 								class="btn bver btn-sm"><i class="fas fa-edit"></i>
 								Editar</a>
 						</div>
-						<div class="boton">
+						<div class="boton col-xs-12 col-md-2">
 							<a th:href="@{/partido/eliminar_partido/__${partido.id}__}"
 								th:if="${session.usuariosession.id == partido.creador.id}"
 								class="btn bver btn-sm"><i class="fas fa-ban"></i>
