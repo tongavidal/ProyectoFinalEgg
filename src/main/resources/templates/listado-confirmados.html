@@ -8,16 +8,20 @@
 
 	<div class="fh5co-loader"></div>
 
-	<div id="page">
+	<div id="page" class="page_ver_partido">
 		<nav th:replace="components/nav::nav"></nav>
 
-		<header id="fh5co-header" class="fh5co-cover partidos"> </header>
+		<header id="fh5co-header"
+			class="fh5co-cover partidos alta-partido img-fondo">
+			<div class="container pt-30">
+				<h1>Lista de Confirmados</h1>
+			</div>
+		</header>
 
 		<div id="fh5co-services" class="fh5co-bg-section lista-partido">
 
 			<div class="container">
 				<div class="row">
-					<h2>Lista de Confirmados</h2>
 					<div class="col-lg-12 search">
 						<input type="search" class="form-control" id="input-search"
 							placeholder="Buscar Postulados...">

@@ -96,9 +96,22 @@ h1, h2, h3, h4, h5, h6, figure {
   margin: 0 0 20px 0;
 }
 
-h4.index {
-
+h4.index, small {
   color: #000 !important;
+  margin: 15px 0 5px 0;
+}
+
+h4.index span {
+  display: contents !important;
+}
+
+small.index span {
+  display: contents !important;
+  line-height: 12px;
+}
+.fh5co-tabs .class-schedule li span {
+	line-height: 12px;
+	margin-bottom: 5px !important;
 }
 
 h1 span, h4 span, h3 span {
@@ -202,6 +215,27 @@ img.img-fluid {
 }
 .mt-40 {
 	margin-top: 40px;	
+}
+.mb-10 {
+	margin-bottom: 10px;	
+}
+.mb-15 {
+	margin-bottom: 15px;	
+}
+.mb-20 {
+	margin-bottom: 20px;	
+}
+.mb-25 {
+	margin-bottom: 25px;	
+}
+.mb-30 {
+	margin-bottom: 30px;	
+}
+.mb-35 {
+	margin-bottom: 35px;	
+}
+.mb-40 {
+	margin-bottom: 40px;	
 }
 
 .equal {
@@ -431,6 +465,7 @@ a.fas.fa-user.has-dropdown.usuario {
 }
 
 #fh5co-header,
+#fh5co-schedule,
 #fh5co-counter,
 .fh5co-bg {
   background-size: cover;
@@ -454,6 +489,18 @@ a.fas.fa-user.has-dropdown.usuario {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.fh5co-bg .overlaywhite {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
@@ -791,7 +838,7 @@ a.fas.fa-user.has-dropdown.usuario {
 
 /* Start Partidos */
 	/* Start Ver Partidos */
-	#page_ver_partido {
+	.page_ver_partido {
 	    position: relative;
 	    overflow-x: hidden;
 	    width: 100%;
@@ -800,17 +847,17 @@ a.fas.fa-user.has-dropdown.usuario {
 	    -o-transition: 0.5s;
 	    transition: 0.5s;
 	}
-	#page_ver_partido .fh5co-cover.partidos.alta-partido.img-fondo, .fh5co-cover.partidos.img-fondo {
+	.page_ver_partido .fh5co-cover.partidos.alta-partido.img-fondo, .fh5co-cover.partidos.img-fondo {
 		background-image: url(/images/cancha2.jpg);
 		background-position: center 63%;
 	    background-size: cover;
 	    background-repeat: no-repeat;
 	    min-height: 100px;
 	}
-	#page_ver_partido .fh5co-cover.partidos.alta-partido h1 {
+	.page_ver_partido .fh5co-cover.partidos.alta-partido h1 {
 		color: #ffffff;
 	}
-	#page_ver_partido .btn {
+	.page_ver_partido .btn {
 	    margin-right: 0px;
 	    margin-bottom: 0px;
 	    font-family: "Archivo", Arial, sans-serif;
@@ -825,25 +872,25 @@ a.fas.fa-user.has-dropdown.usuario {
 	    transition: 0.5s;
 	    padding: 8px 15px;
 	}
-	#page_ver_partido .boton {
+	.page_ver_partido .boton {
 	    display: inline;
 	    padding: 10px 5px;
 	}
-	#page_ver_partido .boton:first-child {
+	.page_ver_partido .boton:first-child {
 	    display: inline;
 	    padding: 10px 5px 10px 15px;
 	}
 	/*End Ver Partidos */
 	
 	/* Start Buscar Partidos */
-	#page_buscar_partidos .fh5co-cover.partidos.buscar-partidos.img-fondo {
+	.page_buscar_partidos .fh5co-cover.partidos.buscar-partidos.img-fondo {
 		background-image: url(/images/cancha2.jpg);
 		background-position: center 63%;
 	    background-size: cover;
 	    background-repeat: no-repeat;
 	    min-height: 100px;
 	}
-	#page_buscar_partidos .fh5co-cover.partidos.buscar-partidos h1 {
+	.page_buscar_partidos .fh5co-cover.partidos.buscar-partidos h1 {
 		color: #ffffff;
 	}
 	a.btn.btn-primary.btn-altapartido {
@@ -854,7 +901,26 @@ a.fas.fa-user.has-dropdown.usuario {
 	}
 	/* End Buscar Partidos */
 	
-	/* Start Buscar Partidos */
+	/* Start Lista Partidos Ok */
+	.page_lista_partidos_ok .fh5co-cover.partidos.lista-partidos-ok.img-fondo {
+		background-image: url(/images/cancha2.jpg);
+		background-position: center 63%;
+	    background-size: cover;
+	    background-repeat: no-repeat;
+	    min-height: 100px;
+	}
+	.page_lista_partidos_ok .fh5co-cover.partidos.lista-partidos-ok h1 {
+		color: #ffffff;
+	}
+	a.btn.btn-primary.btn-altapartido {
+	    border: none;
+	    margin-left: 10px;
+	    padding: 5px 10px;
+	    font-size: 13px;
+	}
+	/* End Lista Partidos Ok */
+	
+	/* Start Listar Partidos */
 	#page_lista_partidos .fh5co-cover.partidos.lista-partidos.img-fondo {
 		background-image: url(/images/cancha2.jpg);
 		background-position: center 63%;
@@ -871,7 +937,7 @@ a.fas.fa-user.has-dropdown.usuario {
 	    padding: 5px 10px;
 	    font-size: 13px;
 	}
-	/* End Lista Partidos */
+	/* End Listar Partidos */
 
 /* Start Calificaciones */
 #form {
@@ -950,6 +1016,17 @@ a.fas.fa-user.has-dropdown.usuario {
   	font-size: 12px !important;
 }
 .bver:hover, .bver:focus, .bver:active {
+    background: rgba(248, 90, 22, 0.50) !important;
+    border: 1px solid #F85A16 !important;
+}
+
+.bverhome{
+  	background-color: #F85A16;
+	border: 1px solid #F85A16 !important;
+  	color: #ffffff;
+  	font-size: 12px !important;
+}
+.bverhome:hover, .bverhome:focus, .bverhome:active {
     background: rgba(248, 90, 22, 0.50) !important;
     border: 1px solid #F85A16 !important;
 }
@@ -1086,6 +1163,11 @@ form.reputacion input[type="radio"]:checked ~ label {
   padding-bottom: 0;
 }
 
+.page_ver_partido .boton:first-child, .page_ver_partido .boton {
+    display: grid;
+    padding: 10px 5px;
+}
+
 .services {
   padding: 25px;
   margin-top: -10em;
@@ -1096,6 +1178,7 @@ form.reputacion input[type="radio"]:checked ~ label {
   -o-box-shadow: 0px 10px 23px -10px rgba(0, 0, 0, 0.43);
   box-shadow: 0px 10px 23px -10px rgba(0, 0, 0, 0.43);
 }
+
 @media screen and (max-width: 992px) {
   .services {
     margin-top: 0;
@@ -1523,7 +1606,7 @@ form.reputacion input[type="radio"]:checked ~ label {
 }
 
 .fh5co-heading {
-  margin-bottom: 5em;
+  margin-bottom: 1em;
 }
 .fh5co-heading h2 {
   font-size: 30px;
@@ -1986,10 +2069,10 @@ form.reputacion input[type="radio"]:checked ~ label {
 }
 .fh5co-nav-toggle.fh5co-nav-white > i {
   color: #000;
-  background: #000;
+  background: #F85A16;
 }
 .fh5co-nav-toggle.fh5co-nav-white > i::before, .fh5co-nav-toggle.fh5co-nav-white > i::after {
-  background: #000;
+  background: #F85A16;
 }
 
 .fh5co-nav-toggle i::before {
@@ -2033,7 +2116,7 @@ form.reputacion input[type="radio"]:checked ~ label {
 .fh5co-nav-toggle {
   position: absolute;
   right: 0px;
-  top: 65px;
+  top: 25px;
   z-index: 21;
   padding: 6px 0 0 0;
   display: block;
@@ -2246,4 +2329,8 @@ form.reputacion input[type="radio"]:checked ~ label {
   opacity: 0;
 }
 
-/*# sourceMappingURL=style.css.map */
+@media screen and (min-width: 991px) {
+  	.col-md-2 {
+    	width: auto !important;
+	}
+}
