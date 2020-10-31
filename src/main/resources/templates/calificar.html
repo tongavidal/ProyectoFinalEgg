@@ -1,9 +1,10 @@
 <!DOCTYPE HTML>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="components/head::head"></head>
 
-<body>
+<body id="resto">
 
 	<div class="fh5co-loader"></div>
 
@@ -15,66 +16,116 @@
 				<h1>Calificar Jugador</h1>
 			</div>
 		</header>
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 animate-box">
-						<form th:action="@{/reputacion/calificar_usuario}" method="post">
-							<div class="form-row">
-								<div th:if="${error != null}" class="col-md-12 alert alert-danger" role="alert">
-									<p th:text="${error}"></p>
-								</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 animate-box">
+					<form th:action="@{/reputacion/calificar_usuario}" method="post">
+						<div class="form-row">
+							<div th:if="${error != null}"
+								class="col-md-12 alert alert-danger" role="alert">
+								<p th:text="${error}"></p>
 							</div>
-                                                        <div th:if="${mensajeerror != null}" role="alert"
-                                                                class="col-md-12 alert alert-success animate-box text-center">
-                                                            <h4 th:text="${mensajeerror}"></h4>
-                                                        </div>
-                                                    
-							<div class="row form-group">
-								<div class="col-md-12">
-									<input th:value="${idPartido}" type="hidden" id="subject" class="form-control" name="idPartido">
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-12">
-									<input th:value="${idUsuario}" type="hidden" id="subject" class="form-control" name="idUsuario">
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-12">
-									<input  type="number" id="subject" class="form-control" name="puntualidad" placeholder="Puntualidad">
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-12">
-									<input  type="number" id="subject" class="form-control" name="habilidad" placeholder="Habilidad">
-								</div>
-							</div>	
-							<div class="row form-group">
-								<div class="col-md-12">
-									<input  type="number" id="subject" class="form-control" name="fairPlay" placeholder="FairPlay">
-								</div>
-							</div>
-							
-							
-							
-				        
-
-							<!--BOTON DE MODIFICAR-->
-					<div class="row form-group">
-						<div class="col-md-12">
-							<input type="submit" value="Calificar"
-										class="btn btn-primary">
 						</div>
-					</div>
-							<br>
-							<br>
-							<br>
-							<br>
+						<div th:if="${mensajeerror != null}" role="alert"
+							class="col-md-12 alert alert-success animate-box text-center">
+							<h4 th:text="${mensajeerror}"></h4>
+						</div>
 
-						</form>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<input th:value="${idPartido}" type="hidden" id="subject"
+									class="form-control" name="idPartido">
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<input th:value="${idUsuario}" type="hidden" id="subject"
+									class="form-control" name="idUsuario">
+							</div>
+						</div>
+						
+						<div class="row form-group">
+							<p>
+							Puntualidad:
+							<span class="clasificacion">
+							    <input id="radio1" type="radio" name="puntualidad" value="5"><!--
+							    --><label for="radio1">★</label><!--
+							    --><input id="radio2" type="radio" name="puntualidad" value="4"><!--
+							    --><label for="radio2">★</label><!--
+							    --><input id="radio3" type="radio" name="puntualidad" value="3"><!--
+							    --><label for="radio3">★</label><!--
+							    --><input id="radio4" type="radio" name="puntualidad" value="2"><!--
+							    --><label for="radio4">★</label><!--
+							    --><input id="radio5" type="radio" name="puntualidad" value="1"><!--
+							    --><label for="radio5">★</label>
+							 </span>
+							 </p>
+							 <p>
+							 Habilidad:
+							 <span class="clasificacion">
+							    <input id="radio11" type="radio" name="habilidad" value="5"><!--
+							    --><label for="radio11">★</label><!--
+							    --><input id="radio22" type="radio" name="habilidad" value="4"><!--
+							    --><label for="radio22">★</label><!--
+							    --><input id="radio33" type="radio" name="habilidad" value="3"><!--
+							    --><label for="radio33">★</label><!--
+							    --><input id="radio44" type="radio" name="habilidad" value="2"><!--
+							    --><label for="radio44">★</label><!--
+							    --><input id="radio55" type="radio" name="habilidad" value="1"><!--
+							    --><label for="radio55">★</label>
+							 </span>
+							 </p>
+							 <p>
+							 FairPlay:
+							 <span class="clasificacion">
+							    <input id="radio111" type="radio" name="fairPlay" value="5"><!--
+							    --><label for="radio111">★</label><!--
+							    --><input id="radio222" type="radio" name="fairPlay" value="4"><!--
+							    --><label for="radio222">★</label><!--
+							    --><input id="radio333" type="radio" name="fairPlay" value="3"><!--
+							    --><label for="radio333">★</label><!--
+							    --><input id="radio444" type="radio" name="fairPlay" value="2"><!--
+							    --><label for="radio444">★</label><!--
+							    --><input id="radio555" type="radio" name="fairPlay" value="1"><!--
+							    --><label for="radio555">★</label>
+							 </span>
+							 </p>
+						</div>
+<!-- 						<div class="row form-group"> -->
+<!-- 							<div class="col-md-12"> -->
+<!-- 								<input type="number" id="subject" class="form-control" -->
+<!-- 									name="puntualidad" placeholder="Puntualidad"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="row form-group"> -->
+<!-- 							<div class="col-md-12"> -->
+<!-- 								<input type="number" id="subject" class="form-control" -->
+<!-- 									name="habilidad" placeholder="Habilidad"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="row form-group"> -->
+<!-- 							<div class="col-md-12"> -->
+<!-- 								<input type="number" id="subject" class="form-control" -->
+<!-- 									name="fairPlay" placeholder="FairPlay"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+
+
+
+
+
+						<!--BOTON DE MODIFICAR-->
+						<div class="row form-group">
+							<div class="col-md-12">
+								<input type="submit" value="Calificar" class="btn btn-primary">
+							</div>
+						</div>
+						<br> <br> <br> <br>
+
+					</form>
 				</div>
 			</div>
-	</div>
+		</div>
 
 
 

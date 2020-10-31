@@ -12,7 +12,7 @@
 		<nav th:replace="components/nav::nav"></nav>
 
 		<header id="fh5co-header" class="fh5co-cover registro">
-			<div class="overlay"></div>
+			<div class="overlay registrarse"></div>
 			<div class="container">
 				<div class="row">
 					<div class="col-md-4">
@@ -111,12 +111,10 @@
 								</div>
 							</div>
 							<div class="row form-group">
-								<div class="col-md-12">
-								<label for="archivo">Seleccioná las posiciones en las que jugás</label>
-									<div th:each="posicion:${posiciones}">
-                                		<input type="checkbox" th:text="' '+${posicion.posicion}" th:field="${usuario.posiciones}" th:value="${posicion.id}" name="posicion" class="form-check-label" >
-                            		</div>
-								</div>
+								<label class="col-md-12" for="archivo">Seleccioná las posiciones en las que jugás</label><br />
+										<div class="checkbox-inline" th:each="posicion:${posiciones}">
+	                                		<input type="checkbox" th:text="' '+${posicion.posicion}" th:field="${usuario.posiciones}" th:value="${posicion.id}" name="posicion" class="form-check-label" >
+	                            		</div>
 							</div>
 							<div class="row form-group">
 								<div class="col-md-12">
