@@ -296,9 +296,9 @@ public class PartidoControlador {
     public String eliminarPartido(@PathVariable String id, ModelMap modelo) {
         try {
             partidoServicio.eliminarPartido(id);
-
+            modelo.put("mensajeexito", "El partido se ha cancelado con exito");
         } catch (ErrorServicio e) {
-            modelo.addAttribute("error", e.getMessage());
+            modelo.put("error", e.getMessage());
             //return "redirect:/partido/listar-partidos";
         }
         //return "redirect:/partido/mis-partidos/{id}";
