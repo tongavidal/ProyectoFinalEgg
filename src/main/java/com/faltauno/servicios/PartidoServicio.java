@@ -209,13 +209,14 @@ public class PartidoServicio {
         List<Usuario> listPostulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
         //Recorro y cargo la lista de usuarios postulados
         for (Usuario u : listPostulados) {
-        	PostuladoCompuesto p = new PostuladoCompuesto();
+           
+            PostuladoCompuesto p = new PostuladoCompuesto();
         	
             p.setId(u.getId());
             p.setNombre(u.getNombre());
             p.setApellido(u.getApellido());
             p.setEdad(u.getEdad());
-            p.setMail(idpartido);
+            p.setMail(u.getMail());
             p.setLocalidad(u.getLocalidad().getNombre());
             p.setFoto(u.getFoto());
             p.setFechaAlta(u.getFechaCreacion());
@@ -252,13 +253,50 @@ public class PartidoServicio {
     }
 
     //listar confirmados
-    public List<Usuario> listarConfirmados(Partido partido) throws ErrorServicio {
-        List<Usuario> usuList = new ArrayList();
+    public List<PostuladoCompuesto> listarConfirmados(Partido partido) throws ErrorServicio {
+        List<PostuladoCompuesto> postulados = new ArrayList<>();        
         //Recorro y cargo la lista de usuarios postulados
         for (Usuario u : partido.getJugConfirmados()) {
-            usuList.add(u);
+            
+            PostuladoCompuesto p = new PostuladoCompuesto();
+        	
+            p.setId(u.getId());
+            p.setNombre(u.getNombre());
+            p.setApellido(u.getApellido());
+            p.setEdad(u.getEdad());
+            p.setMail(u.getMail());
+            p.setLocalidad(u.getLocalidad().getNombre());
+            p.setFoto(u.getFoto());
+            p.setFechaAlta(u.getFechaCreacion());
+
+            //Transformo posiciones en cadena de texto y lo paso
+            List<Posicion> posiciones = u.getPosiciones();
+            int cont = 0;
+            String textPosiciones = "";
+            for (Posicion pos : posiciones) {
+                if (cont == 0) {
+                    textPosiciones = pos.getPosicion();
+                } else {
+                    textPosiciones = textPosiciones + ", " + pos.getPosicion();
+                }
+                cont++;
+            }
+            //cargo finalmente las posiciones
+            p.setPosiciones(textPosiciones);
+
+            //Cargo el promedio general de su reputacion
+            p.setReputacion(reputacionServicio.promedioReputacionTotal(u.getId()));
+
+            //Consulto estado y seteto en modo texto
+            if (u.getEstado()) {
+                p.setEstado("Activo");
+            } else {
+                p.setEstado("Inactivo");
+            }
+
+            postulados.add(p);
         }
-        return usuList;
+        return postulados;
     }
 
     @Transactional

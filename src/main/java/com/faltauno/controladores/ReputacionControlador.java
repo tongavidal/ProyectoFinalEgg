@@ -1,6 +1,7 @@
 
 package com.faltauno.controladores;
 
+import com.faltauno.compuestos.PostuladoCompuesto;
 import com.faltauno.entidades.Partido;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.errores.ErrorServicio;
@@ -38,7 +39,7 @@ public class ReputacionControlador {
         } catch (ErrorServicio e) {
             modelo.put("error",e.getMessage());
             Partido partido = partidoServicio.traerPartido(idpartido);
-            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            List<PostuladoCompuesto> listaConfirmados = partidoServicio.listarConfirmados(partido);
             modelo.put("confirmados", listaConfirmados);
             modelo.put("fecha", false);
             modelo.put("idpartido", idpartido);
@@ -51,7 +52,7 @@ public class ReputacionControlador {
         try {
             reputacionServicio.agregarReputacion(idUsuario,idPartido,puntualidad, habilidad, fairPlay);
             Partido partido = partidoServicio.traerPartido(idPartido);
-            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            List<PostuladoCompuesto> listaConfirmados = partidoServicio.listarConfirmados(partido);
             modelo.put("confirmados", listaConfirmados);
             modelo.put("fecha", false);
             modelo.put("idpartido", idPartido);
