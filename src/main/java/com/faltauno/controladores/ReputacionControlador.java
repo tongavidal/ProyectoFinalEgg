@@ -56,6 +56,7 @@ public class ReputacionControlador {
             modelo.put("confirmados", listaConfirmados);
             modelo.put("fecha", false);
             modelo.put("idpartido", idPartido);
+            modelo.put("mensajeexito","Se calificó con exito");
            return "listado-confirmados.html";
         } catch (ErrorServicio e) {
             modelo.put("title", "Calificar - NosFalta1");

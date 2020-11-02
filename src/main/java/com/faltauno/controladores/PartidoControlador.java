@@ -148,6 +148,7 @@ public class PartidoControlador {
             List<PostuladoCompuesto> postulados = partidoServicio.listarPostulados(idpartido);
 
             modelo.put("postulados", postulados);
+            modelo.put("idpartido", idpartido);
             return "listado-postulados.html";
         }
 
