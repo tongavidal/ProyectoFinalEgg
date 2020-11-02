@@ -255,7 +255,7 @@
 				var tabContentWrap = $('.fh5co-tab-content-wrap'),
 					tabHeight = $('.fh5co-tab-nav').outerHeight(),
 					formActiveHeight = $('.tab-content.active').outerHeight(),
-					totalHeight = parseInt(tabHeight + formActiveHeight + 90);
+					totalHeight = parseInt(tabHeight + formActiveHeight + 350);
 
 					tabContentWrap.css('height', totalHeight );
 
@@ -263,7 +263,7 @@
 					var tabContentWrap = $('.fh5co-tab-content-wrap'),
 						tabHeight = $('.fh5co-tab-nav').outerHeight(),
 						formActiveHeight = $('.tab-content.active').outerHeight(),
-						totalHeight = parseInt(tabHeight + formActiveHeight + 90);
+						totalHeight = parseInt(tabHeight + formActiveHeight + 350);
 
 						tabContentWrap.css('height', totalHeight );
 				});

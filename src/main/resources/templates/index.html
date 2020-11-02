@@ -19,7 +19,8 @@
 							<div class="display-tc animate-box" data-animate-effect="fadeIn">
 								<h1><img class="img-fluid" src="/images/home.png" alt=""></h1>
 								<p>
-									<a th:href="@{/usuario/login}" class="btn btn-primary">Ingresar</a>
+									<a th:if="${session.usuariosession == null}" th:href="@{/usuario/login}" class="btn btn-primary">Ingresar</a>
+									<a th:if="${session.usuariosession != null}" th:href="@{/partido/alta-partido}" class="btn btn-primary">Crear Partido</a>
 								</p>
 							</div>
 						</div>
