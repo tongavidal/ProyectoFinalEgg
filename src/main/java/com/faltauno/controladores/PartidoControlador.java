@@ -116,7 +116,7 @@ public class PartidoControlador {
         modelo.put("title", "Confirmados - NosFalta1");
         try {
             Partido partido = partidoServicio.traerPartido(idpartido);
-            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            List<PostuladoCompuesto> listaConfirmados = partidoServicio.listarConfirmados(partido);
             modelo.put("confirmados", listaConfirmados);
             modelo.put("fecha", partidoServicio.fecha(partido.getFecha()));
             modelo.put("idpartido", idpartido);
@@ -165,7 +165,7 @@ public class PartidoControlador {
         modelo.put("title", "Lista de Postulados - NosFalta1");
         try {
             partidoServicio.eliminaPostulado(idpartido, idpostulado);
-            Partido partido = partidoServicio.traerPartido(idpartido);
+            
             List<PostuladoCompuesto> listaConfirmados = partidoServicio.listarPostulados(idpartido);
             modelo.put("confirmados", listaConfirmados);
             return "listado-postulados.html";
@@ -184,14 +184,14 @@ public class PartidoControlador {
         System.out.println(idconfirmado);
         try {
             partidoServicio.cancelarConfirmado(idpartido, idconfirmado);
-            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            List<PostuladoCompuesto> listaConfirmados = partidoServicio.listarConfirmados(partido);
             modelo.put("confirmados", listaConfirmados);
             modelo.put("fecha", true);
             modelo.put("idpartido", idpartido);
             modelo.put("mensajeexito", "Jugador eliminado de lista de confirmados");
             return "listado-confirmados";
         } catch (ErrorServicio es) {
-            List<Usuario> listaConfirmados = partidoServicio.listarConfirmados(partido);
+            List<PostuladoCompuesto> listaConfirmados = partidoServicio.listarConfirmados(partido);
             modelo.put("confirmados", listaConfirmados);
             modelo.put("fecha", true);
             modelo.put("idpartido", idpartido);

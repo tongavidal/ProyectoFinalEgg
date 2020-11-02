@@ -56,7 +56,8 @@
 								</h4>
 								<p>Posiciones: <span th:text="${confirmado.posiciones.toString()}"></span><br>
 								<p>
-									Reputación: <span></span>
+									Reputación promedio: <span th:if="${confirmado.reputacion == 0}"> Aún no fue calificado</span>
+                                                                                    <span th:if="${confirmado.reputacion != 0}" th:text="${confirmado.reputacion} "></span>
 								</p>
 								<br> <a
 									th:href="@{/usuario/ver-perfil/__${confirmado.id}__}"
