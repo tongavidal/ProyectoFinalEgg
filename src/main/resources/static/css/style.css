@@ -1042,6 +1042,16 @@ a.fas.fa-user.has-dropdown.usuario {
 
 /*End Ver-Partido*/
 
+/*Estrellas perfil*/
+.icon-star2{
+    color: #ffd133;
+    font-size: 30px;
+}
+.icon-star-outlined{
+    font-size: 30px;
+}
+/**/
+
 /* Start listado confirmados */
 form.reputacion {
   width: 250px;

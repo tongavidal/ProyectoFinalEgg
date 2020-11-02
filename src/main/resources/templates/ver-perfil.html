@@ -75,15 +75,33 @@
 						<tbody>
 							<tr>
 								<td>Habilidad:</td>
-								<td><span th:text="${habilidad}"></span> /5</td>
+								<td>
+                                                                    <span th:each="i:${#numbers.sequence(1, 5/1)}">
+                                                                        <span th:if="${i<=habilidad}" class="icon-star2"></span>
+                                                                        <span th:if="${i>habilidad}" class="icon-star-outlined"></span>
+                                                                    </span>
+                                                                    
+                                                                </td>
 							</tr>
 							<tr>
 								<td>Fairplay:</td>
-								<td><span th:text="${fairplay}"></span> /5</td>
+								<td>
+                                                                    <span th:each="i:${#numbers.sequence(1, 5/1)}">
+                                                                        <span th:if="${i<=fairplay}" class="icon-star2"></span>
+                                                                        <span th:if="${i>fairplay}" class="icon-star-outlined"></span>
+                                                                    </span>
+                                                                    
+                                                                </td>
 							</tr>
 							<tr>
 								<td>Puntualidad:</td>
-								<td><span th:text="${puntualidad}"></span> /5</td>
+								<td>
+                                                                    <span th:each="i:${#numbers.sequence(1, 5/1)}">
+                                                                        <span th:if="${i<=puntualidad}" class="icon-star2"></span>
+                                                                        <span th:if="${i>puntualidad}" class="icon-star-outlined"></span>
+                                                                    </span>
+                                                                    
+                                                                </td>
 							</tr>
 						</tbody>
 					</table>
