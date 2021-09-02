@@ -1,67 +1,87 @@
 <!DOCTYPE HTML>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <head th:replace="components/head::head"></head>
+<head th:replace="components/head::head"></head>
 
-    <body>
+<body id="resto">
 
-        <div class="fh5co-loader"></div>
+	<div class="fh5co-loader"></div>
 
-        <div id="page">
-            <nav th:replace="components/nav::nav"></nav>
+	<div id="page" class="page_ver_partido">
+		<nav th:replace="components/nav::nav"></nav>
 
-            <header id="fh5co-header" class="fh5co-cover partidos">  
-            </header>
+		<header id="fh5co-header"
+			class="fh5co-cover partidos alta-partido img-fondo">
+			<div class="container pt-30">
+				<h1>Lista de Postulados</h1>
+			</div>
+		</header>
 
-            <div id="fh5co-services" class="fh5co-bg-section lista-partido">
+		<div id="fh5co-services" class="fh5co-bg-section lista-partido">
 
-                <div class="container">
-                    <div class="row">
-                        <h2>Lista de Postulados</h2>
-                        <div class="col-lg-12 search">
-                            <input type="search" class="form-control" id="input-search" placeholder="Buscar Postulados..." >
-                        </div>
-                        <div th:if="${mensajeerror != null}" class="col-md-12 alert alert-danger" role="alert">
-							<h4 th:text="${mensajeerror}"></h4>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 search">
+						<input type="search" class="form-control" id="input-search"
+							placeholder="Buscar Postulados...">
+					</div>
+					<div th:if="${mensajeerror != null}"
+						class="col-md-12 alert alert-danger" role="alert">
+						<h4 th:text="${mensajeerror}"></h4>
+					</div>
+					<div th:if="${mensajeexito != null}"
+						class="col-md-12 alert alert-success" role="success">
+						<h4 th:text="${mensajeexito}"></h4>
+					</div>
+					<div class="searchable-container">
+						<div th:each="postulado:${postulados}"
+							class="items col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
+							<div class="info-block block-info clearfix">
+								<div class="square-box pull-left">
+									<span class="glyphicon glyphicon-user glyphicon-lg"></span>
+								</div>
+								<h4>
+									Nombre: <span
+										th:text="${postulado.nombre + ' ' + postulado.apellido }"></span>
+								</h4>
+								<p>
+									Posiciones: <span th:text="${postulado.posiciones}"></span><br>
+								<p>
+									Localidad: <span th:text="${postulado.localidad}"></span><br>
+								<p>
+									Reputación: <span th:text="${postulado.reputacion}"> </span>/5<br>
+								</p>
+
+
+								<a th:href="@{/usuario/ver-perfil/__${postulado.id}__}"
+									class="btn btn-sm bver"><i class="fas fa-eye"></i> Ver
+									Perfil</a> <a
+									th:href="@{/partido/eliminarpostulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}"
+									class="btn btn-sm bver"><i class="far fa-trash-alt"></i>
+									Eliminar</a> <a
+									th:href="@{/partido/confirmar-postulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}"
+									class="btn bver btn-sm bver"><i
+									class="fa fa-check-circle-o"></i> Confirmar Postulado</a>
+
+
+							</div>
 						</div>
-						<div th:if="${mensajeexito != null}" class="col-md-12 alert alert-success" role="success">
-							<h4 th:text="${mensajeexito}"></h4>
-						</div>
-                        <div class="searchable-container">
-                            <div th:each="postulado:${postulados}" class="items col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
-                                <div class="info-block block-info clearfix">
-                                    <div class="square-box pull-left">
-                                        <span class="glyphicon glyphicon-user glyphicon-lg"></span>
-                                    </div>
-                                    <h4>Nombre: <span th:text="${postulado.nombre + ' ' + postulado.apellido }"></span></h4>
-                                    <p>Posiciones: <span th:text="${postulado.posiciones.toString()}"></span><br>
-                                    <p>Localidad:  <span th:text="${postulado.localidad.nombre}"></span><br>			
-                                    <p>Reputación:<span th:text="${postulado.reputacion}"></span><br></p>
-                                    
-                                    
-                                    <a th:href="@{/usuario/ver-perfil/__${postulado.id}__}" class="btn btn-primary btn-sm bmodificar"><i class="fas fa-edit"></i> Ver Perfil</a>
-                                    
-                                   <a th:href="@{/partido/eliminarpostulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn btn-primary btn-sm beliminar"><i class="far fa-trash-alt"></i> Eliminar</a>
-                                    
-                                    <a th:href="@{/partido/confirmar-postulado(idpartido=__${idpartido}__,idpostulado=__${postulado.id}__)}" class="btn btn-primary btn-sm bpostularse"><i class="far fa-trash-alt"></i>Confirmar Postulado</a>
-                                    
-                                   
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-                    <scripts th:replace="/components/scripts::scripts"></scripts>
-            <footer th:replace="components/footer::footer"></footer>
-        </div>
-                    <!--FontAwesome-->
-                    <script src="https://kit.fontawesome.com/893bee3809.js" crossorigin="anonymous"></script>
-        <div class="gototop js-top">
-            <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
-        </div>
+		<scripts th:replace="/components/scripts::scripts"></scripts>
+		<footer th:replace="components/footer::footer"></footer>
+	</div>
+	<!--FontAwesome-->
+	<script src="https://kit.fontawesome.com/893bee3809.js"
+		crossorigin="anonymous"></script>
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
 
 
-    </body>
+</body>
 </html>

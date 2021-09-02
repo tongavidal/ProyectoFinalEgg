@@ -7,6 +7,7 @@ package com.faltauno.servicios;
 
 import com.faltauno.entidades.Foto;
 import com.faltauno.entidades.Localidad;
+import com.faltauno.entidades.Posicion;
 import com.faltauno.entidades.Reputacion;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.enumeraciones.Sexo;
@@ -26,6 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,9 +52,9 @@ public class UsuarioServicio implements  UserDetailsService{
     private FotoServicio fotoServicio;
     
     @Transactional
-    public void registrarUsuario(MultipartFile archivo,String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1,Sexo sexo) throws ErrorServicio {
+    public void registrarUsuario(List<Posicion> posiciones,MultipartFile archivo,String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1,Sexo sexo) throws ErrorServicio {
 
-        validarRegistroUsuario(nombre, apellido, edad, localidad, mail, clave, clave1,sexo);
+        validarRegistroUsuario(posiciones,nombre, apellido, edad, localidad, mail, clave, clave1,sexo);
 
         Usuario u = new Usuario();
         //u.setId(UUID.randomUUID().toString().substring(0, 8));
@@ -65,6 +67,7 @@ public class UsuarioServicio implements  UserDetailsService{
         u.setFechaCreacion(new Date());
         u.setEstado(false);
         u.setSexo(sexo);
+        u.setPosiciones(posiciones);
         //Encripto clave
         String encriptada = new BCryptPasswordEncoder().encode(clave);
         u.setClave(encriptada);
@@ -79,10 +82,10 @@ public class UsuarioServicio implements  UserDetailsService{
     }
 
     @Transactional
-    public void modificarUsuario(String id, String nombre, String apellido, String edad, String idLocalidad, String mail, String clave, String clave1) throws ErrorServicio {
+    public void modificarUsuario(String id,List<Posicion> posiciones, String nombre, String apellido, String edad, String idLocalidad, String mail, String clave, String clave1) throws ErrorServicio {
 
-                  Localidad localidad = localidadServicio.buscarLocalidadPorId(idLocalidad);
-    	validarEditarUsuario(nombre, apellido, edad, localidad, mail, clave, clave1);
+        Localidad localidad = localidadServicio.buscarLocalidadPorId(idLocalidad);
+    	validarEditarUsuario(posiciones,nombre, apellido, edad, localidad, mail, clave, clave1);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -90,7 +93,9 @@ public class UsuarioServicio implements  UserDetailsService{
             u.setNombre(nombre);
             u.setApellido(apellido);
             u.setMail(mail);
-
+            u.setEdad(edad);
+            u.setLocalidad(localidad);
+            u.setPosiciones(posiciones);
             //Encripto clave
             String encriptada = new BCryptPasswordEncoder().encode(clave);
             u.setClave(encriptada);
@@ -129,7 +134,7 @@ public class UsuarioServicio implements  UserDetailsService{
         }
     }
 
-    public void validarRegistroUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1,Sexo sexo) throws ErrorServicio {
+    public void validarRegistroUsuario(List<Posicion>posiciones,String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1,Sexo sexo) throws ErrorServicio {
 
         if (nombre == "" || nombre.isEmpty()) {
 
@@ -161,13 +166,19 @@ public class UsuarioServicio implements  UserDetailsService{
 
             throw new ErrorServicio("La clave no puede estar vacia y no puede ser menor a 6 digitos");
         }
+        if (!clave.equals(clave1)) {
+            throw new ErrorServicio("Las claves no coinciden");
+        }
         if (sexo==null) {
             throw new ErrorServicio("El campo sexo no debe ser nulo");
+        }
+        if (posiciones.isEmpty()) {
+            throw new ErrorServicio("Seleccione al menos una posicion");
         }
 
     }
     
-    public void validarEditarUsuario(String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
+    public void validarEditarUsuario(List<Posicion>posiciones,String nombre, String apellido, String edad, Localidad localidad, String mail, String clave, String clave1) throws ErrorServicio {
 
         if (nombre == "" || nombre.isEmpty()) {
 
@@ -194,6 +205,12 @@ public class UsuarioServicio implements  UserDetailsService{
 
             throw new ErrorServicio("La clave no puede estar vacia y no puede ser menor a 6 digitos");
         }
+        if (!clave.equals(clave1)) {
+            throw new ErrorServicio("Las claves no coinciden");
+        }
+        if (posiciones.isEmpty()) {
+            throw new ErrorServicio("Seleccione al menos una posicion");
+        }
 
     }
 
@@ -218,12 +235,9 @@ public class UsuarioServicio implements  UserDetailsService{
             HttpSession session = attr.getRequest().getSession(true);
             session.setAttribute("usuariosession", user);
 
-
-           User userOK = new User(user.getMail(), user.getClave(), permisos);
-
+            User userOK = new User(user.getMail(), user.getClave(), permisos);
             return userOK;
         } else {
-
             return null;
         }
 
@@ -235,8 +249,14 @@ public class UsuarioServicio implements  UserDetailsService{
     
     public void agregarReputacionUsuario(String id,Reputacion reputacion) throws ErrorServicio{
         try {
+            List<Reputacion> reputaciones=new ArrayList<>();
             Usuario usuario=usuarioRepositorio.getOne(id);
-            usuario.getReputacion().add(reputacion);
+            for (Reputacion r : usuario.getReputacion()) {
+                reputaciones.add(r);
+            }
+            
+            reputaciones.add(reputacion);
+            usuario.setReputacion(reputaciones);
             usuarioRepositorio.save(usuario); 
         } catch (Exception e) {
             throw new ErrorServicio("Cosas pasaron");

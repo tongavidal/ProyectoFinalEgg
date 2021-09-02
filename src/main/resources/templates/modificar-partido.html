@@ -1,100 +1,116 @@
 <!DOCTYPE HTML>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="components/head::head"></head>
 
-<body>
+<body id="resto">
 
 	<div class="fh5co-loader"></div>
 
-	<div id="page">
+	<div id="page" class="page_ver_partido">
 		<nav th:replace="components/nav::nav"></nav>
 
-		<header id="fh5co-header" class="fh5co-cover partidos alta-partido" role="banner" data-stellar-background-ratio="0.5">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 animate-box">
-						<br>
-						<h1>Modificar Partido</h1>
-						<form th:action="@{/partido/modificar-partido/__${partido.id}__}" method="post" enctype="multipart/form-data">
-							<div class="form-row">
-								<div th:if="${error != null}" class="col-md-12 alert alert-danger" role="alert">
-									<p th:text="${error}"></p>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-12">
-									<!-- <label for="subject">Subject</label> -->
-									<input th:value="${partido.fecha}" type="date" id="subject" class="form-control" name="fecha" 
-										th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" placeholder="fecha">
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-12">
-									<!-- <label for="subject">Subject</label> -->
-									<input th:value="${horario}" type="time" id="subject" class="form-control" name="horario" 
-										placeholder="horario">
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-12">
-									<select name="idLocalidad" class="form-control">
-										
-										<option th:each="localidad:${localidades}" th:value="${localidad.id}" th:text="${localidad.nombre}" th:selected="${partido.localidad!=null && localidad.id==partido.localidad.id}"></option>
-											
-									</select>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-12">
-									<!-- <label for="subject">Subject</label> -->
-									<!--<input th:value="${partido.establecimiento.nombre}" type="text" id="subject" class="form-control" name="establecimiento" 
-										placeholder="Nombre del establecimiento">-->
-                                                                        <select name="idEstablecimiento" class="form-control">
-										<option th:each="establecimiento:${establecimientos}"
-											th:value="${establecimiento.id}"
-											th:text="${establecimiento.nombre}" th:selected="${partido.establecimiento!=null && establecimiento.id==partido.establecimiento.id}"></option>
-									</select>
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-12">
-									<!-- <label for="subject">Subject</label> -->
-									<input th:value="${partido.precio}" type="number" id="subject" class="form-control" name="precio" 
-										placeholder="Precio por jugador">
-								</div>
-							</div>
-							<div class="row form-group">
-								<div class="col-md-12">
-									<select name="sexo" class="form-control" placeholder="Sexo">
-										<!--<option th:value="${masculino}">Masculino</option>
-                                        <option th:value="${femenino}">Femenino</option>
-                                        <option th:value="${mixto}">Mixto</option>-->
-                                        <option th:each="sex:${sexo}" 
-                                        th:value="${sex}"
-                                        th:text="${sex}" th:selected="${partido.sexo!=null && sex==partido.sexo}"></option>
-									</select>
-								</div>
-							</div>
-
-
-							<!--BOTON DE MODIFICAR-->
-							<div class="row form-group">
-								<div class="col-md-12">
-									<input type="submit" value="Modificar"
-										class="btn btn-primary">
-								</div>
-							</div>
-							<br>
-							<br>
-							<br>
-							<br>
-
-						</form>
-					</div>
-				</div>
+		<header id="fh5co-header"
+			class="fh5co-cover partidos alta-partido img-fondo">
+			<div class="container pt-30">
+				<h1>Modificar Partido</h1>
 			</div>
 		</header>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 animate-box">
+					<br>
+					<form th:action="@{/partido/modificar-partido/__${partido.id}__}"
+						method="post" enctype="multipart/form-data">
+						<div class="form-row">
+							<div th:if="${error != null}"
+								class="col-md-12 alert alert-danger" role="alert">
+								<h4 th:text="${error}"></h4>
+								<span th:if="${alta != null}" class="col-md-6"> <a
+									th:href="@{/partido/alta-partido}" th:text="${alta}"
+									class="btn btn-primary"></a>
+								</span>
+							</div>
+							<div th:if="${mensajeexito != null}" role="alert"
+								class="col-md-12 alert alert-success animate-box text-center">
+								<h4 th:text="${mensajeexito}"></h4>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="subject">Subject</label> -->
+								<input th:value="${partido.fecha}" type="date" id="subject"
+									class="form-control" name="fecha"
+									th:min="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}"
+									placeholder="fecha">
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="subject">Subject</label> -->
+								<input th:value="${horario}" type="time" id="subject"
+									class="form-control" name="horario" placeholder="horario">
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<select name="idLocalidad" class="form-control">
+
+									<option th:each="localidad:${localidades}"
+										th:value="${localidad.id}" th:text="${localidad.nombre}"
+										th:selected="${partido.localidad!=null && localidad.id==partido.localidad.id}"></option>
+
+								</select>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="subject">Subject</label> -->
+								<!--<input th:value="${partido.establecimiento.nombre}" type="text" id="subject" class="form-control" name="establecimiento" 
+										placeholder="Nombre del establecimiento">-->
+								<select name="idEstablecimiento" class="form-control">
+									<option th:each="establecimiento:${establecimientos}"
+										th:value="${establecimiento.id}"
+										th:text="${establecimiento.nombre}"
+										th:selected="${partido.establecimiento!=null && establecimiento.id==partido.establecimiento.id}"></option>
+								</select>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="subject">Subject</label> -->
+								<input th:value="${partido.precio}" type="number" id="subject"
+									class="form-control" name="precio"
+									placeholder="Precio por jugador">
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-md-12">
+								<select name="sexo" class="form-control" placeholder="Sexo">
+									<!--<option th:value="${masculino}">Masculino</option>
+                                        <option th:value="${femenino}">Femenino</option>
+                                        <option th:value="${mixto}">Mixto</option>-->
+									<option th:each="sex:${sexo}" th:value="${sex}"
+										th:text="${sex}"
+										th:selected="${partido.sexo!=null && sex==partido.sexo}"></option>
+								</select>
+							</div>
+						</div>
+
+
+						<!--BOTON DE MODIFICAR-->
+						<div class="row form-group">
+							<div class="col-md-12">
+								<input type="submit" value="Modificar" class="btn btn-primary">
+							</div>
+						</div>
+						<br> <br> <br> <br>
+
+					</form>
+				</div>
+			</div>
+		</div>
 
 
 

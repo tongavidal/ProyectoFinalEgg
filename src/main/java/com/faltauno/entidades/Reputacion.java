@@ -8,6 +8,7 @@ package com.faltauno.entidades;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -26,8 +27,19 @@ public class Reputacion {
     private Integer puntualidad;
     private Integer habilidad;
     private Integer fairplay;
-
+    
+    @ManyToOne
+    private Partido partido;
+    
     public Reputacion() {
+    }
+
+    public Partido getPartido() {
+        return partido;
+    }
+
+    public void setPartido(Partido partido) {
+        this.partido = partido;
     }
     
     
@@ -86,6 +98,5 @@ public class Reputacion {
     public void setFairplay(Integer fairplay) {
         this.fairplay = fairplay;
     }
-    
-    
+
 }

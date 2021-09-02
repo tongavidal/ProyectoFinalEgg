@@ -10,6 +10,20 @@
 *   Template Style 
 *
 * ======================================================= */
+
+html, body#resto{
+  display: flex;
+  font-family: "Signika", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #828282;
+  background: #fff;
+  flex-direction: column;
+  height:100vh;
+  margin: 0;
+}
+
 body {
   font-family: "Signika", Arial, sans-serif;
   font-weight: 400;
@@ -17,6 +31,10 @@ body {
   line-height: 1.7;
   color: #828282;
   background: #fff;
+}
+
+scripts {
+    display: none;
 }
 
 body#partidos{
@@ -78,9 +96,31 @@ h1, h2, h3, h4, h5, h6, figure {
   margin: 0 0 20px 0;
 }
 
-h1 span {
+h4.index, small {
+  color: #000 !important;
+  margin: 15px 0 5px 0;
+}
+
+h4.index span {
+  display: contents !important;
+}
+
+small.index span {
+  display: contents !important;
+  line-height: 12px;
+}
+.fh5co-tabs .class-schedule li span {
+	line-height: 12px;
+	margin-bottom: 5px !important;
+}
+
+h1 span, h4 span, h3 span {
 	color: #F85A16;
-} 
+}
+
+img.img-fluid {
+    width: 100%;
+}
 
 /* Espacios p para paddings y m para Margins (t=top, l=left, r=right, b=bottom) */
 .p-10 {
@@ -119,6 +159,84 @@ h1 span {
 .pt-40 {
 	padding-top: 40px;	
 }
+.pb-10 {
+	padding-bottom: 10px;	
+}
+.pb-15 {
+	padding-bottom: 15px;	
+}
+.pb-20 {
+	padding-bottom: 20px;	
+}
+.pb-25 {
+	padding-bottom: 25px;	
+}
+.pb-30 {
+	padding-bottom: 30px;	
+}
+.pb-35 {
+	padding-bottom: 35px;	
+}
+.pb-40 {
+	padding-bottom: 40px;	
+}
+.m-10 {
+	margin: 10px;	
+}
+.m-15 {
+	margin: 15px;	
+}
+.m-20 {
+	margin: 20px;	
+}
+.m-25 {
+	margin: 25px;	
+}
+.m-30 {
+	margin: 30px;	
+}
+.mt-10 {
+	margin-top: 10px;	
+}
+.mt-15 {
+	margin-top: 15px;	
+}
+.mt-20 {
+	margin-top: 20px;	
+}
+.mt-25 {
+	margin-top: 25px;	
+}
+.mt-30 {
+	margin-top: 30px;	
+}
+.mt-35 {
+	margin-top: 35px;	
+}
+.mt-40 {
+	margin-top: 40px;	
+}
+.mb-10 {
+	margin-bottom: 10px;	
+}
+.mb-15 {
+	margin-bottom: 15px;	
+}
+.mb-20 {
+	margin-bottom: 20px;	
+}
+.mb-25 {
+	margin-bottom: 25px;	
+}
+.mb-30 {
+	margin-bottom: 30px;	
+}
+.mb-35 {
+	margin-bottom: 35px;	
+}
+.mb-40 {
+	margin-bottom: 40px;	
+}
 
 .equal {
   display: -webkit-box;
@@ -126,6 +244,10 @@ h1 span {
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
+}
+img.imgperfil {
+    max-width: 50%;
+    height: auto;
 }
 .equal > [class*='col-'] {
   display: flex;
@@ -343,6 +465,7 @@ a.fas.fa-user.has-dropdown.usuario {
 }
 
 #fh5co-header,
+#fh5co-schedule,
 #fh5co-counter,
 .fh5co-bg {
   background-size: cover;
@@ -356,11 +479,7 @@ a.fas.fa-user.has-dropdown.usuario {
 }
 
 .fh5co-bg {
-  background-size: cover;
-  background-position: center center;
-  position: relative;
-  width: 100%;
-  float: left;
+  background: rgba(0, 0, 0, 0.9);
 }
 
 .fh5co-bg .overlay {
@@ -370,6 +489,18 @@ a.fas.fa-user.has-dropdown.usuario {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.fh5co-bg .overlaywhite {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
@@ -449,6 +580,15 @@ a.fas.fa-user.has-dropdown.usuario {
   top: 0;
   left: 0;
   right: 0;
+}
+.fh5co-cover .overlay.registrarse {
+  z-index: 0;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0, 0.3);
 }
 .fh5co-cover > .fh5co-container {
   position: relative;
@@ -697,6 +837,169 @@ a.fas.fa-user.has-dropdown.usuario {
 /* End Ver-Partido */
 
 /* Start Partidos */
+	/* Start Ver Partidos */
+	.page_ver_partido {
+	    position: relative;
+	    overflow-x: hidden;
+	    width: 100%;
+	    height: 100%;
+	    -webkit-transition: 0.5s;
+	    -o-transition: 0.5s;
+	    transition: 0.5s;
+	}
+	.page_ver_partido .fh5co-cover.partidos.alta-partido.img-fondo, .fh5co-cover.partidos.img-fondo {
+		background-image: url(/images/cancha2.jpg);
+		background-position: center 63%;
+	    background-size: cover;
+	    background-repeat: no-repeat;
+	    min-height: 100px;
+	}
+	.page_ver_partido .fh5co-cover.partidos.alta-partido h1 {
+		color: #ffffff;
+	}
+	.page_ver_partido .btn {
+	    margin-right: 0px;
+	    margin-bottom: 0px;
+	    font-family: "Archivo", Arial, sans-serif;
+	    font-size: 13px;
+	    font-weight: 400;
+	    -webkit-border-radius: 30px;
+	    -moz-border-radius: 30px;
+	    -ms-border-radius: 30px;
+	    border-radius: 30px;
+	    -webkit-transition: 0.5s;
+	    -o-transition: 0.5s;
+	    transition: 0.5s;
+	    padding: 8px 15px;
+	}
+	.page_ver_partido .boton {
+	    display: inline;
+	    padding: 10px 5px;
+	}
+	.page_ver_partido .boton:first-child {
+	    display: inline;
+	    padding: 10px 5px 10px 15px;
+	}
+	/*End Ver Partidos */
+	
+	/* Start Buscar Partidos */
+	.page_buscar_partidos .fh5co-cover.partidos.buscar-partidos.img-fondo {
+		background-image: url(/images/cancha2.jpg);
+		background-position: center 63%;
+	    background-size: cover;
+	    background-repeat: no-repeat;
+	    min-height: 100px;
+	}
+	.page_buscar_partidos .fh5co-cover.partidos.buscar-partidos h1 {
+		color: #ffffff;
+	}
+	a.btn.btn-primary.btn-altapartido {
+	    border: none;
+	    margin-left: 10px;
+	    padding: 5px 10px;
+	    font-size: 13px;
+	}
+	/* End Buscar Partidos */
+	
+	/* Start Lista Partidos Ok */
+	.page_lista_partidos_ok .fh5co-cover.partidos.lista-partidos-ok.img-fondo {
+		background-image: url(/images/cancha2.jpg);
+		background-position: center 63%;
+	    background-size: cover;
+	    background-repeat: no-repeat;
+	    min-height: 100px;
+	}
+	.page_lista_partidos_ok .fh5co-cover.partidos.lista-partidos-ok h1 {
+		color: #ffffff;
+	}
+	a.btn.btn-primary.btn-altapartido {
+	    border: none;
+	    margin-left: 10px;
+	    padding: 5px 10px;
+	    font-size: 13px;
+	}
+	/* End Lista Partidos Ok */
+	
+	/* Start Listar Partidos */
+	#page_lista_partidos .fh5co-cover.partidos.lista-partidos.img-fondo {
+		background-image: url(/images/cancha2.jpg);
+		background-position: center 63%;
+	    background-size: cover;
+	    background-repeat: no-repeat;
+	    min-height: 100px;
+	}
+	#page_lista_partidos .fh5co-cover.partidos.lista-partidos h1 {
+		color: #ffffff;
+	}
+	a.btn.btn-primary.btn-altapartido {
+	    border: none;
+	    margin-left: 10px;
+	    padding: 5px 10px;
+	    font-size: 13px;
+	}
+	/* End Listar Partidos */
+
+/* Start Calificaciones */
+#form {
+  width: 250px;
+  margin: 0 auto;
+  height: 50px;
+}
+
+#form p {
+  text-align: center;
+}
+
+#form label {
+  font-size: 20px;
+}
+
+.clasificacion input[type="radio"] {
+  display: none;
+}
+
+.clasificacion label {
+  color: grey;
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+.clasificacion label:hover,
+.clasificacion label:hover ~ label {
+  color: orange;
+}
+
+.clasificacion input[type="radio"]:checked ~ label {
+  color: orange;
+}
+/* End Calificaciones */
+
+/* Start Perfil */
+	#page_editar_perfil .fh5co-cover.perfil.editar.img-fondo, #page_ver_perfil .fh5co-cover.perfil.ver.img-fondo {
+		background-image: url(/images/cancha2.jpg);
+		background-position: center 63%;
+	    background-size: cover;
+	    background-repeat: no-repeat;
+	    min-height: 100px;
+	}
+	#page_editar_perfil .fh5co-cover.perfil.editar h1, #page_ver_perfil .fh5co-cover.perfil.ver h1 {
+		color: #ffffff;
+	}
+	a.btn.btn-primary.btn-altapartido {
+	    border: none;
+	    margin-left: 10px;
+	    padding: 5px 10px;
+	    font-size: 13px;
+	}
+	.fh5co-cover.perfil {
+    height: auto;
+    margin-top: 95px;
+}
+	/* End Perfil */
+
 .fh5co-cover.partidos {
   height: auto;
   margin-top: 95px;
@@ -706,12 +1009,26 @@ a.fas.fa-user.has-dropdown.usuario {
   margin-bottom: 30px;
 }
 
-.lista-partido .bmodificar{
-  color: green;
+.bver{
+  	background-color: #ededed;
+	border: 1px solid red !important;
+  	color: #F85A16;
+  	font-size: 12px !important;
+}
+.bver:hover, .bver:focus, .bver:active {
+    background: rgba(248, 90, 22, 0.50) !important;
+    border: 1px solid #F85A16 !important;
 }
 
-.lista-partido .beliminar{
-  color: red;
+.bverhome{
+  	background-color: #F85A16;
+	border: 1px solid #F85A16 !important;
+  	color: #ffffff;
+  	font-size: 12px !important;
+}
+.bverhome:hover, .bverhome:focus, .bverhome:active {
+    background: rgba(248, 90, 22, 0.50) !important;
+    border: 1px solid #F85A16 !important;
 }
 
 .fh5co-cover.partidos.alta-partido .img-lateral {
@@ -763,6 +1080,17 @@ form.reputacion input[type="radio"]:checked ~ label {
 }
 /* End listado confirmados */
 
+/* Start Registrarse */
+.checkbox-inline {
+	color: #fff !important;
+}
+.checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+    position: relative;
+    margin-left: 0px;
+    margin-top: 4px \9;
+}
+/* End Registrarse */
+
 #fh5co-header .display-tc .btn,
 #fh5co-counter .display-tc .btn,
 .fh5co-cover .display-tc .btn {
@@ -808,7 +1136,7 @@ form.reputacion input[type="radio"]:checked ~ label {
 #fh5co-blog,
 #fh5co-contact,
 #fh5co-footer {
-  padding: 7em 0;
+  padding: 4em 0;
   clear: both;
 }
 
@@ -835,6 +1163,11 @@ form.reputacion input[type="radio"]:checked ~ label {
   padding-bottom: 0;
 }
 
+.page_ver_partido .boton:first-child, .page_ver_partido .boton {
+    display: grid;
+    padding: 10px 5px;
+}
+
 .services {
   padding: 25px;
   margin-top: -10em;
@@ -845,6 +1178,7 @@ form.reputacion input[type="radio"]:checked ~ label {
   -o-box-shadow: 0px 10px 23px -10px rgba(0, 0, 0, 0.43);
   box-shadow: 0px 10px 23px -10px rgba(0, 0, 0, 0.43);
 }
+
 @media screen and (max-width: 992px) {
   .services {
     margin-top: 0;
@@ -1272,7 +1606,7 @@ form.reputacion input[type="radio"]:checked ~ label {
 }
 
 .fh5co-heading {
-  margin-bottom: 5em;
+  margin-bottom: 1em;
 }
 .fh5co-heading h2 {
   font-size: 30px;
@@ -1735,10 +2069,10 @@ form.reputacion input[type="radio"]:checked ~ label {
 }
 .fh5co-nav-toggle.fh5co-nav-white > i {
   color: #000;
-  background: #000;
+  background: #F85A16;
 }
 .fh5co-nav-toggle.fh5co-nav-white > i::before, .fh5co-nav-toggle.fh5co-nav-white > i::after {
-  background: #000;
+  background: #F85A16;
 }
 
 .fh5co-nav-toggle i::before {
@@ -1782,7 +2116,7 @@ form.reputacion input[type="radio"]:checked ~ label {
 .fh5co-nav-toggle {
   position: absolute;
   right: 0px;
-  top: 65px;
+  top: 25px;
   z-index: 21;
   padding: 6px 0 0 0;
   display: block;
@@ -1995,4 +2329,8 @@ form.reputacion input[type="radio"]:checked ~ label {
   opacity: 0;
 }
 
-/*# sourceMappingURL=style.css.map */
+@media screen and (min-width: 991px) {
+  	.col-md-2 {
+    	width: auto !important;
+	}
+}

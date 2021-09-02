@@ -5,9 +5,11 @@
  */
 package com.faltauno.servicios;
 
+import com.faltauno.compuestos.PostuladoCompuesto;
 import com.faltauno.entidades.Establecimiento;
 import com.faltauno.entidades.Localidad;
 import com.faltauno.entidades.Partido;
+import com.faltauno.entidades.Posicion;
 import com.faltauno.entidades.Usuario;
 import com.faltauno.enumeraciones.Sexo;
 import com.faltauno.errores.ErrorServicio;
@@ -17,6 +19,7 @@ import com.faltauno.repositorios.PartidoRepositorio;
 import com.faltauno.repositorios.UsuarioRepositorio;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -41,6 +44,9 @@ public class PartidoServicio {
 
     @Autowired
     private EstablecimientoRepositorio establecimientoRepositorio;
+
+    @Autowired
+    private ReputacionServicio reputacionServicio;
 
 
     /* CREACION DE PARTIDO */
@@ -146,7 +152,7 @@ public class PartidoServicio {
     public void cargarPostulado(Partido partido, String idUsuario) throws ErrorServicio {
 
         verificarDuplicacionPostulado(partido, idUsuario);
-        
+
         List<Usuario> usuList = new ArrayList<>();
         System.out.println();
         //Recorro y cargo la lista de usuarios postulados
@@ -163,11 +169,10 @@ public class PartidoServicio {
 
     @Transactional
     public void verificarDuplicacionPostulado(Partido partido, String idUsuario) throws ErrorServicio {
-        List<Usuario> listaPostulados = listarPostulados(partido);
+        List<Usuario> listaPostulados = partidoRepositorio.findById(partido.getId()).get().getJugPostulados();;
         for (Usuario u : listaPostulados) {
             if (u.getId().equals(idUsuario)) {
-                System.out.println(u.getId() + " " + idUsuario);
-                throw new ErrorServicio("Ya estás postulado a este partido.");
+                throw new ErrorServicio("¿Tantas ganas de pisarla y encarar? Ya estás postulado a este partido.");
             }
         }
     }
@@ -175,34 +180,75 @@ public class PartidoServicio {
     //confirmar postulado
     @Transactional
     public void confirmarPostulado(Partido partido, String idUsuario) throws ErrorServicio {
-      boolean existe = false;
+        boolean existe = false;
         List<Usuario> usuList = new ArrayList<>();
         //Recorro y cargo la lista de usuarios postulados
         for (Usuario u : partido.getJugConfirmados()) {
             usuList.add(u);
             //verifico si el usuario ya esta confirmado en la lista
-            if(u.getId().equals(idUsuario)){
-            existe = true;
+            if (u.getId().equals(idUsuario)) {
+                existe = true;
             }
         }
-        if(!existe){
-        //Agrego el postulado a la lista
-        usuList.add(usuarioRepositorio.getOne(idUsuario));
-        //Agrego la lista actualizada
-        partido.setJugConfirmados(usuList);
-        //Guardo el partido
-        partidoRepositorio.save(partido);
+        if (!existe) {
+            //Agrego el postulado a la lista
+            usuList.add(usuarioRepositorio.getOne(idUsuario));
+            //Agrego la lista actualizada
+            partido.setJugConfirmados(usuList);
+            //Guardo el partido
+            partidoRepositorio.save(partido);
+        } else {
+            throw new ErrorServicio("Ni que fuera Messi! Este jugador ya está confirmado");
         }
     }
 
     //listar postulados
-    public List<Usuario> listarPostulados(Partido partido) throws ErrorServicio {
-        List<Usuario> usuList = new ArrayList();
+    public List<PostuladoCompuesto> listarPostulados(String idpartido) throws ErrorServicio {
+    
+        List<PostuladoCompuesto> postulados = new ArrayList<>();
+        List<Usuario> listPostulados = partidoRepositorio.findById(idpartido).get().getJugPostulados();
         //Recorro y cargo la lista de usuarios postulados
-        for (Usuario u : partido.getJugPostulados()) {
-            usuList.add(u);
+        for (Usuario u : listPostulados) {
+        	PostuladoCompuesto p = new PostuladoCompuesto();
+        	
+            p.setId(u.getId());
+            p.setNombre(u.getNombre());
+            p.setApellido(u.getApellido());
+            p.setEdad(u.getEdad());
+            p.setMail(idpartido);
+            p.setLocalidad(u.getLocalidad().getNombre());
+            p.setFoto(u.getFoto());
+            p.setFechaAlta(u.getFechaCreacion());
+
+            //Transformo posiciones en cadena de texto y lo paso
+            List<Posicion> posiciones = u.getPosiciones();
+            int cont = 0;
+            String textPosiciones = "";
+            for (Posicion pos : posiciones) {
+                if (cont == 0) {
+                    textPosiciones = pos.getPosicion();
+                } else {
+                    textPosiciones = textPosiciones + ", " + pos.getPosicion();
+                }
+                cont++;
+            }
+            //cargo finalmente las posiciones
+            p.setPosiciones(textPosiciones);
+
+            //Cargo el promedio general de su reputacion
+            p.setReputacion(reputacionServicio.promedioReputacionTotal(u.getId()));
+
+            //Consulto estado y seteto en modo texto
+            if (u.getEstado()) {
+                p.setEstado("Activo");
+            } else {
+                p.setEstado("Inactivo");
+            }
+
+            postulados.add(p);
+            
         }
-        return usuList;
+        return postulados;
     }
 
     //listar confirmados
@@ -320,7 +366,117 @@ public class PartidoServicio {
         }
     }
 
+
     public List<Partido> listarMisPostulaciones(String idusuario) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Transactional
+    public void cancelarConfirmado(String idPartido, String idConfirmado) throws ErrorServicio{
+        Partido partido = traerPartido(idPartido);
+        for (Usuario u : partido.getJugConfirmados()) {
+            if (u.getId().equals(idConfirmado)) {
+                partido.getJugConfirmados().remove(u);
+                break;
+            }
+        }
+        
+    }
+    
+    @Transactional 
+    public  List<Partido> listMisPostulaciones (String idPostulado) {
+        List<Partido> listaPartidos = partidoRepositorio.listaMisPostulaciones(idPostulado);
+        List<Partido> listaMisPostulaciones = new ArrayList();
+        for (Partido p : listaPartidos) {
+            for (Usuario u : p.getJugPostulados()) {
+                if (u.getId().equals(idPostulado)){
+                    listaMisPostulaciones.add(p);
+                    break;
+                }
+            }
+        }
+        return listaMisPostulaciones;
+    }
+
+    public boolean fecha(Date fecha) {
+        Date hoy = new Date();
+        return hoy.before(fecha);
+    }
+
+    //traer por el dia de la semana que viene
+    public List<Partido> buscarPartidosXDia(String dia) throws ErrorServicio {
+
+        //que dia es hoy
+        Date fecha = new Date();
+        //avreguaro que dia de la semana es
+        String diaEs = queDiaEs(fecha);
+        
+        
+        //Averiguar la fecha del dia elegido
+        Boolean encontro = false;
+        while(encontro==false){
+        
+          if(dia.equals(diaEs)){          
+            encontro=true;
+          }else{
+          //sumo un dia a la fecha
+          fecha=sumarRestarDiasFecha(fecha, 1);
+          //Averigo que dia de la semana es
+          diaEs=queDiaEs(fecha);
+          }
+        }
+        
+        //hago la consulta y devuelvo los partidos de dicha fecha
+        List<Partido> listaPartidosDia = partidoRepositorio.buscarPartidoPorFecha(fecha);
+        return listaPartidosDia;                
+    }
+
+    public String queDiaEs(Date date) {
+ 
+        String diaNombre = "";
+        
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        
+        int dia = c.get(Calendar.DAY_OF_WEEK);
+        
+        if (dia == Calendar.SUNDAY) {
+            diaNombre="domingo";
+        }
+        if (dia == Calendar.MONDAY) {
+            diaNombre="lunes";
+        }
+        if (dia == Calendar.TUESDAY) {
+            diaNombre="martes";
+        }
+        if (dia == Calendar.WEDNESDAY) {
+            diaNombre="miercoles";
+        }
+        if (dia == Calendar.THURSDAY) {
+            diaNombre="jueves";
+        }
+        if (dia == Calendar.FRIDAY) {
+            diaNombre="viernes";
+        }
+        if (dia == Calendar.SATURDAY) {
+            diaNombre="sabado";
+        }
+                
+        return diaNombre;
+
+    }
+    
+    public Date sumarRestarDiasFecha(Date fecha, int dias){
+	
+      Calendar calendar = Calendar.getInstance();
+	
+      calendar.setTime(fecha); // Configuramos la fecha que se recibe
+	
+      calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
+
+      return calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos	 
+	
+ }
+
+
 }
