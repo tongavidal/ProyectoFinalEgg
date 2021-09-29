@@ -72,6 +72,10 @@ public class AsisteciaServicio {
         }
         return asistencia;
     }
+    
+    public void holacracks(){
+        System.out.println("hola");
+    }
 
 }
 
